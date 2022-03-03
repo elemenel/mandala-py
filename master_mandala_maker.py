@@ -1201,7 +1201,6 @@ def stupendous_mandala():
     print('This is the stupendous_mandala() code')
     print('from the master_mandala_maker Python module of LR Hatton')
     print('Located @ line 1121- 1201, 17th module of 30.')
-#     import FileScripts as f
     f.code_backup()
     t.my_venv()
     # Select which set of angles to run
