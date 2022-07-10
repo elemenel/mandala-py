@@ -1,7 +1,8 @@
 # mandala-py
 READ.ME
 Master Mandala Maker created and maintained by Leon R Hatton.
-Created, tested and executed using Thonny IDE version 3.2.7 and higher.
+
+Scripted, tested and executed using Thonny IDE version 3.2.7 and higher.
 Primary python module is Turtle, created by Wally Feurzeig, Seymour Papert and Cynthia Solomon in 1967.
 
 Master_Mandala_Maker creates mp4 formatted videos from screenshots of images. Containing over 30 unique scripts, it is dependent on seven additional local modules:
