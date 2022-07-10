@@ -1,5 +1,6 @@
 # mandala-py
 READ.ME
+
 Master Mandala Maker created and maintained by Leon R Hatton. Is a work-in-progress, like all bona fide coding projects.
 
 Cross-platform capability for Linux and Windows 10. Scripted in Python 3.10, tested and executed using Thonny IDE version 3.2.7 and higher.
