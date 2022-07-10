@@ -1,9 +1,8 @@
 #FileScripts.py contains file manipulation scripts associated with master_mandala_maker.py
              # by LeonRHatton
 
-
-
 import os
+import platform
 import random
 from PIL import Image #module for converting python output to image
 import numpy as np
@@ -22,88 +21,75 @@ import moviepy.editor as mp
 import natsort
 from natsort import humansorted as hs
 import glob
-from pathlib import Path
 from glob import glob, iglob
 import imageio
 import my_angles as a
+# import ipython
 from moviepy.editor import *
 import audio_clips as au
 from moviepy.editor import AudioFileClip, ImageClip
 
-
+my_os = platform.system()
+print(my_os)
+if my_os == 'Linux':
+    my_path = '/media/elemen/Garage'
+else:
+    my_path = 'E:'
 
 global loc_code
-loc_code = '/home/elemen/Make_Mandalas/'
+loc_code = my_path +'/Make_Mandalas/'
 
 global folder_name
-folder_name = 'Images_TBD'
+folder_name = '/Images_TBD'
 
 global loc_pic
-loc_pic = '/media/elemen/Container/Images/' # Store Mandala jpg files here
+loc_pic = my_path + '/Images/' # Store Mandala jpg files here
+
 
 global con_vid
-con_vid = '/media/elemen/Container/Videos/'
+con_vid = my_path +'/Videos/'
 
 global con_vid_no_audio
-con_vid_no_audio = '/media/elemen/Container/Videos/no_audio/' # Store non audio Mandala videos here
+con_vid_no_audio = my_path +'/Videos/no_audio/' # Store non audio Mandala videos here
 
 global con_vid_av
-con_vid_av = '/media/elemen/Container/Videos/AV Vids/Full_Vids/'
+con_vid_av = my_path +'/Videos/Full_Vids/'
 
 global loc_thumb
-loc_thumb = '/media/elemen/Container/Thumbs/Output/' # Store Mandala Thumbs here
+loc_thumb = my_path +'/Output/' # Store Mandala Thumbs here
 
+global clip_path
+clip_path = my_path +'/Audio Clips for Python/'
+
+# global random_track
+# random_track = random.choice(au.all_clips)
+# print (au.my_track)
 
 '**********************************************************************************************************'
-# Audio Zone
-
-#Path to songs
-# Album: Jubilee, by Winston Rhodes
-jub_00 = '/home/elemen/Music/Jubilee/Jubilee/\'Jubilee\'!.ogg'
-jub_14 = '/home/elemen/Music/Jubilee/Jubilee/14 - Life\'s Storms.ogg'
-jub_13 = '/home/elemen/Music/Jubilee/Jubilee/13 - Thank God I\'m Forgiven.ogg'
-jub_12 = '/home/elemen/Music/Jubilee/Jubilee/12 - Trav\'lin On The Tracks of Life.ogg'
-jub_11 = '/home/elemen/Music/Jubilee/Jubilee/11 - Music Still Blowing In The Wind.ogg'
-jub_10 = '/home/elemen/Music/Jubilee/Jubilee/10 - On A Heavenly Journey.ogg' # Comment out if Duration too short, causing backend error. 
-jub_09 = '/home/elemen/Music/Jubilee/Jubilee/09 - A Rasta Man\'s Prayer.ogg'
-jub_08 = '/home/elemen/Music/Jubilee/Jubilee/08 - Drink From The Living Water.ogg'
-jub_07 = '/home/elemen/Music/Jubilee/Jubilee/07 - On The Hallelujah Trail.ogg'
-jub_06 = '/home/elemen/Music/Jubilee/Jubilee/06 - Spread Your Tender Mercy Over Me.ogg'
-jub_05 = '/home/elemen/Music/Jubilee/Jubilee/05 - His Majesty, God!.ogg'
-jub_04 = '/home/elemen/Music/Jubilee/Jubilee/04 - Heading To Zion.ogg'
-jub_03 = '/home/elemen/Music/Jubilee/Jubilee/03 - I Never Knew.ogg'
-jub_02 = '/home/elemen/Music/Jubilee/Jubilee/02 - Yes I\'m Still Here Lord.ogg'
-
-# Mix
-mix_01 = '/home/elemen/Music/Stored Jams/Music/The 60\'s Hits/Sam Cooke - Change Is Gonna Come.mp3'
-my_mix = mix_01.lstrip('/home/elemen/Music/Stored Jams/Music/' + 'The 60\'s Hits/Sam Cooke - Change Is Gonna Come.mp3')
-
-global jubilee_album
-jubilee_album = [jub_00, jub_14, jub_02, jub_03, jub_04, jub_05, jub_06, jub_07, jub_08, jub_09, jub_11, jub_12, jub_13]
-
-def pick_track():
-    global random_track # global keyword is important here to make objects available outside of the module
-    random_track =  random.choice(au.all_clips) # Can use(jubilee_album)
-    global my_track
-    my_track = random_track.lstrip('home/elemen/Music/Audio Clips for Python')  # or ('home/elemen/Music/Jubilee/') + ',  by Winston W. Rhodes'
-    print('The track being used for this show is: ' + my_track)
-    return my_track
-
-'*******************************************************************************************************************'
-      
-
-
-
-
+# Copies completed videos to /home/elemen/Videos/Full_Vids for Plex access om Linux
+def copy_videos():
+     if my_os == 'Linux':
+         try:
+             origin = '/media/elemen/Garage/Videos/Full_Vids/'
+             destination = '/home/elemen/Videos/Full_Vids/'
+             endswith_ = '.mp4'
+             [shutil.copy(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
+             print('Copying videos from Garage directory to Home directory.....')
+         except shutil.SameFileError as e:
+             pass 
+     else:
+         pass
+     print('Completed videos have been copied to the Linux Home directory!')   
+# copy_videos()
 
 # Backs up the code to current. Does not archive yet. 
 def code_backup():
-    shutil.rmtree('/home/elemen/CodeBackup/')
-    shutil.rmtree('/home/elemen/MandalaMakerBackup/')
-    src =  '/home/elemen/Python Code/'
-    m_src = '/home/elemen/Make_Mandalas/'
-    dest = '/home/elemen/CodeBackup/'
-    m_dest = '/home/elemen/MandalaMakerBackup/'
+    shutil.rmtree(my_path +'Code_Backup/')
+    shutil.rmtree(my_path +'MandalaMakerBackup/')
+    src =  my_path +'Python Code/'
+    m_src = my_path +'Make_Mandalas/'
+    dest = my_path +'Code_Backup/'
+    m_dest = my_path +'MandalaMakerBackup/'
     destination = shutil.copytree(src, dest)
     destination = shutil.copytree(m_src, m_dest)
     print('Python Code files have been backed up to CodeBackup folder')
@@ -130,7 +116,7 @@ def save_thumb():
 def save_undo():
     image = pyautogui.screenshot()
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-    cv2.imwrite(t.my_str + '+' + str(t.iterable) +'.png', image)
+    cv2.imwrite(t.my_str + '+' + str(t.iterable) + '_undo_ ' + '.png', image)
     
     
 # This creates  png and jpg files of the final image, to be saved out to the Pictures/Mandalas folder.
@@ -140,7 +126,11 @@ def save_final_thumb():
     cv2.imwrite(t.my_str +'_' + '999' + '_' +'.jpg', image)
     cv2.imwrite(t.my_str +'_' + '998' + '_' + '.png', image)
    
-    
+def save_final_undo():
+    image = pyautogui.screenshot()
+    image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    cv2.imwrite(t.my_str +'_' + '999' + '_undo_' +'.jpg', image)
+    cv2.imwrite(t.my_str +'_' + '998' + '_undo_' + '.png', image)    
 
  
 # Moves images to their respective locations from the code file and leaving .py files only
@@ -162,43 +152,43 @@ def move_jpgs():
 def move_pics():
     move_pngs()
     move_jpgs()
-    print('Image .png files have been moved to /media/elemen/Container/Thumbs/Output/')
-    print('Image .jpg files have been moved to /media/elemen/Container/Images/')
+    print('Image .png files have been moved to /Thumbs/Output/')
+    print('Image .jpg files have been moved to /Images/')
 # move_pics()    
 
-# Video files originate in the /media/elemen/Thumbs/Output folder. This will move them to the /media/Container/Videos folder.
+# Video files originate in the /media/elemen/Thumbs/Output folder. This will move them to the /media/elemen/Container/Videos folder.
 # Moves images to their respective locations from the code file and leaving .py files only, then to larger size drive(Container)
 # Runs best with Master Mandala Maker. Using list comprehension syntax.
 def move_all():
-    origin = loc_thumb +'/'
+    origin = loc_thumb
     destination = con_vid
     endswith_ = '.avi'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Video .avi files have been moved to /media/elemen/Container/Videos/')
+    print('Video .avi files have been moved to /Videos/')
     
-    origin = loc_thumb +'/'
+    origin = loc_thumb
     destination = con_vid_no_audio
     endswith_ = '.mp4'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Video .mp4 files have been moved to /media/elemen/Container/Videos/')
+    print('Video .mp4 files have been moved to /Videos/')
     
-    origin = loc_thumb +'/'
+    origin = loc_thumb
     destination = con_vid
     endswith_ = '.webm'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Video .webm files have been moved to /media/elemen/Container/Videos/')
+    print('Video .webm files have been moved to /Videos/')
     
-    origin = loc_code +'/'
-    destination = loc_thumb + folder_name +'/'
+    origin = loc_code
+    destination = loc_thumb + folder_name
     endswith_ = '.png'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Image .png files have been moved to /media/elemen/Container/Thumbs/Output/')
+    print('Image .png files have been moved to /Thumbs/Output/')
     
-    origin = loc_thumb + folder_name +'/'
+    origin = loc_thumb + folder_name
     destination = loc_pic
     endswith_ = '.jpg'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Image .jpg files have been moved to /media/elemen/Container/Images/')
+    print('Image .jpg files have been moved to /Images/')
     
 # move_all()
 
@@ -216,14 +206,14 @@ def move_all():
 
 
 
-# Using Dropbox as file server to link the windows and phone
-def update_dropbox():
-    from shutil import copytree
-    shutil.rmtree('/home/elemen/Dropbox/Code/')
-    src =  '/home/elemen/Documents/Code/'
-    dest = '/home/elemen/Dropbox/Code/'
-    destination  = shutil.copytree(src, dest)
-    print('Dropbox has been updated to current')
+# # Using Dropbox as file server to link the windows and phone
+# def update_dropbox():
+#     from shutil import copytree
+#     shutil.rmtree('/media/elemen/Container/Mint_Home/Dropbox/Code/')
+#     src =  '/media/elemen/Container/Mint_Home/Documents/Code/'
+#     dest = '/media/elemen/Container/Mint_Home/Dropbox/Code/'
+#     destination  = shutil.copytree(src, dest)
+#     print('Dropbox has been updated to current')
     
     
     
@@ -242,7 +232,7 @@ def update_all():
     current_path()
     code_backup()
     current_path()
-    os.chdir('/home/elemen/Python Code/')
+    os.chdir(my_path)
     current_path()
     print('Pics have been moved to Pictures folder and Dropbox has been updated')
     
@@ -258,7 +248,7 @@ def make_file_folder():
     folder_name = t.my_str
     shutil.rmtree(loc_thumb + folder_name + '/')
     os.makedirs(loc_thumb + folder_name + '/')
-    print('New temp directory /home/elemen/Looped_Pics/Thumbs/' + folder_name + '   has been created')
+    print('New temp directory /Looped_Pics/Thumbs/' + folder_name + '   has been created')
 
 
 
@@ -274,7 +264,7 @@ def update_all():
     # Python program to change the
     # current working directory
     print(str(' Working directory changing from') + '    ' + str(current_path()))
-    os.chdir('/home/elemen/Make_Mandalas/')
+    os.chdir(my_path + 'Python/Make_Mandalas/')
     print (str('Working directory changed to') +'   ' + str(current_path()))
 
 def job():
@@ -294,32 +284,20 @@ def job():
 
 
     
-def update_dropbox():
-    from shutil import copytree
-    shutil.rmtree('/home/elemen/Dropbox/Code/')
-    src =  '/home/elemen/Documents/Code/'
-    dest = '/home/elemen/Dropbox/Code/'
-    destination  = shutil.copytree(src, dest)
-    print('Dropbox has been updated to current')
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-# Used by Master Mandala maker Module to create videos from looped .png files
-def set_vid_env():
-#     time.sleep(3)
-#     Tm.end_time()
-#     move_pics()
-    current_path()
-    os.chdir(loc_thumb + folder_name + '/')
-    print('The current folder is:  ' + str(loc_thumb + folder_name))
-    try_video()
-#     time.sleep(3)
-#     move_all()
-    os.chdir('/home/elemen/Make_Mandalas/')
+# def update_dropbox():
+#     from shutil import copytree
+#     shutil.rmtree('/home/elemen/Dropbox/Code/')
+#     src =  '/home/elemen/Documents/Code/'
+#     dest = '/home/elemen/Dropbox/Code/'
+#     destination  = shutil.copytree(src, dest)
+#     print('Dropbox has been updated to current')
+
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 
 # This works to merge video clips into one.     
 def merge_videos():
-    my_directory = '/home/elemen/Videos/Mandalas/'
-    os.chdir('/home/elemen/Videos/Mandalas/')
+    my_directory = my_path +'Videos/Mandalas/'
+    os.chdir(my_path + 'Videos/Mandalas/')
     # Select and input the files to merge
     clip1= VideoFileClip(my_directory + "Mixed-Hued Mandala_75.avi")
     clip2= VideoFileClip(my_directory + "Mixed-Hued Mandala_120.avi")
@@ -354,7 +332,7 @@ def try_video():
     import natsort
     from natsort import humansorted
     import my_angles as a
-    fps = 1.75 # 1.75 value creates a video with audio file of 3 minutes, the max duration value of moviepy. Best with 300 loops.
+    fps = 1.75 
     # Make images directory current
     os.chdir(loc_thumb + folder_name +'/')
     #Collect and sort .png files
@@ -364,10 +342,10 @@ def try_video():
     #     os.chdir(loc_thumb + folder_name)
     # Write sequenced png files to a single .mp4 file normally less than 10 mb, quality as good as much larger .avi file
     # insert this after my_clip as needed to control duration: .set_duration(240).
-    my_clip.write_videofile( con_vid_no_audio + folder_name +'.mp4', fps=30,\
-                            codec='libx264', bitrate=None, audio=False, audio_fps=44100, preset='medium', audio_nbytes=4,\
-                            audio_codec='mp3', audio_bitrate=None, audio_bufsize=4000, temp_audiofile='home/elemen/Music/temp',\
-                            remove_temp=False, write_logfile=True, threads=None,\
+    my_clip.write_videofile( con_vid_no_audio + folder_name + '.mp4', fps=30,
+                            codec='libx264', bitrate=None, audio=False, audio_fps=44100, preset='medium', audio_nbytes=4,
+                            audio_codec='mp3', audio_bitrate=None, audio_bufsize=4000, temp_audiofile='E:/temp',
+                            remove_temp=False, write_logfile=True, threads=None,
                             ffmpeg_params=None, logger='bar')
     # Write sequenced .png files to a single .avi file normally exceeding 200 mb 
 #     my_clip_a.set_duration(265).write_videofile( loc_thumb + folder_name +'.avi', fps=24,\
@@ -377,63 +355,76 @@ def try_video():
 #                             ffmpeg_params=None, logger='bar')
 
     print('Video is Ready')
-    
-    
-    
-
-
-
-
-
-    
+  
 # try_video()
 
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+# Used by Master Mandala maker Module to create videos from looped .png files
+def set_vid_env():
+    current_path()
+    os.chdir(loc_thumb + folder_name + '/')
+    print('The current folder is:  ' + str(loc_thumb + folder_name))
+    try_video()
+    os.chdir(my_path + '/Make_Mandalas/')
+    
+    
+    
+
 def a_v_merge():
-    os.chdir(con_vid +'/no_audio/')
+    os.chdir(con_vid +'no_audio/')
     my_file = folder_name  # ['colorful_mandala_765', 'Blue and Red Hued Mandala_765','Mixed-Hued Mandala_765']
     
-    videoclip = VideoFileClip('/media/elemen/Container/Videos/no_audio/' + my_file + '.mp4')
-    audioclip = AudioFileClip(AudioFileClip(random_track))
-    videoclip.duration = audioclip.duration
+#     videoclip = VideoFileClip('E:/Videos/no_audio/' + my_file + '.mp4')
+    videoclip = VideoFileClip(my_path + 'no_audio/' + my_file + '.mp4')
+    audioclip = AudioFileClip(AudioFileClip(au.my_track))
+#     videoclip.duration = audioclip.duration # set duration of video to duration of audio
+    audioclip.duration = videoclip.duration # set duration of audio to duration of video
     new_audioclip = CompositeAudioClip([audioclip])
     videoclip.audio = new_audioclip
-    videoclip.write_videofile('/media/elemen/Container/AV Vids/' + my_file + '_with music' + '.mp4')
+    videoclip.write_videofile(my_path +'Videos/AV Vids/' + my_file + '_with music' + '.mp4')
+    
 #     videoclip.set_duration(179).write_videofile(my_file + '_with Music' + '.mp4')
     
 # a_v_merge()
 
 #  https://www.geeksforgeeks.org/moviepy-assigning-audio-clip-to-video-file/
+# Used by Master Mandala maker to generate videos by merging audio clips to video clips
 def sync_av():
     i_key = str(t.file_key)
-    os.chdir(con_vid +'/')
+    os.chdir(con_vid)
     new_video = '__temp__.mp4'
-#     audio_file = "/home/elemen/Music/Jubilee/Jubilee/12 - Trav'lin On The Tracks of Life.ogg"
-    my_file = folder_name 
+    audio_file = au.my_audio_clip
+    my_file = folder_name
+    print('Audio file::   ' + str(audio_file))
+    print('my_file:   ' + str(my_file))
     # loading video gfg
-    clip = VideoFileClip('/media/elemen/Container/Videos/no_audio/' + my_file + '.mp4')
-  
+    clip = VideoFileClip(my_path + '/Videos/no_audio/' + my_file +'.mp4')
     # select from 0 to x seconds, approx duration of the original video
-    clip = clip.subclip(0, 179) # Limited by the maxduration variable to 179s duration
+    clip = clip.subclip(0, 999) # Limited by the maxduration variable to 179s duration
   
     # loading audio file
-    audioclip = AudioFileClip(random_track) # .clip
+    audioclip = AudioFileClip(audio_file) # .clip
   
     # adding audio to the video clip
     videoclip = clip.set_audio(audioclip)
   
                 #     # showing video clip
     videoclip.ipython_display(loop = 5, maxduration = 999)
-    shutil.move(os.path.join(new_video),os.path.join('/media/elemen/Container/AV Vids/Full_Vids/' + my_file + '_' + my_track + '_audio.mp4'))
-
-    print('The new video has been renamed to    ' + str(my_file) + '_' + my_track + '_audio.mp4')
-    my_clip = (VideoFileClip('/media/elemen/Container/AV Vids/Full_Vids/' + my_file + '_' + my_track + '_audio.mp4'))
+#     shutil.move(os.path.join(new_video),os.path.join('E:/Videos/Full_Vids/' + my_file + '_' + au.my_track + '_audio.mp4'))
+    shutil.move(os.path.join(new_video),os.path.join(my_path + '/Videos/Full_Vids/' +  my_file + '-' + au.my_track + '_.mp4'))
+    
+    print('The new video has been renamed to    ' + str(my_file) + '-' + au.my_track + '_.mp4')
+   
+#     my_clip= (VideoFileClip('E:/Videos/Full_Vids/' + my_file + '_' + au.my_track + '_audio.mp4'))
+#     my_clip= (VideoFileClip(my_path + 'Videos/Full_Vids/' + my_file + au.my_track + '_.mp4'))
+    os.chdir(loc_code)
     print('=========================================')    
     
 # sync_av()    
 #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 def longer_video():
    
-    my_video = '/media/elemen/Vids/Awesome Mandala713.avi'
+    my_video = my_path +'Awesome Mandala713.avi'
     new_video = '__temp__.mp4'
     # loading video dsa gfg intro video 
     clip = VideoFileClip(my_video) 
@@ -461,11 +452,11 @@ def longer_video():
 '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
 '*******************************************************************************************************************************'
 # This absolutely works  using cv2 VideoWriter to create .avi videos on a single folder. Does not loop directories, but does loop the files.
-import cv2
-import numpy as np
-import os
-from natsort import humansorted
-import natsort
+# import cv2
+# import numpy as np
+# import os
+# from natsort import humansorted
+# import natsort
 from os.path import isfile, join
 
 def convert_frames_to_video(pathIn,pathOut,fps):
@@ -492,7 +483,7 @@ def convert_frames_to_video(pathIn,pathOut,fps):
     print('Video is ready!')
     
 def main():
-    folder_name = '/media/elemen/Thumbs/Output/square_spiral_333/'
+    folder_name = my_path + 'Thumbs/Output/square_spiral_333/'
     pathIn=  folder_name
     pathOut = folder_name + '_mandala_show.avi'
     
@@ -515,13 +506,12 @@ def begin_output_to_file():
     sys.stdout = open('filename.txt', w)
     print("test sys.stdout")
     sys.stdout = original_stdout
-# output_to_file()
+# begin_output_to_file()
 
 def close_output_to_file():
     print('Closing output to file')
     filename.txt = str(t.my_str + 'ran on' + str(Tm.date_time))
     sys.stdout = close('filename.txt', w)
-    
     sys.stdout = original_stdout
 
 
@@ -561,14 +551,17 @@ def change_file_mode():
     
 # change_file_mode()
 
-
+def return_print_to_console():
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+# return_print_to_console()
 
 # Make multiple copies of a file
 
 def copy_pics():
     for num in range(300):
-        src = '/media/elemen/Container/Images/An Awesome Polygram Mandala featuring 1512  Degree Angles_999_.jpg'  
-        dest = '/media/elemen/Container/300_pics/An Awesome Polygram Mandala featuring 1512/An Awesome Polygram Mandala featuring 1512  Degree Angles' + str(num) + '.jpg'
+        src = my_path + 'Images/An Awesome Polygram Mandala featuring 1512  Degree Angles_999_.jpg'  
+        dest = my_path + 'An Awesome Polygram Mandala featuring 1512  Degree Angles' + str(num) + '.jpg'
         destination  = shutil.copyfile(src, dest)
     print('Files have been copied')   
         
@@ -584,7 +577,7 @@ def process_pics():
     import my_angles as a
     fps = 1.75 # 1.75 value creates a video with audio file of 3 minutes, the max duration value of moviepy. Best with 300 loops.
     # Make images directory current
-    my_dir = '/media/elemen/Container/300_pics/Mixed Hues 834/'
+    my_dir = my_path +'300_pics/Mixed Hues 834/'
     os.chdir(my_dir)
     #Collect and sort .jpg files
     image_files = humansorted(os.listdir('.'))
@@ -593,7 +586,7 @@ def process_pics():
     # insert this after my_clip as needed to control duration: .set_duration(240).
     my_clip.write_videofile( my_dir +'MixedHues_834.mp4', fps=30,\
                             codec='libx264', bitrate=None, audio=False, audio_fps=44100, preset='medium', audio_nbytes=4,\
-                            audio_codec='mp3', audio_bitrate=None, audio_bufsize=4000, temp_audiofile='home/elemen/Music/temp',\
+                            audio_codec='mp3', audio_bitrate=None, audio_bufsize=4000, temp_audiofile= my_path +'Music/temp',
                             remove_temp=False, write_logfile=True, threads=None,\
                             ffmpeg_params=None, logger='bar')
     # Write sequenced .png files to a single .avi file normally exceeding 200 mb 
@@ -604,4 +597,12 @@ def process_pics():
 #                             ffmpeg_params=None, logger='bar')
     print('mp4 created!')
 # process_pics()    
-'**************************************************************************************************************************************'    
+'**************************************************************************************************************************************'
+this_file = my_path +'/Python/Make_Mandalas/my_angles.py'
+
+def print_to_file():
+    my_file = open(this_file)
+    for line in my_file:
+        print(line)
+# print_to_file()        
+
