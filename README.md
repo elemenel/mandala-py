@@ -12,7 +12,8 @@ my_splash_screen.py,  -- generates watermark on mandala, title screens, splash s
 my_hues.py, -- outputs custom shades and randomized hues of a given color range; 
 File_Scripts.py, -- source of file manipulation and audio, visual and final a/v processing; 
 My_template.py, -- provides template for mandala using the Turtle module, and 
-audio_clips.py  -- Holds links to audio tracks on local machine.New users have to specify the path to their local audio tracks.
+audio_clips.py  -- Contains links to audio tracks on local machine and selects a random track. 
+New users have to specify the path to their local audio tracks.
  
 Also requires the pip installs of:
 open cv-python, 
