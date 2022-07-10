@@ -6,11 +6,11 @@ Cross-platform capability for Linux and Windows 10. Scripted in Python 3.10, tes
 The primary python module used is Turtle, created by Wally Feurzeig, Seymour Papert and Cynthia Solomon in 1967.
 
 Master_Mandala_Maker creates mp4 formatted videos from screenshots of images. Containing over 30 unique scripts, it is dependent on seven additional local modules:
-t.my_angles.py,  -- outputs angle
-Timer.py,  -- holds time and timer functions
-my_splash_screen.py,  -- generates watermark on mandala, title screens, splash screens, end screens
-my_hues.py, -- outputs custom shades and randomized hues of a given color range
-File_Scripts.py, -- source of file manipulation and audio, visual and final a/v processing
+t.my_angles.py,  -- outputs angle; 
+Timer.py,  -- holds time and timer functions; 
+my_splash_screen.py,  -- generates watermark on mandala, title screens, splash screens, end screens; 
+my_hues.py, -- outputs custom shades and randomized hues of a given color range; 
+File_Scripts.py, -- source of file manipulation and audio, visual and final a/v processing; 
 My_template.py, -- provides template for mandala using the Turtle module, and 
 audio_clips.py  -- Holds links to audio tracks on local machine.
  
