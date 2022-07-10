@@ -1,6 +1,6 @@
 # mandala-py
 READ.ME
-Master Mandala Maker created and maintained by Leon R Hatton.
+Master Mandala Maker created and maintained by Leon R Hatton. Is a work-in-progress, like all bona fide coding projects.
 
 Cross-platform capability for Linux and Windows 10. Scripted in Python 3.10, tested and executed using Thonny IDE version 3.2.7 and higher.
 The primary python module used is Turtle, created by Wally Feurzeig, Seymour Papert and Cynthia Solomon in 1967.
@@ -11,7 +11,7 @@ Timer.py,  -- holds time and timer functions;
 my_splash_screen.py,  -- generates watermark on mandala, title screens, splash screens, end screens; 
 my_hues.py, -- outputs custom shades and randomized hues of a given color range; 
 File_Scripts.py, -- source of file manipulation and audio, visual and final a/v processing; 
-My_template.py, -- provides template for mandala using the Turtle module, and 
+My_template.py, -- sets up environment for mandala creation using the Turtle module, and 
 audio_clips.py  -- Contains links to audio tracks on local machine and selects a random track. 
 New users have to specify the path to their local audio tracks.
  
