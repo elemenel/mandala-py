@@ -1,5 +1,5 @@
 #  My_template.py conntains file manipulation scripts associated with master_mandala_maker.py.
-# This custom module is needed to run master_mandala_maker. It sets up the environment that each of the\
+# This custom module is needed to run master_mandala_maker. It sets up the environment that each of the
 #  30 or so mandala makers (modular scripts) depends upon to run it's functions to successful completions.
 # by LeonRHatton using Thonny IDE.
 
