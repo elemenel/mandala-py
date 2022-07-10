@@ -1,4 +1,4 @@
-# bubble-burst
+# mandala-py
 READ.ME
 Master Mandala Maker created and maintained by Leon R Hatton.
 Created, tested and executed using Thonny IDE version 3.2.7 and higher.
