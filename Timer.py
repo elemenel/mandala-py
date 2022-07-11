@@ -38,7 +38,14 @@ def set_time():
         end_time = time.localtime()
         current_time = time.strftime('%D; %H:%M:%S',end_time)
         print ('End:    ' + current_time)
-        
+
+# def sleeper(): #Work on this to automat pauses between mandala module execution
+#     fn_01 = turtle.exitonclick()
+#     fn_02 = continue
+#     fn_03 =  time.sleep(10)
+   
+    # keyboard input to quit or continue
+
         
 def time_functions():
     set_time()

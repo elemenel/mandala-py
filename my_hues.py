@@ -49,7 +49,7 @@ def pick_indigo():
     U = b
     t.li.pencolor(S, T, U)
 
-#random indigo hues
+#random magenta hues
 def pick_magenta():
     r = random.randint(125, 175)
     g = random.randint(0, 5)
@@ -57,7 +57,7 @@ def pick_magenta():
     I = r
     J = g
     K = b
-    t.lm.pencolor(I, J, K)
+    t.me.pencolor(I, J, K)
 
 #random gold hues
 def pick_gold():
@@ -73,13 +73,13 @@ def pick_gold():
 
 #random dark hues
 def pick_dark():
-    r = random.randint(0, 25)
+    r = random.randint(0, 100)
     g = random.randint(0, 25)
-    b = random.randint(0, 25)
+    b = random.randint(0, 50)
     X = r
     Y = g
     Z = b
-    t.le.pencolor(X, Y, Z)
+    t.lz.pencolor(X, Y, Z)
 
 
 
@@ -102,7 +102,7 @@ def pick_random():
     D = r
     E = g
     F = b
-    t.lr.pencolor(D, E, F)
+    t.me.pencolor(D, E, F)
 
 def pick_random_a():
     r = random.randint(200, 225)
