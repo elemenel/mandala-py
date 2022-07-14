@@ -24,18 +24,21 @@ import glob
 from glob import glob, iglob
 import imageio
 import my_angles as a
-# import ipython
 from moviepy.editor import *
 import audio_clips as au
-from moviepy.editor import AudioFileClip, ImageClip
+from moviepy.editor import AudioFileClip, ImageClip, VideoFileClip
+from pydub import *
 
+#Assign correct system path for cross-platform capability
 my_os = platform.system()
 print(my_os)
 if my_os == 'Linux':
     my_path = '/media/elemen/Garage'
 else:
     my_path = 'E:'
-
+    
+'*********************************************************************************************************'
+# Create path variables
 global loc_code
 loc_code = my_path +'/Make_Mandalas/'
 
@@ -61,12 +64,8 @@ loc_thumb = my_path +'/Output/' # Store Mandala Thumbs here
 global clip_path
 clip_path = my_path +'/Audio Clips for Python/'
 
-# global random_track
-# random_track = random.choice(au.all_clips)
-# print (au.my_track)
-
 '**********************************************************************************************************'
-# Copies completed videos to /home/elemen/Videos/Full_Vids for Plex access om Linux
+# Copies completed videos to /home/elemen/Videos/Full_Vids for Plex access on Linux
 def copy_videos():
      if my_os == 'Linux':
          try:
@@ -81,15 +80,15 @@ def copy_videos():
          pass
      print('Completed videos have been copied to the Linux Home directory!')   
 # copy_videos()
-
+'**********************************************************************************************************'
 # Backs up the code to current. Does not archive yet. 
 def code_backup():
-    shutil.rmtree(my_path +'Code_Backup/')
-    shutil.rmtree(my_path +'MandalaMakerBackup/')
-    src =  my_path +'Python Code/'
-    m_src = my_path +'Make_Mandalas/'
-    dest = my_path +'Code_Backup/'
-    m_dest = my_path +'MandalaMakerBackup/'
+    shutil.rmtree(my_path +'/Code_Backup/')
+    shutil.rmtree(my_path +'/MandalaMakerBackup/')
+    src =  my_path +'/Python Code/'
+    m_src = my_path +'/Make_Mandalas/'
+    dest = my_path +'/Code_Backup/'
+    m_dest = my_path +'/MandalaMakerBackup/'
     destination = shutil.copytree(src, dest)
     destination = shutil.copytree(m_src, m_dest)
     print('Python Code files have been backed up to CodeBackup folder')
@@ -194,7 +193,6 @@ def move_all():
 
 
 
-
 # Empties the Pictures folder where final jpgs are stored. Default is to leave commented to avoid accidental purging.
 # def clear_pics_mandalas():
 #     file = pathlib.Path('/home/elemen/Pictures/Mandalas/')
@@ -204,19 +202,7 @@ def move_all():
 #         os.makedirs('/home/elemen/Pictures/Mandalas/')
 #     print('Pictures/Mandalas/ folder has been emptied. All files therein were permanently deleted.')
 
-
-
-# # Using Dropbox as file server to link the windows and phone
-# def update_dropbox():
-#     from shutil import copytree
-#     shutil.rmtree('/media/elemen/Container/Mint_Home/Dropbox/Code/')
-#     src =  '/media/elemen/Container/Mint_Home/Documents/Code/'
-#     dest = '/media/elemen/Container/Mint_Home/Dropbox/Code/'
-#     destination  = shutil.copytree(src, dest)
-#     print('Dropbox has been updated to current')
-    
-    
-    
+   
 # Function to get the current working directory   
 def current_path():
     import os
@@ -243,7 +229,8 @@ def update_all():
 #     clear_pics_mandalas()
 #     print(str('Current time is    ' + str(tm.my_time)))
 
-# Empties the folder where the .png files are stored for video processing 
+# Empties the folder where the .png files are stored for video processing
+
 def make_file_folder():
     folder_name = t.my_str
     shutil.rmtree(loc_thumb + folder_name + '/')
@@ -267,61 +254,8 @@ def update_all():
     os.chdir(my_path + 'Python/Make_Mandalas/')
     print (str('Working directory changed to') +'   ' + str(current_path()))
 
-def job():
-    update_all()
-    print(str('Files were updated as of'  +str(Tm.my_time) +'.'))
-# Every day at 12am or 00:00 time bedtime() is called.
-    schedule.every().day.at("03:00").do(job)
-
-# job()
-# # Loop so that the scheduling task
-# # keeps on running all time.
-# while True:
-#     # Checks whether a scheduled task 
-#     # is pending to run or not
-#     schedule.run_pending()
-#     time.sleep(1)
-
-
-    
-# def update_dropbox():
-#     from shutil import copytree
-#     shutil.rmtree('/home/elemen/Dropbox/Code/')
-#     src =  '/home/elemen/Documents/Code/'
-#     dest = '/home/elemen/Dropbox/Code/'
-#     destination  = shutil.copytree(src, dest)
-#     print('Dropbox has been updated to current')
-
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-
-# This works to merge video clips into one.     
-def merge_videos():
-    my_directory = my_path +'Videos/Mandalas/'
-    os.chdir(my_path + 'Videos/Mandalas/')
-    # Select and input the files to merge
-    clip1= VideoFileClip(my_directory + "Mixed-Hued Mandala_75.avi")
-    clip2= VideoFileClip(my_directory + "Mixed-Hued Mandala_120.avi")
-    clip3= VideoFileClip(my_directory + "Mixed-Hued Mandala_165.avi")
-    clip4= VideoFileClip(my_directory + "Mixed-Hued Mandala_210.avi")
-    clip5= VideoFileClip(my_directory + "Mixed-Hued Mandala_255.avi")
-    clip6= VideoFileClip(my_directory + "Mixed-Hued Mandala_300.avi")
-    clip7= VideoFileClip(my_directory + "Mixed-Hued Mandala_345.avi")
-    clip8= VideoFileClip(my_directory + "Mixed-Hued Mandala_390.avi")
-    clip9= VideoFileClip(my_directory + "Mixed-Hued Mandala_435.avi")
-    clip10= VideoFileClip(my_directory + "Mixed-Hued Mandala_480.avi")         
-             
-
-    final_clip= concatenate_videoclips([clip1, clip2, clip3, clip4, clip5, clip6, clip7, clip8, clip9, clip10])
-    #Change the name as appropriate
-    final_clip.write_videofile(my_directory + "Mixed-Hued Mandalas_01.mp4")
-
-#merge_videos()     
-     
-            
-
-
 '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
-# Used by Mandala Maker to create videos from the .png files.
+# Optionally can be used by Mandala Maker to create videos from the .png files.
 # This works using moviepy on a single folder. Does not loop. Optional codecs are 'mpeg4', libx264(.mp4), 'rawvideo'(.avi),\
                                     # libvpx(webm)-HTML5 and browser videos.
 def try_video():
@@ -366,52 +300,37 @@ def set_vid_env():
     print('The current folder is:  ' + str(loc_thumb + folder_name))
     try_video()
     os.chdir(my_path + '/Make_Mandalas/')
-    
-    
-    
 
-def a_v_merge():
-    os.chdir(con_vid +'no_audio/')
-    my_file = folder_name  # ['colorful_mandala_765', 'Blue and Red Hued Mandala_765','Mixed-Hued Mandala_765']
-    
-#     videoclip = VideoFileClip('E:/Videos/no_audio/' + my_file + '.mp4')
-    videoclip = VideoFileClip(my_path + 'no_audio/' + my_file + '.mp4')
-    audioclip = AudioFileClip(AudioFileClip(au.my_track))
-#     videoclip.duration = audioclip.duration # set duration of video to duration of audio
-    audioclip.duration = videoclip.duration # set duration of audio to duration of video
-    new_audioclip = CompositeAudioClip([audioclip])
-    videoclip.audio = new_audioclip
-    videoclip.write_videofile(my_path +'Videos/AV Vids/' + my_file + '_with music' + '.mp4')
-    
-#     videoclip.set_duration(179).write_videofile(my_file + '_with Music' + '.mp4')
-    
-# a_v_merge()
-
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 #  https://www.geeksforgeeks.org/moviepy-assigning-audio-clip-to-video-file/
 # Used by Master Mandala maker to generate videos by merging audio clips to video clips
 def sync_av():
+    global full_vid_path
     i_key = str(t.file_key)
     os.chdir(con_vid)
     new_video = '__temp__.mp4'
     audio_file = au.my_audio_clip
     my_file = folder_name
-    print('Audio file::   ' + str(audio_file))
-    print('my_file:   ' + str(my_file))
+    print('Audio file:   ' + str(audio_file))
+    print('File name:   ' + str(my_file))
     # loading video gfg
-    clip = VideoFileClip(my_path + '/Videos/no_audio/' + my_file +'.mp4')
+    clip = VideoFileClip(my_path + '/Videos/no_audio/' + my_file +'.mp4')#.fx(vfx.colorx, 1.2)
     # select from 0 to x seconds, approx duration of the original video
     clip = clip.subclip(0, 999) # Limited by the maxduration variable to 179s duration
   
     # loading audio file
     audioclip = AudioFileClip(audio_file) # .clip
-  
+    audio = afx.audio_loop(audioclip, duration=audioclip.duration)
     # adding audio to the video clip
     videoclip = clip.set_audio(audioclip)
-  
+#     audio = afx.audio_loop(audioclip, duration=videoclip.duration)
                 #     # showing video clip
-    videoclip.ipython_display(loop = 5, maxduration = 999)
-#     shutil.move(os.path.join(new_video),os.path.join('E:/Videos/Full_Vids/' + my_file + '_' + au.my_track + '_audio.mp4'))
-    shutil.move(os.path.join(new_video),os.path.join(my_path + '/Videos/Full_Vids/' +  my_file + '-' + au.my_track + '_.mp4'))
+    videoclip.ipython_display(loop = 1, maxduration = 999)
+
+    full_vid_path = my_path + '/Videos/Full_Vids/' +  my_file + '-' + au.my_track + '_.mp4'
+    shutil.move(os.path.join(new_video),os.path.join(full_vid_path))
+#     get_duration()
+#         my_path + '/Videos/Full_Vids/' +  my_file + '-' + au.my_track + '_.mp4'))
     
     print('The new video has been renamed to    ' + str(my_file) + '-' + au.my_track + '_.mp4')
    
@@ -420,83 +339,7 @@ def sync_av():
     os.chdir(loc_code)
     print('=========================================')    
     
-# sync_av()    
-#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-def longer_video():
-   
-    my_video = my_path +'Awesome Mandala713.avi'
-    new_video = '__temp__.mp4'
-    # loading video dsa gfg intro video 
-    clip = VideoFileClip(my_video) 
-         
-    # getting first 60 seconds
-    clip = clip.subclip(0, 60)
-      
-    # new clip with new duration
-    new_clip = clip.set_duration(130)
-      
-      
-    # new clip with new duration
-    new_clip.ipython_display(width = 1050)
-    
-    #rename the newly created .mp4 file
-    shutil.move(os.path.join(new_video),os.path.join(my_video))
-# longer_video()
-
-
-
-
-
-
-
-'^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
-'*******************************************************************************************************************************'
-# This absolutely works  using cv2 VideoWriter to create .avi videos on a single folder. Does not loop directories, but does loop the files.
-# import cv2
-# import numpy as np
-# import os
-# from natsort import humansorted
-# import natsort
-from os.path import isfile, join
-
-def convert_frames_to_video(pathIn,pathOut,fps):
-    frame_array = []
-    files = humansorted([f for f in os.listdir(pathIn) if isfile(join(pathIn, f))])
-
-    for i in range(len(files)):
-        filename=pathIn + files[i]
-        #reading each file
-        img = cv2.imread(filename)
-        height, width, layers = img.shape
-        size = (width,height)
-        #Checks for the accuracy of sorted files to be converted
-        print(i,filename)
-        #inserting the frames into an image array
-        frame_array.append(img)
-       
-    out = cv2.VideoWriter(pathOut,cv2.VideoWriter_fourcc(*'DIVX'), fps, size)
-
-    for i in range(len(frame_array)):
-        # writing to a image array
-        out.write(frame_array[i])
-    out.release()
-    print('Video is ready!')
-    
-def main():
-    folder_name = my_path + 'Thumbs/Output/square_spiral_333/'
-    pathIn=  folder_name
-    pathOut = folder_name + '_mandala_show.avi'
-    
-    fps = 1.0
-    convert_frames_to_video(pathIn, pathOut, fps)
-
-# if __name__=="__main__":
-#     main()
-
-'************************************************************************************************************'
-
-
-
+# sync_av()
 
 #  Output shell to a file
 def begin_output_to_file():
@@ -557,7 +400,6 @@ def return_print_to_console():
 # return_print_to_console()
 
 # Make multiple copies of a file
-
 def copy_pics():
     for num in range(300):
         src = my_path + 'Images/An Awesome Polygram Mandala featuring 1512  Degree Angles_999_.jpg'  
@@ -567,36 +409,7 @@ def copy_pics():
         
 # copy_pics()   
 
-# Process 300 jpegs
-def process_pics():
-    import os
-    import moviepy.video.io.ImageSequenceClip
-    import moviepy
-    import natsort
-    from natsort import humansorted
-    import my_angles as a
-    fps = 1.75 # 1.75 value creates a video with audio file of 3 minutes, the max duration value of moviepy. Best with 300 loops.
-    # Make images directory current
-    my_dir = my_path +'300_pics/Mixed Hues 834/'
-    os.chdir(my_dir)
-    #Collect and sort .jpg files
-    image_files = humansorted(os.listdir('.'))
-    my_clip =  moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
-#   # Write sequenced png files to a single .mp4 file normally less than 10 mb, quality as good as much larger .avi file
-    # insert this after my_clip as needed to control duration: .set_duration(240).
-    my_clip.write_videofile( my_dir +'MixedHues_834.mp4', fps=30,\
-                            codec='libx264', bitrate=None, audio=False, audio_fps=44100, preset='medium', audio_nbytes=4,\
-                            audio_codec='mp3', audio_bitrate=None, audio_bufsize=4000, temp_audiofile= my_path +'Music/temp',
-                            remove_temp=False, write_logfile=True, threads=None,\
-                            ffmpeg_params=None, logger='bar')
-    # Write sequenced .png files to a single .avi file normally exceeding 200 mb 
-#     my_clip_a.set_duration(265).write_videofile( loc_thumb + folder_name +'.avi', fps=24,\
-#                             codec='png', bitrate=None, audio=False, audio_fps=44100, preset='medium', audio_nbytes=4,\
-#                             audio_codec=None, audio_bitrate=None, audio_bufsize=2000, temp_audiofile=None,\
-#                             remove_temp=True, write_logfile=False, threads=None,\
-#                             ffmpeg_params=None, logger='bar')
-    print('mp4 created!')
-# process_pics()    
+
 '**************************************************************************************************************************************'
 this_file = my_path +'/Python/Make_Mandalas/my_angles.py'
 
@@ -605,4 +418,6 @@ def print_to_file():
     for line in my_file:
         print(line)
 # print_to_file()        
+
+
 
