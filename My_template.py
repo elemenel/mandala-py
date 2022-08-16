@@ -1,8 +1,12 @@
-#  My_template.py conntains file manipulation scripts associated with master_mandala_maker.py.
-# This custom module is needed to run master_mandala_maker. It sets up the environment that each of the
-#  30 or so mandala makers (modular scripts) depends upon to run it's functions to successful completions.
-# by LeonRHatton using Thonny IDE.
+"""  My_template.py contains file manipulation scripts associated with master_mandala_maker.py.
+ This custom module is needed to run master_mandala_maker. It sets up the environment that each of the
+  30 or so mandala makers (modular scripts) depend upon to run all functions to successful completions.
+ by LeonRHatton using Thonny IDE.
+"""
 
+global folder_name
+folder_name = 'novonno_mandala'
+import time
 def my_venv():
     import turtle # The main turtle module is used in this module.
     import time
@@ -13,10 +17,12 @@ def my_venv():
     import Timer as Tm
     import my_angles as a
     import math
+    import gc
+    Tm.set_time()
     
-    
-    turtle.setup(1920, 1050)  # This is the default screen size. Choose any size.
-    turtle.title('A Healing Mandala by LeonRHatton') # Placeholder. Is unique to each mandala maker
+    global turtle
+    turtle.setup(1910, 1070)  # This is the default screen size. Choose any size.
+    turtle.title('The Novonno Healing Mandalas by LeonRHatton') # Placeholder. Is unique to each mandala maker
     turtle.shape('blank')
     turtle.colormode(255)
     turtle.pensize(2)
@@ -25,16 +31,18 @@ def my_venv():
     B = 255
     turtle.bgcolor(R,G,B)
     
-   
-    
     global my_angle
     my_angle = 120
     
     global my_title
-    my_title = str('A Healing Mandala featuring multiple angles') # Placeholder. Is unique to each mandala maker
+    my_title = str('The Novonno Healing Mandalas featuring multiple angles') # Placeholder. Is unique to each mandala maker
     
     global my_str
-    my_str = str('A Healing Mandala') # Placeholder. Is unique to each mandala maker
+    my_str = str('The Novonno Healing Mandalas') # Placeholder. Is unique to each mandala maker
+    
+    global rand_pick, rand_num
+    rand_num = random.randint(1,50)
+    rand_pick = random.randint(51,120)
     
     global pi
     pi = 4 * math.atan(1)
@@ -53,6 +61,12 @@ def my_venv():
     le.speed(0)
     le.shape('blank')
     le.pensize(1)
+    
+    global ce # An instance of turtle.
+    ce = turtle.Turtle()
+    ce.speed(0)
+    ce.shape('blank')
+    ce.pensize(1)
     
     global lr # An instance of turtle.
     lr = turtle.Turtle()
@@ -96,6 +110,12 @@ def my_venv():
     lb.shape('blank')
     lb.pensize(1)
     
+    global lc  # An instance of turtle.
+    lc = turtle.Turtle()
+    lc.speed(0)
+    lc.shape('blank')
+    lc.pensize(1)
+    
     global lm # An instance of turtle.
     lm = turtle.Turtle()
     lm.speed(0)
@@ -114,32 +134,29 @@ def my_venv():
     me.shape('blank')
     me.pensize(1)
     
+    global lz # An instance of turtle.
+    lz = turtle.Turtle()
+    lz.speed(0)
+    lz.shape('blank')
+    lz.pensize(1)
+    
     global iterable # Universal counter used as iterator.
     iterable = 0
     
-    global file_key # Used to set a random number to avoid making dupilcate file names.
-    file_key = random.randrange(1,999,1)
+    global file_key, my_key # Used to set a random number to avoid making duplicate file names.
+    file_key = random.randrange(100,1000,1)
+    my_key = ' -r.' + str(file_key)
     
         
-    global lc  # An instance of turtle.
-    lc = turtle.Turtle()
-    lc.speed(0)
-    lc.shape('blank')
-    lc.pensize(1)
-    
-    global my_hue
-    my_hue = random.randint(100, 255)
-    
-    global min_hue
-    min_hue = 0
-    
-    global max_hue
-    max_hue = 255
     
     
+    gc.enable()   
     
+    
+      
     #Utility to clear screen and reset to sequence next screen drawing
 def reset_all():
+    import time
     turtle.reset()
     my_pen.reset()
     le.reset()
@@ -155,6 +172,10 @@ def reset_all():
     lm.reset()
     lu.reset()
     li.reset()
+    time.sleep(9)
+    
+    print('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
+    
     
     
     
