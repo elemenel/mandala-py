@@ -28,12 +28,15 @@ from moviepy.editor import *
 import audio_clips as au
 from moviepy.editor import AudioFileClip, ImageClip, VideoFileClip
 from pydub import *
+from turtle import Screen as sc
+
 
 #Assign correct system path for cross-platform capability
+global my_path
 my_os = platform.system()
 print(my_os)
 if my_os == 'Linux':
-    my_path = '/media/elemen/Garage'
+    my_path = '/media/elemen/Inland SSD'
 else:
     my_path = 'E:'
     
@@ -50,13 +53,13 @@ loc_pic = my_path + '/Images/' # Store Mandala jpg files here
 
 
 global con_vid
-con_vid = my_path +'/Videos/'
+con_vid = my_path + '/Videos/'
 
 global con_vid_no_audio
 con_vid_no_audio = my_path +'/Videos/no_audio/' # Store non audio Mandala videos here
 
 global con_vid_av
-con_vid_av = my_path +'/Videos/Full_Vids/'
+con_vid_av = my_path +'/Mandalas/'
 
 global loc_thumb
 loc_thumb = my_path +'/Output/' # Store Mandala Thumbs here
@@ -69,11 +72,11 @@ clip_path = my_path +'/Audio Clips for Python/'
 def copy_videos():
      if my_os == 'Linux':
          try:
-             origin = '/media/elemen/Garage/Videos/Full_Vids/'
+             origin = '/media/elemen/Inland SSD/Videos/Full_Vids/'
              destination = '/home/elemen/Videos/Full_Vids/'
              endswith_ = '.mp4'
              [shutil.copy(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-             print('Copying videos from Garage directory to Home directory.....')
+             print('Copying videos from Inland SSD directory to Home directory.....')
          except shutil.SameFileError as e:
              pass 
      else:
@@ -83,20 +86,20 @@ def copy_videos():
 '**********************************************************************************************************'
 # Backs up the code to current. Does not archive yet. 
 def code_backup():
-    shutil.rmtree(my_path +'/Code_Backup/')
+#     shutil.rmtree(my_path +'/Code_Backup/')
     shutil.rmtree(my_path +'/MandalaMakerBackup/')
-    src =  my_path +'/Python Code/'
+#     src =  my_path +'/Python Code/'
     m_src = my_path +'/Make_Mandalas/'
-    dest = my_path +'/Code_Backup/'
+#     dest = my_path +'/Code_Backup/'
     m_dest = my_path +'/MandalaMakerBackup/'
-    destination = shutil.copytree(src, dest)
+#     destination = shutil.copytree(src, dest)
     destination = shutil.copytree(m_src, m_dest)
-    print('Python Code files have been backed up to CodeBackup folder')
+    print('Python Code files have been backed up to MandalaMakerBackup folder')
 #Default is to leave commented. Uncomment to run from here.    
 # code_backup()                                                           
 
 
-# Empties the folder where the .png files are stored for video processing. Dependency: Master Mandala Maker    
+# Empties the folder where the .png files are stored for video processing.   
 def make_png_folder():
     png_folder = pathlib.Path(loc_thumb + folder_name +'/')
     Path(png_folder).mkdir(parents=True, exist_ok=True)
@@ -106,7 +109,7 @@ def make_png_folder():
 # make_png_folder()
     
     
-#  This creates a png of each loop.
+#  This creates a png of each loop. Master Mandala Maker depends on this. 
 def save_thumb():
     image = pyautogui.screenshot()
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
@@ -118,12 +121,13 @@ def save_undo():
     cv2.imwrite(t.my_str + '+' + str(t.iterable) + '_undo_ ' + '.png', image)
     
     
-# This creates  png and jpg files of the final image, to be saved out to the Pictures/Mandalas folder.
+# This creates  png and jpg files of the final image, to be saved out to the Pictures/Mandalas folder. Master Mandala Maker depends on this. 
 def save_final_thumb():
     image = pyautogui.screenshot()
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     cv2.imwrite(t.my_str +'_' + '999' + '_' +'.jpg', image)
     cv2.imwrite(t.my_str +'_' + '998' + '_' + '.png', image)
+    time.sleep(3)
    
 def save_final_undo():
     image = pyautogui.screenshot()
@@ -133,7 +137,7 @@ def save_final_undo():
 
  
 # Moves images to their respective locations from the code file and leaving .py files only
-# Runs only with Master Mandala Maker. Using list comprehension syntax.
+# Master Mandala Maker depends on this. Using list comprehension syntax.
 
 def move_pngs():
     origin = loc_code
@@ -188,7 +192,7 @@ def move_all():
     endswith_ = '.jpg'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
     print('Image .jpg files have been moved to /Images/')
-    
+    print('================================================================================')
 # move_all()
 
 
@@ -255,43 +259,38 @@ def update_all():
     print (str('Working directory changed to') +'   ' + str(current_path()))
 
 '^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^'
-# Optionally can be used by Mandala Maker to create videos from the .png files.
+# Master Mandala Maker depends on this to create videos from the .png files.
 # This works using moviepy on a single folder. Does not loop. Optional codecs are 'mpeg4', libx264(.mp4), 'rawvideo'(.avi),\
                                     # libvpx(webm)-HTML5 and browser videos.
 def try_video():
     import os
     import moviepy.video.io.ImageSequenceClip
-    import moviepy
-#     from moviepy.editor import *
+    import moviepy.editor as mp
     import natsort
     from natsort import humansorted
     import my_angles as a
-    fps = 1.75 
+    fps = 1.5
     # Make images directory current
     os.chdir(loc_thumb + folder_name +'/')
     #Collect and sort .png files
     image_files = humansorted(os.listdir('.'))
     my_clip =  moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
-#     my_clip_a = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
-    #     os.chdir(loc_thumb + folder_name)
     # Write sequenced png files to a single .mp4 file normally less than 10 mb, quality as good as much larger .avi file
-    # insert this after my_clip as needed to control duration: .set_duration(240).
-    my_clip.write_videofile( con_vid_no_audio + folder_name + '.mp4', fps=30,
+    my_clip.write_videofile( con_vid_no_audio + folder_name + '.mp4', fps=24,
                             codec='libx264', bitrate=None, audio=False, audio_fps=44100, preset='medium', audio_nbytes=4,
-                            audio_codec='mp3', audio_bitrate=None, audio_bufsize=4000, temp_audiofile='E:/temp',
+                            audio_codec='mp3', audio_bitrate=None, audio_bufsize=4000, temp_audiofile = my_path +'/temp',
                             remove_temp=False, write_logfile=True, threads=None,
                             ffmpeg_params=None, logger='bar')
-    # Write sequenced .png files to a single .avi file normally exceeding 200 mb 
-#     my_clip_a.set_duration(265).write_videofile( loc_thumb + folder_name +'.avi', fps=24,\
-#                             codec='png', bitrate=None, audio=False, audio_fps=44100, preset='medium', audio_nbytes=4,\
-#                             audio_codec=None, audio_bitrate=None, audio_bufsize=2000, temp_audiofile=None,\
-#                             remove_temp=True, write_logfile=False, threads=None,\
-#                             ffmpeg_params=None, logger='bar')
-
-    print('Video is Ready')
+    print('mp4 vid-only duration: ' + str(my_clip.duration))
+    print('png to mp4 conversion is ready')
   
 # try_video()
-
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+def get_duration():
+    from moviepy.editor import VideoFileClip
+    clip = VideoFileClip(my_clip)
+    print('Duration: ' + my_clip.duration )
+    
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 # Used by Master Mandala maker Module to create videos from looped .png files
 def set_vid_env():
@@ -308,34 +307,15 @@ def sync_av():
     global full_vid_path
     i_key = str(t.file_key)
     os.chdir(con_vid)
-    new_video = '__temp__.mp4'
-    audio_file = au.my_audio_clip
+    print('Folder name is:  ' + str(folder_name))
     my_file = folder_name
-    print('Audio file:   ' + str(audio_file))
-    print('File name:   ' + str(my_file))
-    # loading video gfg
-    clip = VideoFileClip(my_path + '/Videos/no_audio/' + my_file +'.mp4')#.fx(vfx.colorx, 1.2)
-    # select from 0 to x seconds, approx duration of the original video
-    clip = clip.subclip(0, 999) # Limited by the maxduration variable to 179s duration
-  
-    # loading audio file
-    audioclip = AudioFileClip(audio_file) # .clip
-    audio = afx.audio_loop(audioclip, duration=audioclip.duration)
-    # adding audio to the video clip
-    videoclip = clip.set_audio(audioclip)
-#     audio = afx.audio_loop(audioclip, duration=videoclip.duration)
-                #     # showing video clip
-    videoclip.ipython_display(loop = 1, maxduration = 999)
-
-    full_vid_path = my_path + '/Videos/Full_Vids/' +  my_file + '-' + au.my_track + '_.mp4'
-    shutil.move(os.path.join(new_video),os.path.join(full_vid_path))
-#     get_duration()
-#         my_path + '/Videos/Full_Vids/' +  my_file + '-' + au.my_track + '_.mp4'))
-    
-    print('The new video has been renamed to    ' + str(my_file) + '-' + au.my_track + '_.mp4')
-   
-#     my_clip= (VideoFileClip('E:/Videos/Full_Vids/' + my_file + '_' + au.my_track + '_audio.mp4'))
-#     my_clip= (VideoFileClip(my_path + 'Videos/Full_Vids/' + my_file + au.my_track + '_.mp4'))
+    videoclip = VideoFileClip(my_path + '/Videos/no_audio/' + my_file +'.mp4')
+    audioclip = AudioFileClip(au.my_audio_clip)
+    full_vid_path = my_path + '/Videos/Full_Vids/' +  t.my_str + '-' + t.my_key + '.mp4'
+    new_audioclip = CompositeAudioClip([audioclip])
+    videoclip.audio = new_audioclip
+    videoclip.write_videofile(full_vid_path)
+    print('The new video has been renamed to    ' + t.my_str + '-' + t.my_key + '.mp4')
     os.chdir(loc_code)
     print('=========================================')    
     
@@ -419,5 +399,64 @@ def print_to_file():
         print(line)
 # print_to_file()        
 
+
+
+# Pause routine, wait for mouse click. if not, continue. if click, stop. Run at end of each angle loop.
+def keep_on():
+    
+    print('Terminate? Type "y" to Quit')
+    print('Waiting 5 seconds. If no response, will continue')
+    answer = sc.textinput('Your choice:   ', 'n')
+    time.sleep(5)
+    
+    if(str(answer) == "y"):
+        quit()
+    else:
+        pass
+       
+    
+def copy_mp3s():
+     if my_os == 'Linux':
+         try:
+             origin = r'/home/elemen/Music/ripped/wav//'
+             destination = r'/home/elemen/Music/truncated//'
+             endswith_ = '.mp3'
+             [shutil.copy(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
+             print('Copying music from ripped/wav to truncated.....')
+         except shutil.SameFileError as e:
+             pass 
+     else:
+         pass
+     print('Copying Completed!')   
+# copy_mp3s()    
+
+# import os
+# import shutil
+# 
+# source_folder = r"E:\demos\files\reports\\"
+# destination_folder = r"E:\demos\files\account\\"
+# 
+# # fetch all files
+# for file_name in os.listdir(source_folder):
+#     # construct full file path
+#     source = source_folder + file_name
+#     destination = destination_folder + file_name
+#     # copy only files
+#     if os.path.isfile(source):
+#         shutil.copy(source, destination)
+#         print('copied', file_name)        
+#
+# Needs a lot of work as of 8/14/2022 when first tried
+def pause_option():
+    answer = input('Stop? Enter y or n')
+    if answer == 'y':
+       exit
+    elif answer == 'n':
+       pass
+    else:
+        print('Enter y or n')
+        time.sleep(10)
+        pass
+# pause_option()    
 
 
