@@ -1,27 +1,87 @@
+#.....................................................................................................................................#
 #my_angles.py contains file manipulation scripts associated with master_mandala_maker.py
              # by LeonRHatton
 
 import turtle
+# import My_template as t
 import random
 import numpy as np
 import math
+#import FileScripts as f
+import sys
+import platform
 
 global r_angle
 r_angle = random.randrange(72, 1500, 9)
 
+my_os = platform.system()
+if my_os == 'Linux':
+    my_path = '/media/elemen/Inland SSD'
+    
+else:
+    my_path = 'E:'
+
 turtle.setup(10,10)
 
+#::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+# past auto angles: # 72,1500, 72 on 1/8/2022. Produces 5 points or sides.
+                    # 257.142857, 1500, 51.42857 on 1/8/2022. Produces 7 points or sides.
+                    # 150, 1500, 60 on 1/9/2022. Produces assortment of 12, 4 points or sides.
+                    # 63, 2000, 63 on 1/9/2022. Produces designs having angles whose digits sum to 9. Like it.
+                    # 54, 2000, 54 on 1/10/2022. Also has digits summing up to 9.
+                    # 73, 1000, 73 on 1/11/2022. Arbitrary. Mostly 11 sides or points. Nice ones.
+                    # 68, 1500, 68.
+                    # 44, 1500, 44 on 1/12/2022.
+                    # 216, 400, 144 on 1/12/2022. For testing
+                    # 88,1000, 104 on 1/17/2022. Successfully automated video creation using Python code!
+                    # 150, 1000, 75 on 1/18/2022. Makes 11.
+                    # 135, 1200, 75 on 1/18/2022. Makes 14.
+                    # 144, 500, 60 on1/19/2022. Makes 6.
+                    # 257.142857, 2000, 257.142857 on 1/19/2022. Seven points or sides. Makes 7.
+                    # 145, 1300, 71. On 1/19/2022. Makes 17. Ran on Fantastic, Awesome, and stupendous.
+                    # 144, 1300, 52. On 1/20/2022. Makes 22. Ran on Ribbons on 1/20/2022.
+                    # 144, 1300, 82  On 1/20/2022. Makes 15. Ran on Fantastic and stupendous.
+                    # 144, 300, 60 on 1/21/2022. Makes 3. Ran on stupendous.
+                    # 144, 3000, 600 on 1/21/2022. Makes 5. Ran on stupendous and jagged.
+                    # 144, 3000, 540 on 1/21/2022. Makes 6. Ran on hued polygonial.
+                    # 441, 3000, 441 on 1/21/2022. Makes 6. Ran on bold mandala.
+                    # 60, 500, 15 on 1/22/2022. Makes 12. Ran on colorful, bold mandala, hued polygonial, stupendous, jagged, and Fantastic.
+                    # 75, 500, 45 on 1/23/2022. Makes 10.  Ran on colorful, bold mandala, hued polygonial, stupendous, jagged, and Fantastic.
+                    # 81, 720, 36. on 1/23/2022. Makes 18. Ran it on the bunch.
+                    # 60, 1300, 60. oN 1/26/2022. makes 18, ran it on Multi-Hued.
+                    # 60, 1300, 61. on 1/27/2022, makes 21. Ran it on Mult-Hued and stupendous.
+                    # 60,2000, 180. On 1/27/2022. makes 11. On stupendous, pretty, double and bold.
+                    # 585, 8000, 585 on 1/28/2022. Makes 10. on Hued Freedom, home_star.
+                    # 432, 1000, 60. Makes 10. On 11., 1/30/2022
+                    # 90, 1500, 75. Makes 17. Ran on 1/30/2022 on 12.
+                    #90, 400, 45. Appended 257.142857. Ran on 1/31/2022, on all except spiral.
+                    # 135, 500, 90. Appended 257.142857(7 points), 144(5 points, 1211(11 points)  Makes 8 total. on 2/1/2022.
+                    # 120, 500, 72. Makes 6. Appends added totals 9. Ran on the 4 hued's. 2/1/2022.
+                    #240, 700, 72. makes 10. Ran on just about all. 2/2/2022
+                    #1425, 3350, 135. Makes 15. Ran on stupendous on 2/9/2022. Perfected randomnizing the audio selections.
+                    # 126, 2000, 126. Makes 14. Ran on awesome, multi-hued, colorful, iridescent, home-star, pretty, hued poly, hued gradiant.
+                    # 90, 2000, 150. Makes 11. Ran on home_star and color_shifting. added more music and created new file dedicated to audio.
+                    # 51.42, 1800, 205.71428. Makes 9. # Ran on multiple modules; make spectacular 7-pointed polygrams and/or 7-sided polygons
+                    # 1439.984, 3600, 51.428.  Seven points themes. Some are beauties, some are too close to 180 and 360 multiples. Added 510, 135. Makes 46. Ran on Glorious Mandala, on 4/6/2022
+                    # 60, 501, 10 Ran on 4/7/2022
+                    # 420, 421, 1.  4/8/2022. Ran on all available modules(25). 420 is the least common multiple of 2, 3, 4, 5, 7. \
+                                                        #  Ran to compare the variations against a single number.
+                    # 840, 7600, 420. Ran on all available. Wanted to see how the 420 modes develop.                                    
 #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::                    
 # Automated Angle Generator using numpy.arange module; produces a list of angles based on custom algorithms.
-angle_min =   1350 #random.randrange(150, 750, 72)102.85714
-angle_max =  2000 #random.randrange(500, 1500, 50)4500
-key = 144  #102.85714
+angle_min = 205.71428  #205.71428 #random.randrange(150, 750, 72)102.85714
+angle_max = 1500 #random.randrange(500, 1500, 50)4500
+key =  102.85714
 #Using List comprehension with numpy to create list of angles dynamically, and it offers good variation in angles and element count(from 4 to 10).
-i_angle_auto = [i for i in np.arange(float(angle_min), float(angle_max), key) if i % float(180) != 0]# and if i % float(360) != 0]#+ [random.randrange(2160, 4280, 288)]
+i_angle_auto = [i for i in np.arange(float(angle_min), float(angle_max), key) if i % float(180) != 0]  + [150, 135, 288, 240, 1211, 1350, 1520 ]# and if i % float(360) != 0]#+ [random.randrange(2160, 4280, 288)]
 #                # + [random.randrange(144, 432, 56)] + [random.randrange(135, 270, 10)] \
 #                 #+ [random.randrange(150, 500, 75)]  # Can append any angle(s) to list.  Can also run sequenced angles
 
-# i_angle_auto =[120, 90, 72, 60, 144, 154.28571, 771.42855, 1008, 240, 135, 150, 405]
+# i_angle_auto =[120, 90, 72, 60, 51.42857142857143, 45, 40, 36, 32.72727272727273, 30, 27.692307692307693,\
+#                25.714285714285715, 24, 22.5, 21.176470588235293, 20, 18.94736842105263, 18, 17.142857142857142,\
+#                16.3636363636363631, 15.652173913043478, 15 ]
+# Set up do develop a catalog which would include a sample. Decided to try angle 135 first, for 8 points mostly.
+# i_angle_auto = [135, ]
 
 valuesRounded = [round(number) for number in i_angle_auto]
 if 360 in i_angle_auto:
@@ -211,3 +271,18 @@ print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
 # b = 2
 # for i in range(10):
 #     print(a*i +b)
+
+#****************************************************************************************************************
+def log_factorial():
+    my_title = '/Factorial_output.txt'
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(my_path + my_title + '_log.txt', 'w')
+    count = 1
+    x = 360
+    while count <= 361:
+        print('Factorial '+ str(count) + ':    ' + str(x / count))
+        count += 1
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    
+#  log_factorial()    
