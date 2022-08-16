@@ -9,6 +9,7 @@ from PIL import Image #module for converting python output to image
 import numpy as np
 import cv2
 import pyautogui
+import pyscreenshot
 import datetime as datetime
 import sys
 import os
@@ -37,7 +38,7 @@ def splash_screen():
     s_image = cv2.cvtColor(np.array(s_image), cv2.COLOR_RGB2BGR)
     cv2.imwrite(t.my_str + '_splash' +'.png', s_image)
     time.sleep(4)
-    t.my_pen.reset()   
+    t.my_pen.reset()
 
 def title_screen():
     turtle.colormode(255)
@@ -56,19 +57,19 @@ def title_screen():
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     cv2.imwrite(t.my_str + '_title' + '.png', image)
     time.sleep(9)
-    t.my_pen.reset()   
-    
-def watermark():
-    turtle.colormode(255)
-    t.my_pen.penup()
-    t.my_pen.setpos( -950, -500)
-#     t.my_pen.pencolor(10, 50, 20) #for testing
-    t.my_pen.color(10, 220, 30)
-    t.my_pen.shape("blank")
-    t.my_pen.pendown()
-    t.my_pen.write('Graphics by LeonRHatton; music by Winston Rhodes and others:  '   + t.my_str + ',  '\
-                   + au.my_track, font = ("Garamond", 12 , "italic"))  
+    t.my_pen.reset()
 
+def watermark():
+        turtle.colormode(255)
+        t.my_pen.penup()
+        t.my_pen.setpos( -950, -500)
+    #     t.my_pen.pencolor(10, 50, 20) #for testing
+        t.my_pen.color(10, 220, 30)
+        t.my_pen.shape("blank")
+        t.my_pen.pendown()
+        t.my_pen.write('Graphics by LeonRHatton; music by Winston Rhodes and others:  '   + t.my_str + ',  '\
+                       + au.my_track, font = ("Garamond", 12 , "italic"))
+    
 
 
 
@@ -89,7 +90,7 @@ def end_screen():
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     cv2.imwrite('End of Show' + '_' + '999' +'.png', image)
     time.sleep(3)
-    t.my_pen.reset()   
+    t.my_pen.reset()
 
 
 def save_titles():
@@ -107,32 +108,33 @@ def save_titles():
         t.my_pen.write("by LeonRHatton,    " + tm.my_date, font = ("Garamond ", 10 , "italic"))
         save_thumb()
         time.sleep(5)
-    t.my_pen.reset()    
-  
+    t.my_pen.reset()
+
 
 def save_screenshot():
      # take screenshot using pyautogui
     image = pyautogui.screenshot()
-       
-    # since the pyautogui takes as a 
-    # PIL(pillow) and in RGB we need to 
-    # convert it to numpy array and BGR 
+
+    # since the pyautogui takes as a
+    # PIL(pillow) and in RGB we need to
+    # convert it to numpy array and BGR
     # so we can write it to the disk
     image = cv2.cvtColor(np.array(image),
                          cv2.COLOR_RGB2BGR)
-       
+
     # writing it to the disk using opencv
     cv2.imwrite(t.my_str, image)
 
 def take_screenshot():
     # To capture the screen
     image = pyscreenshot.grab()
-      
+
     # To display the captured screenshot
     image.show()
-      
+
     # To save the screenshot
     image.save("LeonRHatton.png")
+
     
     
     
