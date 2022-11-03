@@ -10,17 +10,12 @@ import math
 #import FileScripts as f
 import sys
 import platform
-
+import time
 global r_angle
 r_angle = random.randrange(72, 1500, 9)
 
-my_os = platform.system()
-if my_os == 'Linux':
-    my_path = '/media/elemen/Inland SSD'
+my_path = '/media/elemen/04ffb1eb-d94f-4d3f-bbb5-f68b8f913a71'
     
-else:
-    my_path = 'E:'
-
 turtle.setup(10,10)
 
 #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -69,48 +64,22 @@ turtle.setup(10,10)
                     # 840, 7600, 420. Ran on all available. Wanted to see how the 420 modes develop.                                    
 #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::                    
 # Automated Angle Generator using numpy.arange module; produces a list of angles based on custom algorithms.
-angle_min = 205.71428  #205.71428 #random.randrange(150, 750, 72)102.85714
-angle_max = 1500 #random.randrange(500, 1500, 50)4500
-key =  102.85714
-#Using List comprehension with numpy to create list of angles dynamically, and it offers good variation in angles and element count(from 4 to 10).
-i_angle_auto = [i for i in np.arange(float(angle_min), float(angle_max), key) if i % float(180) != 0]  + [150, 135, 288, 240, 1211, 1350, 1520 ]# and if i % float(360) != 0]#+ [random.randrange(2160, 4280, 288)]
-#                # + [random.randrange(144, 432, 56)] + [random.randrange(135, 270, 10)] \
-#                 #+ [random.randrange(150, 500, 75)]  # Can append any angle(s) to list.  Can also run sequenced angles
+angle_min = 315 # 5142.857142857143  #205.71428 #random.randrange(150, 750, 72)102.85714
+angle_max = 2000 # 7000 #random.randrange(500, 1500, 50)4500
+key =  126 # 205.71428
+# # #Using List comprehension with numpy to create list of angles dynamically, and it offers good variation in angles and element count(from 4 to 10).
+i_angle_auto = [i for i in np.arange(float(angle_min), float(angle_max), key) if i % float(180) != 0]  #+ [1211, 257.142857, 144, 560, 1140] #, 6510, 7980] #150, 135, 288, 240, 1211, 1350, 1520 ]# and if i % float(360) != 0]#+ [random.randrange(2160, 4280, 288)]
+               # + [random.randrange(144, 432, 56)] + [random.randrange(135, 270, 10)] \
+                #+ [random.randrange(150, 500, 75)]  # Can append any angle(s) to list.  Can also run sequenced angles
 
 # i_angle_auto =[120, 90, 72, 60, 51.42857142857143, 45, 40, 36, 32.72727272727273, 30, 27.692307692307693,\
 #                25.714285714285715, 24, 22.5, 21.176470588235293, 20, 18.94736842105263, 18, 17.142857142857142,\
 #                16.3636363636363631, 15.652173913043478, 15 ]
 # Set up do develop a catalog which would include a sample. Decided to try angle 135 first, for 8 points mostly.
-# i_angle_auto = [135, ]
+# i_angle_auto = [1350, 585, 288, 324, 396, 432, 468, 504, 576, 612, 648, 2430,
+#                 368, 215, 225, 90, 120, 135, 144, 150, 205.71428]
 
-valuesRounded = [round(number) for number in i_angle_auto]
-if 360 in i_angle_auto:
-    i_angle_auto.remove(360)
-else:
-    pass
-print('...................................................................................................')
-print('The Automated Set of Angles to be Drawn Are:')
-print(valuesRounded)
-print('....................................................................................................')
-print('The number of Automated Angle Generator elements is: ' + str(len(valuesRounded)))
-      
-  
-# valuesRoundUp = [math.ceil(number) for number in i_angle_auto]
-# valuesRoundDown = [math.floor(number) for number in i_angle_auto]
-
-# print(valuesRoundUp)
-# print(valuesRoundDown)
-
-
-# Python3 code to demonstrate
-# Sum of number digits in List
-# using sum() + list comprehension
-x = list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded))
-# print(x)
-print('...................................................................................................')      
-print('Sum of digits in the elements of the list are:   ' )
-# print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded)))
-print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))    
+ 
 #----------------------------------------------------------------------------------------------------------------------------------
 # Run sequences of angles using List Compehension
 # start_seq = 361
@@ -153,7 +122,7 @@ print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
 # i_angle_6 = [60,120,240,300,420,480,540,600,780,840,900,960,1020,1140] # 6 points or sides
 # 
 # i_angle_5 = [72,144,216,288,432,504,576,648,792,864,936,1008,1152,1224,1296,1368] # 5 points or sides
-# 
+# # 
 # i_angle_7 = [51.42857,102.857,154.29,205.7143,257.143,308.571,\
 #            411.4286,462.86,514.2857,565.7143,617.1429,\
 #            668.5714,771.4286,822.8571,874.2857,925.7143,977.1429] #7 points or sides
@@ -171,7 +140,7 @@ print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
 # i_angle_s = [120,480, 90, 144, 576, 240, 154.29, 140, 2394,\
 #              1211, 138, 471, 498, 510, 405, 105.882, 320, 170.53]
 # i_angle_m = [1368,1140,977.1429,855,760,684,621.8182,570,526.1538,488.5714,456,427.5,402.3529,380]
-# 
+# i_angle_auto = i_angle_mix = [138.462,148.2353,792,520,532, 154.29, 120, 90, 150, 257.143, 135,  1211 ]  
 # i_angle_basic = [585, 1170, 1755] # Mainly for testing
 # 
 # i_angle_o = [141, 91.5, 227, 1211] # odd angles
@@ -180,7 +149,7 @@ print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
 # 
 # # length = len(i_angle)
 # 
-# i_angle_f = [120, 90, 135, 150, 144, 210, 834,910, 410, 2394, 1350, 1211, 771.3, 1140, 526.1538 ]  #Favorite angles: 144/5P, 210/12P, 834/TightSpiral,2394/20P,1350/Square
+# i_angle_auto = i_angle_f = [120, 90, 135, 150, 144, 210, 532, 834, 910, 410, 2394, 1350, 771.3, 1140, 526.1538 ]  #Favorite angles: 144/5P, 210/12P, 834/TightSpiral,2394/20P,1350/Square
 # 
 # i_angle_d_9 = [ 108, 117, 126, 135, 144, 153, 162, 171, 180, 207, 216, 225, 234, 243, 252, 261,\
 #               270, 306, 315, 324, 333, 342, 351, 405, 414, 423, 432, 441, 450, 504, 513,\
@@ -271,6 +240,32 @@ print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
 # b = 2
 # for i in range(10):
 #     print(a*i +b)
+# i_angle_auto = i_angle_5
+
+valuesRounded = [round(number) for number in i_angle_auto]
+if 360 in i_angle_auto:
+    i_angle_auto.remove(360)
+else:
+    pass
+print('...................................................................................................')
+print('The Automated Set of Angles to be Drawn Are:')
+print(valuesRounded)
+print('....................................................................................................')
+print('The number of Automated Angle Generator elements is: ' + str(len(valuesRounded)))
+
+# Python3 code to demonstrate
+# Sum of number digits in List
+# using sum() + list comprehension
+x = list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded))
+# print(x)
+print('...................................................................................................')      
+print('Sum of digits in the elements of the list are:   ' )
+print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded)))
+# print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))   
+time.sleep(6)
+
+
+
 
 #****************************************************************************************************************
 def log_factorial():

@@ -3,10 +3,12 @@
   30 or so mandala makers (modular scripts) depend upon to run all functions to successful completions.
  by LeonRHatton using Thonny IDE.
 """
-
-global folder_name
-folder_name = 'novonno_mandala'
 import time
+# from functools import lru_cache
+
+global file_name
+file_name = 'novonno_file'
+
 def my_venv():
     import turtle # The main turtle module is used in this module.
     import time
@@ -21,7 +23,7 @@ def my_venv():
     Tm.set_time()
     
     global turtle
-    turtle.setup(1910, 1070)  # This is the default screen size. Choose any size.
+    turtle.setup(1950, 1070)  # This is the default screen size. Choose any size.
     turtle.title('The Novonno Healing Mandalas by LeonRHatton') # Placeholder. Is unique to each mandala maker
     turtle.shape('blank')
     turtle.colormode(255)
@@ -39,6 +41,9 @@ def my_venv():
     
     global my_str
     my_str = str('The Novonno Healing Mandalas') # Placeholder. Is unique to each mandala maker
+    
+    global my_project
+    my_project = 'a mandala'
     
     global rand_pick, rand_num
     rand_num = random.randint(1,50)
@@ -144,7 +149,7 @@ def my_venv():
     iterable = 0
     
     global file_key, my_key # Used to set a random number to avoid making duplicate file names.
-    file_key = random.randrange(100,1000,1)
+    file_key = random.randrange(100,10000,1)
     my_key = ' -r.' + str(file_key)
     
         
@@ -175,8 +180,6 @@ def reset_all():
     time.sleep(9)
     
     print('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
-    
-    
     
     
     

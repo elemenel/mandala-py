@@ -134,7 +134,3 @@ def take_screenshot():
 
     # To save the screenshot
     image.save("LeonRHatton.png")
-
-    
-    
-    

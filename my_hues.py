@@ -3,6 +3,9 @@
 
 import My_template as t
 import random
+import turtle
+turtle.colormode(255)
+
 
 #random red hues
 def pick_red():
@@ -13,6 +16,7 @@ def pick_red():
     G = g
     B = b
     t.lu.pencolor(R, G, B)
+#     print('The pick_red pen is t.lu')
 
 
 #random blue hues
@@ -24,6 +28,7 @@ def pick_blue():
     M = g
     N = b
     t.lb.pencolor(L, M, N)
+#     print('The pick_blue pen is t.lb')
 
 
 
@@ -36,6 +41,7 @@ def pick_green():
     P = g
     Q = b
     t.lg.pencolor(O, P, Q)
+#     print('The pick_green pen is t.lg')
 
 
 
@@ -48,6 +54,7 @@ def pick_indigo():
     T = g
     U = b
     t.li.pencolor(S, T, U)
+#     print('The pick_indigo pen is t.li')
 
 #random magenta hues
 def pick_magenta():
@@ -58,18 +65,19 @@ def pick_magenta():
     J = g
     K = b
     t.me.pencolor(I, J, K)
+#     print('The pick_magenta pen is t.me')
 
 #random gold hues
 def pick_gold():
-    r = random.randint(225, 255)
-    g = random.randint(175, 220)
-    b = random.randint(10, 50)
+    r = random.randrange(225, 254,1)
+    g = random.randrange(175, 220,1)
+    b = random.randrange(10, 50,1)
     V = r
     W = g
     X = b
-    t.la.pencolor(V, W, X)
-
-
+    return(t.la.pencolor(V, W, X))
+#     )
+#     print('The pick_gold pen is t.la')
 
 #random dark hues
 def pick_dark():
@@ -80,6 +88,7 @@ def pick_dark():
     Y = g
     Z = b
     t.lz.pencolor(X, Y, Z)
+#     print('The pick_dark pen is t.lz')
 
 
 
@@ -92,6 +101,7 @@ def pick_light():
     B = g
     C = b
     t.le.pencolor(A, B, C)
+#     print('The pick_light pen is t.le')
 
 
 #random hues
@@ -103,6 +113,7 @@ def pick_random():
     E = g
     F = b
     t.me.pencolor(D, E, F)
+#     print('The pick_random pen is t.me')
 
 def pick_random_a():
     r = random.randint(200, 225)
@@ -112,6 +123,7 @@ def pick_random_a():
     E = g
     F = b
     t.lr.pencolor(D, E, F)
+#     print('The pick_random_a pen is t.lr')
     
     
     
@@ -122,4 +134,8 @@ def pick_dot():
     X = r
     Y = g
     Z = b
-    t.ld.pencolor(X, Y, Z)    
+    t.ld.pencolor(X, Y, Z)
+#     print('The pick_dot pen is t.ld')
+    
+dict = {'pick_dot': 't.ld', 'pick_random_a': 't.lr', 'pick_random': 't.me', 'pick_light': 't.le', 'pick_dark': 't.lz', 'pick_gold': 't.la', 'pick_magenta': 't.me', 'pick_indigo': 't.li', 'pick_green': 't.lg', 'pick_blue': 't.lb', 'pick_red': 't.lu'}
+# print ("dict ['pick_gold'] :   ", dict ['pick_gold']  )
