@@ -8,7 +8,7 @@ The primary python module used is Turtle, created by Wally Feurzeig, Seymour Pap
 
 Master_Mandala_Maker creates mp4 formatted videos from screenshots of images and then a randomly-selected audio clip is picked from my
 personal library. Containing over 30 unique scripts, Master _Mandala_Maker is dependent on seven additional local modules:
-t.my_angles.py,  -- outputs angle; 
+my_angles.py,  -- outputs angle; 
 Timer.py,  -- holds time and timer functions; 
 my_splash_screen.py,  -- generates watermark on mandala, title screens, splash screens, end screens; 
 my_hues.py, -- outputs custom shades and randomized hues of a given color range; 
@@ -27,7 +27,7 @@ natsort.
 scrot also needs to be installed via apt (Ubuntu).
 
 This code first sets up the file environment, then selects an angle as a base template for the mandala.
-The code then initiates the video-making process. With each loop of code, .png images are saved. The looped collection of pngs is then sorted sequentially
+The code then initiates the video-making process. With each loop of code, .png images are saved. The looped collection of .pngs is then sorted sequentially
 and processed into an audio-less video track.  The audio track is then added and synced to the video track completing the video creation process. Finally a jpeg image is created after the final loop.  It is stored in a subfolder of the default Pictures folder. So the mandala script outputs both  a video and a full image for each mandala created.
  ---On 6/22/2022: Successfully added cross-platform capability for Windows 10 and Linux Mint 20. Also upgraded to Python 3.10.5 on both systems to take advantage of the new 'prefixremove' and 'suffixremove' function to better handle renaming the audio files.
      
