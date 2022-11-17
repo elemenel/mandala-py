@@ -31,12 +31,14 @@ from moviepy.editor import AudioFileClip, ImageClip, VideoFileClip
 from pydub import *
 from turtle import Screen as sc
 from functools import lru_cache
+from pathlib import Path
+from moviepy.video.io.VideoFileClip import VideoFileClip
 
 #Assign correct system path for cross-platform capability
 global my_path
 my_path = '/media/elemen/Inland SSD1'
-
-     
+my_no_audio_video_path = '/media/elemen/Inland SSD1/Videos/no_audio/'
+my_full_vids_video_path = '/media/elemen/Inland SSD1/Videos/Full_Vids/'     
     
 '*********************************************************************************************************'
 # Create path variables
@@ -44,10 +46,10 @@ global loc_code
 loc_code = my_path +'/Make_Mandalas/'
 
 global folder_name
-folder_name = '/Images_TBD'
+folder_name = 'Images_TBD'
 
 global loc_pic
-loc_pic = my_path + '/Images/' # Store Mandala jpg files here
+loc_pic = '/home/elemen/Pictures/Mandala Final Thumbs/' # Store Mandala jpg files here
 
 
 global con_vid
@@ -112,14 +114,14 @@ def copy_videos():
 def code_backup():
     print('Starting code backup...........')
 #     shutil.rmtree(my_path +'/Code_Backup/')
-    shutil.rmtree(my_path +'/MandalaMakerBackup/')
+    shutil.rmtree('/media/elemen/MANDALABKUP/')
 #     src =  my_path +'/Python Code/'
     m_src = my_path +'/Make_Mandalas/'
 #     dest = my_path +'/Code_Backup/'
-    m_dest = my_path +'/MandalaMakerBackup/'
+    m_dest = '/media/elemen/MANDALABKUP/'
 #     destination = shutil.copytree(src, dest)
     destination = shutil.copytree(m_src, m_dest)
-    print('Python Code files have been backed up to MandalaMakerBackup folder')
+    print('Python Code files have been backed up to MandalaMakerBackup pendrive')
 #Default is to leave commented. Uncomment to run from here.    
 # code_backup()                                                           
 
@@ -179,20 +181,21 @@ def move_pngs():
     destination = loc_thumb + folder_name
     endswith_ = '.png'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    
+    print('Image .png files have been moved to /Thumbs/Output/')
 
 def move_jpgs():
     origin = loc_code
-    destination = loc_pic + folder_name
+    destination = loc_pic #+ folder_name
     endswith_ = '.jpg'
-    [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]  
-
+    [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
+    print('Jpg files have been moved to ' + str(destination))
+# move_jpgs()
 
 def move_pics():
     move_pngs()
     move_jpgs()
-    print('Image .png files have been moved to /Thumbs/Output/')
-    print('Image .jpg files have been moved to /Images/')
+#     print('Image .png files have been moved to /Thumbs/Output/')
+#     print('Image .jpg files have been moved to /Mandala Final Thumbs/')
 # move_pics()    
 
 # Video files originate in the /media/elemen/Thumbs/Output folder. This will move them to the /media/elemen/Container/Videos folder.
@@ -228,7 +231,7 @@ def move_all():
     destination = loc_pic
     endswith_ = '.jpg'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Image .jpg files have been moved to /Images/')
+    print('Image .jpg files have been moved to /home/elemen/Pictures/Mandala Final Thumbs/')
     print('================================================================================')
 # move_all()
 
@@ -301,7 +304,7 @@ def make_video():
     import natsort
     from natsort import humansorted
     import my_angles as a
-    fps = 2.0 #1.5
+    fps = 3.0 #2.0 1.5
     # Make images directory current
 #     os.chdir(loc_thumb + folder_name)
     image_files = humansorted(os.listdir('.')) #Collect and sort .png files
@@ -312,7 +315,7 @@ def make_video():
                             audio_codec= 'mp3', audio_bitrate= None, audio_bufsize=4000, temp_audiofile = my_path + '/temp',
                             remove_temp= True, write_logfile= True, threads=None,
                             ffmpeg_params= None, logger= 'bar')
-    print('mp4 vid-only duration: ' + str(my_clip.duration))
+    print('mp4 vid-only duration: ' + str(my_clip.duration / 60) + 'minutes')
     print('Thumb images conversion to audio-less video file completed!')
   
 # make_video()
@@ -342,12 +345,14 @@ def sync_av():
     print('Folder name is:  ' + str(folder_name))
     my_file = folder_name
     print('File Name is  ' + my_file)
-    videoclip = VideoFileClip(my_audio_path + '/Videos/no_audio/' + my_file +'.mp4')
+    videoclip = VideoFileClip(my_audio_path + 'Videos/no_audio/' + my_file +'.mp4')
     audioclip = AudioFileClip(au.my_audio_clip)
+    print('The duration of this clip is   ' + str(audioclip.duration))
 #     full_vid_path = my_path + str('/Videos/Full_Vids/' + folder_name + '.mp4')
     new_audioclip = CompositeAudioClip([audioclip])
     videoclip.audio = new_audioclip
-    videoclip.write_videofile(my_audio_path + str('/Videos/Full_Vids/' + t.my_str + '.mp4'))
+    videoclip.write_videofile(my_audio_path + str('Videos/Full_Vids/' + t.my_str + '.mp4'))
+    print('The duration of the new video is ' + str(videoclip.duration))
     print('The new video has been renamed to    ' + t.my_str + '.mp4')
     os.chdir(loc_code)
     time.sleep(15)
@@ -523,13 +528,53 @@ def sync_mandala_folders():
     
     source_path_a = '/media/elemen/Inland SSD1/Make_Mandalas/'
     target_path_a = '/home/elemen/Git/'
+    target_path_b = '/media/elemen/MANDALABKUP/'
+    
 
     sync(source_path, target_path, 'sync') #for syncing one way
     sync(source_path_a, target_path_a, 'sync')
+    sync(source_path_a, target_path_b, 'sync')
+    
     
     #sync(target_path, source_path, 'sync') #for syncing the opposite way
     #sync(target_path_a, source_path_a, 'sync') #for syncing the opposite way
     print('Sync of Mandala folders completed successfully!')
     print('Sync of Mandala Maker python script files for Git completed successfully!')
-
+    print('Sync of Mandala Maker python script files to MANDALABKUP pendrive completed successfully!')
+    
 # sync_mandala_folders()
+
+
+#Utility to clear screen and reset to sequence next screen drawing
+def reset_all():
+    import time
+    sync_mandala_folders()
+    t.turtle.reset()
+    t.my_pen.reset()
+    t.le.reset()
+    t.me.reset()
+    t.lb.reset()
+    t.la.reset()
+    t.lg.reset()
+    t.ld.reset()
+    t.lr.reset()
+    t.lc.reset()
+    t.ll.reset()
+    t.lu.reset()
+    t.lm.reset()
+    t.lu.reset()
+    t.li.reset()
+    time.sleep(9)
+    
+    print('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
+    
+def get_video_duration():
+#     my_path = my_no_audio_video_path
+    my_path = my_full_vids_video_path
+    for filename in Path(my_path).glob('*.mp4'):
+            clip = (VideoFileClip(filename.as_posix())) #filename.as_posix(), ))
+            print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+            print(str(filename) + ': ' + str(round(clip.duration /60)) + ' minutes')   
+# get_video_duration()    
+    
+
