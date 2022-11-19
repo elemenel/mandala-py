@@ -316,7 +316,8 @@ def make_video():
                             remove_temp= True, write_logfile= True, threads=None,
                             ffmpeg_params= None, logger= 'bar')
     print('mp4 vid-only duration: ' + str(my_clip.duration / 60) + 'minutes')
-    print('Thumb images conversion to audio-less video file completed!')
+    
+    print('Thumb images conversion to audio-less mp4 video file completed!')
   
 # make_video()
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
@@ -577,4 +578,3 @@ def get_video_duration():
             print(str(filename) + ': ' + str(round(clip.duration /60)) + ' minutes')   
 # get_video_duration()    
     
-
