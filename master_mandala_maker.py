@@ -1806,7 +1806,7 @@ def gold_red_mandala():
 #     stdoutOrigin=sys.stdout
 #     sys.stdout = open('/media/elemen/Container/Logs/gold_red_mandala_' + str(t.file_key) + '_log.txt', 'w')
     print('Starting gold_red_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 1570 - 1627, 21st module of 38')
+    print('Located @ line 1801 - 1852, 21st module of 38')
 #     
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1852,6 +1852,113 @@ def gold_red_mandala():
 #     sys.stdout=stdoutOrigin
 
 
+
+#+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
+def gold_red_mandala_extended():
+    Tm.set_time()
+#     print('Starting gold_red_mandala() by Leon Hatton on   ' + str(Tm.my_time))
+#     stdoutOrigin=sys.stdout
+#     sys.stdout = open('/media/elemen/Container/Logs/gold_red_mandala_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting gold_red_mandala_extended() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 1855 - 1954, 21st module of 38')
+#     
+    # Select which set of angles to run
+    a.i_angle = a.i_angle_auto # Select set of angles to use.
+    str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
+    # s.title_screen()
+    for a.i  in range( len(a.i_angle)):
+        t.my_venv()
+        Tm.start_time()
+        t.my_project = 'A Gold Red Mandala Extended'
+        au.pick_extended_track()
+        t.my_angle = a.i_angle[a.i]
+        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = t.my_project + t.my_key
+        f.make_png_folder()
+        os.chdir(f.loc_thumb + f.folder_name)
+        turtle.title(t.my_str)
+        turtle.bgcolor(0,0,0)
+        print(str('The featured angle is     ') + str(t.my_angle))
+        turtle.bgcolor("indigo")
+        while t.iterable <= (300): # First Pass 
+            h.pick_gold()
+            h.pick_red()
+            h.pick_light()
+            t.la.pensize(t.iterable / 27)
+            t.la.circle(t.iterable *t.phi, - t.my_angle)
+            t.lu.pensize(t.iterable/18)
+            t.lu.backward(t.iterable *t.pi)
+            t.lu.right(t.my_angle)
+            t.le.dot(5)
+            t.le.left(t.my_angle)
+            t.le.forward(t.iterable/2)
+            f.save_thumb()
+            t.iterable += 1
+            
+        t.la.penup()
+        t.lu.penup()
+        t.le.penup()
+        t.la.setpos(0,0)
+        t.lu.setpos(0,0)
+        t.le.setpos(0,0)
+        t.la.pendown()
+        t.lu.pendown()
+        t.le.pendown()
+        count = 0
+        while t.iterable <= (605): # Second Pass
+            h.pick_gold()
+            h.pick_red()
+            h.pick_light()
+            t.lu.pensize(count / 27)
+            t.lu.circle(count *t.phi, - t.my_angle)
+            t.la.pensize(count/18)
+            t.la.backward(count *t.pi)
+            t.la.right(t.my_angle)
+            t.le.dot(5)
+            t.le.left(t.my_angle)
+            t.le.forward(count/2)
+            f.save_thumb()
+            t.iterable += 1
+            count += 1
+            
+        t.la.penup()
+        t.lu.penup()
+        t.le.penup()
+        t.la.setpos(0,0)
+        t.lu.setpos(0,0)
+        t.le.setpos(0,0)
+        t.la.pendown()
+        t.lu.pendown()
+        t.le.pendown()    
+        count = 0
+        while t.iterable <= (910): # Third Pass 
+            h.pick_gold()
+            h.pick_red()
+            h.pick_light()
+            t.le.pensize(count / 27)
+            t.le.circle(count *t.phi, - t.my_angle)
+            t.lu.pensize(count/18)
+            t.lu.backward(count *t.pi)
+            t.lu.right(t.my_angle)
+            t.la.dot(5)
+            t.la.left(t.my_angle)
+            t.la.forward(count/2)
+            f.save_thumb()
+            t.iterable += 1
+            count += 1
+            
+            
+        f.save_final_thumb()
+        turtle.setup(5,5)
+        f.set_vid_env()
+        f.sync_av()
+        reset_all()
+            #  #
+    # s.end_screen()
+    Tm.end_time()
+    f.reset_all()
+#     sys.stdout.close()
+#     sys.stdout=stdoutOrigin
 
 #novo_25
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -2656,6 +2763,143 @@ def cloverleaf_extended():
 
 
 
+def majestic_mandala_extended():
+    Tm.set_time()
+    print('Starting majestic_mandala_extended() by Leon Hatton on   ' + str(Tm.my_time))
+#     stdoutOrigin=sys.stdout
+#     sys.stdout = open('/media/elemen/Container/Logs/cloverleaf' + str(t.file_key) + '_log.txt', 'w')
+#     print('Starting cloverleaf() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 2659 - 2781, 31st module of 38')
+    Tm.start_time()
+    # Select which set of angles to run
+    a.i_angle =a.i_angle_auto # Select set of angles to use.
+    str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
+    #     s.title_screen()
+    for a.i  in range( len(a.i_angle)):
+        t.my_venv()
+        Tm.start_time()
+        t.my_project = 'A Majestic Mandala Extended'
+        au.pick_extended_track()
+        t.my_angle = a.i_angle[a.i]
+        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = t.my_project + t.my_key
+        f.make_png_folder()
+        os.chdir(f.loc_thumb + f.folder_name)
+        turtle.title(t.my_str)
+        
+        t.le.pensize(5) #First Pass
+        t.le.speed(0)
+        t.le.pencolor(0, 255,0)
+        turtle.bgcolor(0,0,0)
+        
+        while t.iterable <= 300:
+            if t.iterable <= 251:
+                t.le.pencolor(t.iterable, 255 - t.iterable, t.iterable)
+            else:
+                t.le.pencolor(255, 0, 255)
+            t.le.left(t.my_angle)
+            t.le.forward(t.iterable * t.phi)
+            t.le.penup()
+            t.le.left(t.my_angle)
+            t.le.forward(t.iterable)
+            t.le.pendown()
+            t.le.left(t.my_angle)
+            t.le.forward(t.iterable + t.pi)
+            f.save_thumb()
+            t.iterable += 1
+            
+            
+        t.le.pensize(5) # Second Pass
+        t.le.speed(0)
+        turtle.bgcolor(0,0,0)
+        t.le.penup()
+        t.le.setpos(0,0)
+        t.le.pendown()
+        count = 0
+        print('The value of t.iterable is   ' + str(t.iterable))
+        while t.iterable <= 605:
+            if count <= 253:
+                t.le.pencolor(255 - count, 255 - count, count)
+            else:
+                t.le.pencolor(0, 0, 255)
+            t.le.left(t.my_angle)
+            t.le.forward(count * t.phi)
+            t.le.penup()
+            t.le.left(t.my_angle)
+            t.le.forward(count)
+            t.le.pendown()
+            t.le.left(t.my_angle)            
+            t.le.forward(count + t.pi)
+            
+            f.save_thumb()
+            count += 1
+            t.iterable += 1
+            
+        t.le.pensize(3) # Third Pass
+        t.le.speed(0)
+        turtle.bgcolor(0,0,0)
+        t.le.penup()
+        t.le.setpos(0,0)
+        t.le.pendown()
+        count = 0
+        print('The value of t.iterable is   ' + str(t.iterable))
+        while t.iterable <= 910:
+            if count <= 254:
+                t.le.pencolor(count, 255 - count, 255 - count)
+            else:
+                t.le.pencolor(255, 0, 0)
+            t.le.left(t.my_angle)
+            t.le.forward(count * t.phi)
+            t.le.penup()
+            t.le.left(t.my_angle)
+            t.le.forward(count)
+            t.le.pendown()
+            t.le.left(t.my_angle)
+            t.le.forward(count + t.pi)
+            f.save_thumb()
+            count += 1
+            t.iterable += 1
+            
+        t.le.pensize(2) # Fourth Pass
+        t.le.speed(0)
+        turtle.bgcolor(0,0,0)
+        t.le.penup()
+        t.le.setpos(0,0)
+        t.le.pendown()
+        count = 0
+#         t.le.left(t.my_angle)
+        print('The value of t.iterable is   ' + str(t.iterable))
+        while t.iterable <= 1215:
+            if count <= 255:
+                t.le.pencolor(count, count, 255 - count)
+            else:
+                t.le.pencolor(255, 255, 0)
+            t.le.left(t.my_angle)
+            t.le.forward(count * t.phi)
+            t.le.penup()
+            t.le.left(t.my_angle)
+            t.le.forward(count)
+            t.le.pendown()
+            t.le.left(t.my_angle)
+            t.le.forward(count + t.pi)
+            f.save_thumb()
+            count += 1
+            t.iterable += 1
+        print('The value of t.iterable is   ' + str(t.iterable))    
+        f.save_final_thumb()
+        turtle.setup(5,5)
+        f.set_vid_env()
+        f.sync_av()
+        reset_all()
+#         Tm.end_time()
+#     s.end_screen()
+    f.reset_all()
+    Tm.end_time()
+#     f.pause_option()
+#     sys.stdout.close()
+#     sys.stdout=stdoutOrigin
+
+
 #novo_35
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def glorious_mandala():  # Based on Awesome Manadala
@@ -3122,89 +3366,107 @@ def black_seed():
 
 
 #nomega
-print('********************************************************************************************')
+'***************************************************************************************************************************************'
 """ List of modules. To run, uncomment the row. A word of caution: Computer memory and speed take a hit with the 250+ looping, image creation,
  and video creation associated with each image file. No load testing has been made at this time. Also, because of the looping screenshots a dedicated,
  always on monitor is needed. The screenshot code will capture anything that is on the monitor screen while it is running. Power-saving and screensaver
  apps should be disabled while this code is running.
-'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+'++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 """
 f.sync_mandala_folders()
-#  This first group of modules specifies a single angle; has no looping lists of angles
+'====================================================================================================================================================================='
+#  This first group of modules are extended versions of their parent script, as indicated by their name. The are set to also empoly the list of extended music clips.
+
+colorful_mandala_extended() #'Located @ line 187 - 256,  3rd module of 38', created on 11/6/2022
+awesome_mandala_extended() #Created 11/7/2022
+glorious_mandala_extended()  #Created 11/13/2022
+brave_mandala_extended() # Created 11/14/2022
+gold_red_mandala_extended() # Created 11/18/2022
+cloverleaf_extended() # Created 11/ 17/2022
+majestic_mandala_extended()  # created 11/17/2022 Derived from cloverleaf_extended; employs lines instead of circles
+
+'===================================================================================================================================================================='
+#  This second group of modules specifies a single angle; has no looping lists of angles
+
 # basic_yin_yang()  # ( novo_1)  Located @ line 73 - 109, 1st module of 38. An animated rendition of the yin-yang grat.phic. My original; currently
                     # the most popular one on YouTube. Added the working do_video on 1/14/2022 which converts the png files/
                     #to gif, mp4, and avi files. Successfully automated video (.avi) creation 1/20/2022.
                     #Successfully lengthened and added long audio clips on 8/17/2022.
 
-# NEEDS SOME TWEAKING blue_orange_mandala_144() #novo_23  23 of 38; Located at rows 1510 - 1568. Added 12/7/2021 (Edited from Mandala_160_09292020)\
-                            # Processed to mp4 12/7/2021
+
 # growing_yin_yang() #novo_3 12 of 38, Published to YouTube 11/11/2021, Need to work on further as of 4/3/2022
 
 
 # circular_mandala_205()  # novo_4 25 of 38; Added 12/9/2021 (Edited from Mandala_160_09292020) Processed to mp4 12/9/2021
-# '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-# '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-# This group of modules specifies a list of angles to loop
-#
-# colorful_mandala() # *novo_5 Row 101 - 151, #2 of 38 Updated to automate video creation
-# colorful_mandala_extended() #'Located @ line 187 - 256,  3rd module of 38', created on 11/6/2022
-# jagged_multigram() # novo_6 #Row 150, 3 of 38, Published to YouTube on 11/2/2021 Updated to automate video creation
-# ===Work on  hued_polygonial() # novo_7 Rows 293 - 361,   4th module of 38. Features Blue and Red Hues. Modified 12/17/2021 Updated to automate video creation
-          # On 4/28/2022, assigned an 'Offset Angle' to second turtle pen as the current angle times t.phi, looks good as a balance.
-          # Base angle + it's t.phi offset. Nice.
-# #'**********************************************************************************************************************'
-# Fantastic_Mandala() # novo_8  Row 328 - 384, 5 of 38 # Works well. Updated to automate video creation Implemented 't.phi Offset' Angle on 4/28/2022.
-# # #'**********************************************************************************************************************'
-#NEEDS SOME REWORKINGdark_mandala() #novo_6 Row 435, 6 of 38, Revised 4/30/2022
-# NEEDS A BIT OF TWEAKING iridescent_polygram()  # novo_7 Row 516 - 577, 7 of 38 Modified 1/2/2022 Updated to automate video creation
-# bold_mandala()  # novo_8 Row 593 - 643, 8 of 38, Updated to automate video creation  Implemented 't.phi Offset' Angle on 4/28/2022.
-# NEEDS TWEAKING hued_gradiant()  #novo_9 Row 647 - 733, 9 of 38
-# animated_abstraction()  #  novo_9 10 of 38, Thumbs created 11/21/2021
-#  NEEDS TWEAKING gradiant_mandala() #  novo_14 Row  785 - 852, 11 of 38. Last run date: 2/1/2022
-# hued_polygram()  # novo_13  Located @ line 929 - 989, number 13 of 38, created 11/14/2021; added print to file 3/1/2022
-#               pretty_polygonial()   # novo_16   Row 856, 14 of 38, modified 11/19/2021  nEEDS WORK!
+'======================================================================================================================================================================='
+# This third group of modules specifies a list of angles to loop
 
-# awesome_mandala()  #  novo_15 15 of 38, Located at lines 1073 - 1118. Processed to mp4 and published to YouTube on 11/21/2021.\
-#                                 # modified 11/20/2021, This is exceptional.
-# #                                 # I might expand on it with other modules and angles. added print to file 3/1/2022\
-#                                   # Altered code to randomnize gold color using h.pick_gold().
-# awesome_mandala_extended() #Created 11/7/2022
+# colorful_mandala() # *novo_5 Row 101 - 151, #2 of 38 Updated to automate video creation
+
+# jagged_multigram() # novo_6 #Row 150, 3 of 38, Published to YouTube on 11/2/2021 Updated to automate video creation
+
+# Fantastic_Mandala() # novo_8  Row 328 - 384, 5 of 38 # Works well. Updated to automate video creation Implemented 't.phi Offset' Angle on 4/28/2022.
+
+# bold_mandala()  # novo_8 Row 593 - 643, 8 of 38, Updated to automate video creation  Implemented 't.phi Offset' Angle on 4/28/2022.
+
+# animated_abstraction()  #  novo_9 10 of 38, Thumbs created 11/21/2021
+
+# hued_polygram()  # novo_13  Located @ line 929 - 989, number 13 of 38, created 11/14/2021; added print to file 3/1/2022
+
+# awesome_mandala()  #  novo_15 15 of 38, Located at lines 1073 - 1118. Processed to mp4 and published to YouTube on 11/21/2021. modified 11/20/2021, This is exceptional.
+
 # glorious_mandala() # novo_18 Created 4/6/2022, based on stupendous mandala. Located @ line 2337- 2419, 32nd module of 38.
-# glorious_mandala_extended()  #Created 11/13/2022
-# pretty_awesome_mandala() # novo_19 Row 997 - 1054, Number 16 of 38. Derived from awesome_mandala.\
-#                             # Processed 90 degrees to MP4 on 12/15/2021
-# #'**********************************************************************************************************************'
-# stupendous_mandala() # novo_18 Row 1034 - 1101, number 17 of 38. Derived from pretty_awesome_mandala. Created 1/8/2022. added print to file 3/1/2022
-#                         #Features a more prominent center than it's parent.  Works well.
-# #'**********************************************************************************************************************'
+
+# pretty_awesome_mandala() # novo_19 Row 997 - 1054, Number 16 of 38. Derived from awesome_mandala. # Processed 90 degrees to MP4 on 12/15/2021
+
+# stupendous_mandala() # novo_18 Row 1034 - 1101, number 17 of 38. Derived from pretty_awesome_mandala. Created 1/8/2022. added print to file 3/1/2022Features a more prominent center than it's parent.  Works well.
+
 # brave_mandala() #novo_19 Located @ line 1386 -1449, Derived from awesome_mandala; 18 of 38
-# brave_mandala_extended()
+
 # color_shifting_mandala() # novo_20 Rows 1274 - 1327, 19 of 38 work on
-#       Work on some more  multi_hued_polygram() # novo_23 Row  1125 - 1180, 20 of 38
-# gold_red_mandala()  # novo_25 Rows 1303 - 1353; 21 of 38 Added 12/3/2021; processed to mp4 12/16/2021(added 3 degrees)
+#       
+# gold_red_mandala()  # novo_25 Located @ line 1801 - 1852, 21st module of 38 Added 12/3/2021; processed to mp4 12/16/2021(added 3 degrees)
+
 # Hued_freedom_star() # novo_26 Row 1358 - 1428, 22 of 38; Added 12/4/2021
-# # #
-                  # occillating_polygon() # novo_27 NEED WORK ON THE UNDO FUNCTION Located @ line 1891 - 1968, 26th module of 38; Added 12/28/2021  Is first attempt to use undo function as way to create occillation
+                 
 # arc_star() #novo_28 27 of 38; Located at lines 1586 - 1654. Added 01/06/2022. Derived from a Thought Matrix arc-star wriiten by me in 2020.\
-#                        # Employs first use of automated creation of angle lists using numpy arange.
-#
+                        # Employs first use of automated creation of angle lists using numpy arange.
+
 # home_star() #novo_ 28 of 38; Located at lines 2007 - 2078.  Added 01/06/2022. Derived from a Thought Matrix arc-star scripted by me in 2020.\
-#                        # Employs first use of automated creation of angle lists using numpy arange. Called home_star because the turtle\
-#                        # pen is picked up and dropped down at the center of the screen(0,0).
-# ribbons_mandala()  #novo_30  24 of 38; Located at rows 1572 - 1635. Added 12/8/2021 (Edited from Mandala_160_09292020);\
-#                         #converted to mult-angles on 1/20/2022
-# use_abs() # novo_31 29 of 38; Located at line 1890. Uses the abs() function to draw the sides and points such that\
-#                         #it continues until the point of origin is reached.
+                        # Employs first use of automated creation of angle lists using numpy arange. Called home_star because the turtle\
+                        # pen is picked up and dropped down at the center of the screen(0,0).
+
+# ribbons_mandala()  #novo_30  24 of 38; Located at rows 1572 - 1635. Added 12/8/2021 (Edited from Mandala_160_09292020); converted to mult-angles on 1/20/2022
+
+# use_abs() # novo_31 29 of 38; Located at line 1890. Uses the abs() function to draw the sides and points such that it continues until the point of origin is reached.
+
 # double_take() # novo_32 30 of 38; Located at line 1843 - 1881. Facilitates the creation of a hexagram by using 2 pens drawn\
 #                     # with same angles in opposite directions. Using specific angle array named a.i.angle_double.
-# cloverleaf() # novo_33 31 of 38, Located at line  2247 - 2304. Created 3/6/2022.
-cloverleaf_extended()
-# wall_show() # novo_34 of 38. Located @ line 2408- 2474. Working on a suitable product to frame and display on a wall. Began development August 2022.
-# Independence_mandala() # novo_33  Located @2335 - 2408. Developed June 2022, Added 6/28/2022. 33rd module of 38. Makes beautiful diagrams.
-# black_seed()   # novo_35 Needs more work
 
-#****************************************************************************************************************************************************************
-turtle.setup(550,550)
-f.move_all()
+# cloverleaf() # novo_33 31 of 38, Located at line  2247 - 2304. Created 3/6/2022.
+
+# wall_show() # novo_34 of 38. Located @ line 2408- 2474. Working on a suitable product to frame and display on a wall. Began development August 2022.
+
+# Independence_mandala() # novo_33  Located @2335 - 2408. Developed June 2022, Added 6/28/2022. 33rd module of 38. Makes beautiful diagrams.
+
+'===================================================================================================================================================='
+# This set of modules require tweaking and modification
+
+#NEEDS SOME REWORKINGdark_mandala() #novo_6 Row 435, 6 of 38, Revised 4/30/2022
+# NEEDS A BIT OF TWEAKING iridescent_polygram()  # novo_7 Row 516 - 577, 7 of 38 Modified 1/2/2022 Updated to automate video creation
+# NEEDS SOME TWEAKING blue_orange_mandala_144() #novo_23  23 of 38; Located at rows 1510 - 1568. Added 12/7/2021 (Edited from Mandala_160_09292020) Processed to mp4 12/7/2021
+# Work on  hued_polygonial() # novo_7 Rows 293 - 361,   4th module of 38. Features Blue and Red Hues. Modified 12/17/2021 Updated to automate video creation
+          # On 4/28/2022, assigned an 'Offset Angle' to second turtle pen as the current angle times t.phi, looks good as a balance.
+          # Base angle + it's t.phi offset. Nice.
+# NEEDS TWEAKING hued_gradiant()  #novo_9 Row 647 - 733, 9 of 38
+# NEEDS TWEAKING gradiant_mandala() #  novo_14 Row  785 - 852, 11 of 38. Last run date: 2/1/2022
+# pretty_polygonial()   # novo_16   Row 856, 14 of 38, modified 11/19/2021  nEEDS WORK!
+# Work on some more  multi_hued_polygram() # novo_23 Row  1125 - 1180, 20 of 38
+# black_seed()   # novo_35 Needs more work
+# occillating_polygon() # novo_27 NEED WORK ON THE UNDO FUNCTION Located @ line 1891 - 1968, 26th module of 38; Added 12/28/2021  Is first attempt to use undo function as way to create occillation
+'======================================================================================================================================================================================================='
+# Finalizing scripts to sync all files and folders
+turtle.setup(550,550) # Minimized turtle window to observe screen and read shell output
+f.move_all() # Moves files to appropriate locations
 f.sync_mandala_folders()  # Sync video and script folders backups
 turtle.exitonclick()  # Waits for mouse click to end the program;  Default is to leave uncommented.
