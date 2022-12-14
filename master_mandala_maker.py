@@ -1,5 +1,4 @@
-#novo_0 This is a marker for Thonny Find and Replace function, to enable quick access to top of each module
-# MASTER MANDALA MAKER.PY
+# MASTER MANDALA MAKER (master_mandala_maker.py)
 
 import turtle
 import time
@@ -9,7 +8,7 @@ import My_template as t # Set up environment
 import my_angles as a  #Processes angle selections
 import my_hues as h # Aids in color selections
 import my_splash_screen as s
-from PIL import Image #module for converting python output to image
+# from PIL import Image #module for converting python output to image
 import numpy as np # Processes the video
 import cv2 # For screenshots
 import pyautogui # For screenshots
@@ -23,6 +22,11 @@ import audio_clips as au # Processes the audio tracks
 # import gc
 from select import select
 # from functools import lru_cache
+
+if sys.platform.startswith('linux'):
+    my_path = '/media/elemen/Inland SSD1'
+else:
+    my_path = 'M:'
 
 t.my_venv()   #Initializes mandala drawing environments
 
@@ -63,6 +67,10 @@ turtle.bgcolor(0, 0, 10)
 
 length = 255  #Default is 252; any lower number for testing
 
+def my_project():
+    my_project = t.my_project
+    return my_project
+
 def my_title():
     my_title = turtle.title(t.my_str)
 
@@ -70,20 +78,18 @@ def my_title():
 # Index of modules:
 
 
-#novo_1
+#  module_1
 #+++++++++++MODULE 1, BASIC YIN-YANG+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def basic_yin_yang():
     Tm.set_time()
     Tm.start_time()
-#     print('Starting basic_yin_yang() by Leon Hatton on   ' + str(Tm.my_time))
-
     print('Starting basic_yin_yang() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 73 - 109, 1st module of 38')
+    print('Located @ line 78 - 112, 1st module of 38')
     t.my_venv()
     t.my_project = 'A Yin-Yang Expression'
     t.my_angle = 180
     Tm.start_time()
-    au.pick_track()
+    au.pick_short_track()
     t.my_str = t.my_project + '   featuring   ' + str( t.my_angle) + '  ' + '    Degree Angles  with  '  + au.my_track
     turtle.title(t.my_str)
     f.folder_name = t.my_project + t.my_key 
@@ -110,17 +116,20 @@ def basic_yin_yang():
 
 
 
-#novo_2
+#  module_2
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def colorful_mandala():
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
     Tm.start_time()
-#     print('Starting colorful_mandala by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/colorful_mandala_' + str(t.file_key) + '_log.txt', 'w')
-    print('This is the colorful_mandala() code')
+    my_project = 'A Colorful Mandala'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
     print('from the master_mandala_maker Python module of LR Hatton')
-    print('Located @ line 117 - 185,  2nd module of 38')
+    print('Located @ line 116 - 186,  2nd module of 46')
     print('Ran on:  ' + str(Tm.my_time))
     t.my_venv()
     # Select which set of angles to run
@@ -133,16 +142,13 @@ def colorful_mandala():
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Colorful Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
-#             s.splash_screen()
-        # s.watermark()
         print('The angle for this mandala is    ' + str(t.my_angle) + '    degrees.')
         t.iterable = 0
         t.li.pensize(1)
@@ -170,36 +176,40 @@ def colorful_mandala():
             t.li.pensize(t.iterable / 27)
             f.save_thumb()
             t.iterable += 1
-
         f.save_final_thumb()
         turtle.setup(5,5)
         f.set_vid_env()
         f.sync_av()
         reset_all()
         t.my_venv()
-        # s.end_screen()
     f.reset_all()
     Tm.end_time()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
-#novo_3
+#  module_3
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def colorful_mandala_extended():
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
     Tm.start_time()
-#     print('Starting colorful_mandala by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/colorful_mandala_' + str(t.file_key) + '_log.txt', 'w')
-    print('This is the colorful_mandala_extended() code')
+    my_project = 'A Colorful Mandala Extended'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
     print('from the master_mandala_maker Python module of LR Hatton')
-    print('Located @ line 187 - 256,  3rd module of 38')
+    print('Located @ line 190 - 298,  3rd module of 46')
     print('Ran on:  ' + str(Tm.my_time))
     t.my_venv()
     # Select which set of angles to run
-    a.i_angle = a.i_angle_auto # Select set of angles to use.
+    a.i_angle = a.i_angle_auto 
     str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
     t.my_title = str('This Show Features Colorful Extended Mandalas with   ' + str(str_angles) + '  ' + 'angles')
     print(t.my_title)
@@ -209,7 +219,7 @@ def colorful_mandala_extended():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Colorful Mandala Extended'
-        au.pick_extended_track()
+        au.pick_medium_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -254,6 +264,8 @@ def colorful_mandala_extended():
         t.li.setpos(0,0)
         t.la.pendown()
         t.li.pendown()
+        t.li.speed(0)
+        t.la.speed(0)
         while t.iterable <= 495:
             R =  0
             G =  140
@@ -286,24 +298,29 @@ def colorful_mandala_extended():
         # s.end_screen()
     f.reset_all()
     Tm.end_time()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
-#novo_4
+#  module_4
 #**************************************************************************************************************
   # Published to YouTube on 11/2/2021
  #This script features three pens: le, me, and lb. They follow separate yet coordinated routes to compose the mandala.
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def jagged_multigram():
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting jagged_multigram() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print(str('********************************************************************************************************************'))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/jagged_multigram_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting jagged_multigram() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 191 - 282, 3rd module of 38')
-#     
+    Tm.start_time()
+    my_project = 'Jagged Multigram'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 301 - 393, 4th module of 46')
     t.my_venv() #Calls the template module
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -312,11 +329,10 @@ def jagged_multigram():
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Jagged Multigram'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         my_hue = random.randint(5, 100)
@@ -327,8 +343,6 @@ def jagged_multigram():
         t.lb.speed(0)
         t.iterable = 0000
         turtle.title(t.my_str)
-#             s.splash_screen()
-        # s.watermark()
         print('The angle for this mandala is    ' + str(t.my_angle) + '    degrees.')
         print('The value of my_hue is' + '   ' + str(my_hue))
         print('The value of my_hue_a is' + '   ' + str(my_hue_a))
@@ -380,25 +394,30 @@ def jagged_multigram():
     Tm.end_time()
     f.reset_all()
     # s.end_screen()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
 
-#novo_5
+#  module_5
 #*****************************************************************************************************************************
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def hued_polygonial():  # Uses 2 pens with offset t.phi angle
-#     time.sleep(3)
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting hued_polygonial() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/hued_polygonial_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting hued_polygonial() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 285 - 358,   4th module of 38')
-#     
+    Tm.start_time()
+    my_project = 'Hued Polygonial'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 399 - 472,   5th module of 46')
     t.my_venv()
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -411,14 +430,12 @@ def hued_polygonial():  # Uses 2 pens with offset t.phi angle
         t.my_venv()
         t.my_angle = a.i_angle[a.i]
         print('The offset angle value is  ' + str(t.my_angle * (t.pi/2)))
-        au.pick_track()
-        t.my_str = ' A Hued Polygonial featuring ' + str(round(t.my_angle)) + ' Degree Angles,    ' + t.my_key + 'with   ' + au.my_track
+        au.pick_short_track()
+        t.my_str = my_project +  ' featuring ' + str(round(t.my_angle)) + ' Degree Angles,    ' + t.my_key + 'with   ' + au.my_track
         f.folder_name = t.my_str + '/'
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
-#             s.splash_screen()
-        # s.watermark()
         h.pick_gold()
         t.la.rt(t.my_angle / 2)
         h.pick_blue()
@@ -458,22 +475,28 @@ def hued_polygonial():  # Uses 2 pens with offset t.phi angle
     Tm.end_time()
     # s.end_screen()
     f.reset_all()
-    #     sys.stdout.close()
-    #     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
-#novo_6
+#  module_6
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def Fantastic_Mandala():  # Uses 2 pens with offset t.phi angle
-#     time.sleep(3)
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting Fantastic_Mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open(my_path + /Logs/Fantastic_Mandala_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting Fantastic_Mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 362 - 433,   5th module of 38')
+    Tm.start_time()
+    my_project = 'Fantastic Mandala'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 477 - 542,   6th module of 46')
     t.my_venv() # Initializes turtle canvas screen environment
     # Select which set of angles to run using list comprehension method
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -483,16 +506,13 @@ def Fantastic_Mandala():  # Uses 2 pens with offset t.phi angle
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Fantastic Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
-#             s.splash_screen()
-        # s.watermark()
         h.pick_light()
         h.pick_gold()
         h.pick_indigo()
@@ -525,24 +545,29 @@ def Fantastic_Mandala():  # Uses 2 pens with offset t.phi angle
         #  #  #
         t.my_venv()
     Tm.end_time()
-    # s.end_screen()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
-#novo_7
+#  module_7
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
-#NEEDS SOME REWORKING def dark_mandala(): #Needs work
-#     time.sleep(3)
+'''#NEEDS SOME REWORKING def dark_mandala(): #Needs work
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting dark_mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open(my_path + /Logs/dark_mandala_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting dark_mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 432 - 509,   6th module of 38')
+    Tm.start_time()
+    my_project = 'A Dark Mandala'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 547 - 635,   7th module of 46')
     t.my_venv()
      # Select which set of angles to run using list comprehension method
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -551,8 +576,7 @@ def Fantastic_Mandala():  # Uses 2 pens with offset t.phi angle
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Dark Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -617,23 +641,27 @@ def Fantastic_Mandala():  # Uses 2 pens with offset t.phi angle
         #  #  #
         t.my_venv()
     Tm.end_time()
-    # s.end_screen()
-    f.reset_all()
-#         sys.stdout.close()
-#         sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
+'''
 
 
-
-#novo_8
+#  module_8
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def iridescent_polygram():  # Uses 2 pens with offset t.phi angle
-#     time.sleep(3)
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting iridescent_polygram() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/iridescent_polygram_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting iridescent_polygram() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 513 - 578,   7th module of 38')
+    Tm.start_time()
+    my_project = 'Iridescent Polygram'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 639 - 705,   8th module of 46')
 #     
     t.my_venv()
     # Select which set of angles to run;  Favorite angles: 144/5P, 210/12P, 834/TightSpiral,2394/20P,1350/Square
@@ -646,11 +674,10 @@ def iridescent_polygram():  # Uses 2 pens with offset t.phi angle
     for a.i  in range(len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'An Iridescent Polygram'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
@@ -687,21 +714,27 @@ def iridescent_polygram():  # Uses 2 pens with offset t.phi angle
     Tm.end_time()
     # s.end_screen()
     f.reset_all()
-#         sys.stdout.close()
-#         sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
-#novo_9
+#  module_9
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def bold_mandala():
-    #     time.sleep(3)
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting  bold_mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/bold_mandala_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting  bold_mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 594 - 660, 8th module of 38')
+    Tm.start_time()
+    my_project = 'Bold Mandala'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 709 - 775, 8th module of 46')
     t.my_venv()
 #     
     # Select which set of angles to run
@@ -712,20 +745,17 @@ def bold_mandala():
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Bold Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '  featuring ' + str( t.my_angle) + ' Degree Angles, with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '  featuring ' + str( t.my_angle) + ' Degree Angles, with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
-#             s.splash_screen()
-        # s.watermark()
         turtle.bgcolor(0,0,0)
         t.la.speed(0)
         for t.iterable in range (255):      #255 is default. Use lower number for testing. 300 for audio.
-            turtle.bgcolor(255- t.iterable, t.iterable, t.iterable)
+            turtle.bgcolor(255- t.iterable, t.iterable %25, 255 - t.iterable)
             h.pick_indigo() #Indigo hues
             h.pick_gold() #Gold hues
             t.la.left(t.my_angle / 3) #Gold pen
@@ -742,33 +772,36 @@ def bold_mandala():
 #             time.sleep(10) #for testing only; comment out to run code
             f.save_thumb()
         print(t.my_str)
-
-#             turtle.bgcolor(2,9,3)
         f.save_final_thumb()
         turtle.setup(5,5)
         f.set_vid_env()
         f.sync_av()
         reset_all()
-        #  #  #
         t.my_venv()
 # s.end_screen()
     Tm.end_time()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 #
 
 
-#novo_10
+#  module_10
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
-# NEEDS SOME TWEAKING def hued_gradiant():  # Uses 2 pens with offset t.phi angle
-#     time.sleep(3)
+'''# NEEDS SOME TWEAKING def hued_gradiant():  # Uses 2 pens with offset t.phi angle
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting  hued_gradiant() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/hued_gradiant_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting  hued_gradiant() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 655 - 745, 9th module of 38')
+    Tm.start_time()
+    my_project = 'Hued Gradiant'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 778 - 860, 10th module of 46')
 #     
     t.my_venv()
     # Select which set of angles to run
@@ -779,11 +812,10 @@ def bold_mandala():
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Hued Gradiant Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' +  str(round(t.my_angle)) + ' and  ' + str(round (t.my_angle * t.phi)) +'    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' +  str(round(t.my_angle)) + ' and  ' + str(round (t.my_angle * t.phi)) +'    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
@@ -838,20 +870,28 @@ def bold_mandala():
     # s.end_screen()
     f.reset_all()
     Tm.end_time()
- #     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
-    #
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
+'''
 
 
-#novo_11
+
+#  module_11
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def animated_abstraction():
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting animated_abstraction() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open(my_path + '/Logs/animated _abstraction_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting animated_abstraction() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 752 - 832,   10th module of 38')
+    Tm.start_time()
+    my_project = 'Animated Abstract'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 862 - 938,   11th module of 46')
     # ()
     t.my_venv()
     # Select which set of angles to run
@@ -862,11 +902,10 @@ def animated_abstraction():
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'Animated Abstract Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
@@ -916,23 +955,28 @@ def animated_abstraction():
     Tm.end_time()
     # s.end_screen()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
-#novo_12
+#  module_12
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def gradiant_mandala():
-#     time.sleep(3)
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting gradiamt_mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/gradiant_mandala_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting gradiant_mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('from the master_mandala_maker Python module of LR Hatton')
-    print('Located @ line 827 - 898, 11th module of 38')
+    Tm.start_time()
+    my_project = 'Gradiant Mandala'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 943 - 1001, 12th module of 46')
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
     str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
@@ -940,11 +984,10 @@ def gradiant_mandala():
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Gradiant Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
@@ -977,29 +1020,35 @@ def gradiant_mandala():
         # s.end_screen()
     Tm.end_time()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
 
-#novo_13
+#  module_13
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def growing_yin_yang(): #Published to YouTube 11/11/2021
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-    print('Starting growing_yin_yang() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open(f.my_path + '/Logs/growing_yin_yang_' + str(t.file_key) + '_log.txt', 'w')
-#     print('Starting growing_yin_yang() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 930 - 981, 12th module of 38')
+    Tm.start_time()
+    my_project = 'Growing Animated Yin-Yang'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 1007 - 1047, 13th module of 46')
     t.my_venv()
     Tm.start_time()
-    t.my_project = 'A Growing Yin-Yang'
-    au.pick_track()
+    au.pick_short_track()
     t.my_angle =180
-    t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-    f.folder_name = t.my_project + t.my_key
+    t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+    f.folder_name = my_project + t.my_key
     f.make_png_folder()
     os.chdir(f.loc_thumb + f.folder_name)
     turtle.title(t.my_str)
@@ -1021,22 +1070,28 @@ def growing_yin_yang(): #Published to YouTube 11/11/2021
     Tm.end_time()
     # s.end_screen()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
-#novo_14
+#  module_14
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Uses 2 pens with offset t.phi angle
 def hued_polygram():
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting hued_polygram() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/hued_polygram_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting hued_polygram() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('novo_13, Located @ line 929 - 989, 13th module of 38')
-#     
+    Tm.start_time()
+    my_project = 'Animated Hued Polygram'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 1051 - 1113, 14th module of 46')
     t.my_venv()
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1046,11 +1101,10 @@ def hued_polygram():
     for a.i  in range(len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Hued Polygram'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
@@ -1085,24 +1139,29 @@ def hued_polygram():
     # s.end_screen()
     Tm.end_time()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
-#novo_15
+#  module_15
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
-def pretty_polygonial(): # NEEDS WORK
-    time.sleep(3)
+'''# def pretty_polygonial(): # NEEDS WORK
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-    print('Starting pretty_polygonial() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/pretty_polygonial_' + str(t.file_key) + '_log.txt', 'w')
-#     print('Starting pretty_polygonial() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 1028 - 1096, 14th module of 38')
-#     
-    au.pick_track()
+    Tm.start_time()
+    my_project = 'Pretty Polygonial'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 1118 - 1187, 15th module of 46')
+    au.pick_short_track()
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
     str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
@@ -1113,14 +1172,12 @@ def pretty_polygonial(): # NEEDS WORK
         with Timer("Elapsed time to run this code: {} minutes"):
             Tm.start_time()
             t.my_angle =  a.i_angle[a.i]
-            au.pick_track()
-            t.my_str = ' A Pretty Polygram Mandala featuring '+ str(round(t.my_angle)) + '  Degree Angles'  + t.my_key  + '-' + au.my_track
-            f.folder_name = t.my_str + '/'
+            au.pick_short_track()
+            t.my_str = my_project + ' featuring '+ str(round(t.my_angle)) + '  Degree Angles'  + t.my_key  + '-' + au.my_track
+            f.folder_name = my_project + t.my_key
             f.make_png_folder() # Deletes old folder and contents and creates new folder wth folder name
             os.chdir(f.loc_thumb + f.folder_name)
             turtle.title(t.my_str)
-#             s.splash_screen()
-            # s.watermark()
             turtle.bgcolor(0,0,0)
             print(str('The featured angle is     ') + str(t.my_angle))
             t.iterable = 0
@@ -1153,28 +1210,33 @@ def pretty_polygonial(): # NEEDS WORK
             f.set_vid_env()
             f.sync_av()
             reset_all()
-            #  #
             t.my_venv()
-        # s.end_screen()
         Tm.end_time()
         f.reset_all()
-#         sys.stdout.close()
-#         sys.stdout=stdoutOrigin
+        print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+        sys.stdout.close()
+        sys.stdout=stdoutOrigin
+        print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+        Tm.end_time()
+'''
 
 
 
-
-#novo_16
+#  module_16
 #**************************************************************************************************************
   # First Published to YouTube on 11/21/2021
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def awesome_mandala():
-#       print('Starting awesome_mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/awesome_mandala_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting awesome_mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 1067 - 1147, 15th module of 38')
-#     
+    global my_project
+    my_project = t.my_project
+    Tm.set_time()
+    Tm.start_time()
+    my_project = 'Awesome Mandala'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 1192 - 1266, 16th module of 46')
     t.my_venv()
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1183,11 +1245,10 @@ def awesome_mandala():
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'An Awesome Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
@@ -1234,20 +1295,26 @@ def awesome_mandala():
     Tm.end_time()
 # s.end_screen()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
-
-#novo_17
+#  module_17
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def awesome_mandala_extended():
-#       print('Starting awesome_mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/awesome_mandala_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting awesome_mandala_extended() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 1238 - 1340, 16th module of 38')
-#     
+    global my_project
+    my_project = t.my_project
+    Tm.set_time()
+    Tm.start_time()
+    my_project = 'Awesome Mandala Extended'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 1270 - 1398, 17th module of 46')
     t.my_venv()
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1256,11 +1323,10 @@ def awesome_mandala_extended():
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'An Awesome Mandala Extended'
-        au.pick_extended_track()
+        au.pick_medium_track() # Randomly selects a track from dymaically created medium_clips list
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
@@ -1278,17 +1344,15 @@ def awesome_mandala_extended():
         turtle.bgcolor(10, 255, 255)
         t.iterable = 0
         h.pick_gold() #Pen la
-        t.la.left(t.my_angle/2)
-        t.lm.left(t.my_angle/2)
-        while t.iterable <= 354:  # 450 is default, use any number First pass
+        while t.iterable <= 255:  # First pass
             h.pick_gold() #Pen la
             if t.iterable <= 255:
                 turtle.bgcolor(X, Y - t.iterable, Z - t.iterable)
             else:
                 turtle.bgcolor(X, 0, 0)
             t.la.pensize(t.iterable/60)
-            t.la.left(t.my_angle)
             t.la.forward(t.iterable * t.phi)
+            t.la.rt(t.my_angle)
             t.lm.pensize(t.iterable / 120)
             t.lm.rt(t.my_angle)
             if t.iterable <= 255:
@@ -1304,31 +1368,58 @@ def awesome_mandala_extended():
         h.pick_magenta #Pen me
         t.me.penup()
         t.lm.penup()
-        t.me.setpos(0,0)
-        t.lm.setpos(0,0)
+        t.la.home()
+        t.lm.home()
         t.me.pendown()
         t.lm.pendown()
-        t.me.left(t.my_angle/2)
-        t.lm.left(t.my_angle/2)
+        t.me.speed(0)
+        t.lm.speed(0)
         count = 0
-        t.iterable = 354
-        while t.iterable <= 708:  # 450 is default, use any number Second pass
+        while t.iterable <= 501:  # 450 is default, use any number Second pass
             h.pick_magenta() #Pen me
             turtle.bgcolor(X, 0, 0)
-            t.me.pensize(count/54)
+            t.me.pensize(count/27)
+         
+            t.me.forward(count * t.phi)
             t.me.left(t.my_angle)
-            t.me.forward(count + t.phi)
-            t.lm.pensize(count /120)
+            t.lm.pensize(count /45)
             t.lm.rt(t.my_angle)
             if count <= 255:
                 t.lm.pencolor(R + count, M - count, B)
             else:
                 t.lm.pencolor(M, M, X)
-            t.lm.circle(count, - t.my_angle, 9)
-            f.save_thumb()
+            t.lm.circle(count / t.phi, - t.my_angle, 9)
             count += 1
             t.iterable += 1
-        
+            f.save_thumb()
+        h.pick_indigo() #Pen li
+        t.li.penup()
+        t.lm.penup()
+        t.la.home()
+        t.lm.home()
+        t.li.pendown()
+        t.lm.pendown()
+        t.li.speed(0)
+        t.lm.speed(0)
+        t.li.left(t.my_angle/2)
+#         t.lm.left(t.my_angle/2)
+        count = 0
+        while t.iterable <= 740:  # 450 is default, use any number Third pass
+            h.pick_indigo() #Pen li
+            turtle.bgcolor(X, 0, 0)
+            t.li.pensize(count/27)
+            t.li.left(t.my_angle)
+            t.li.forward(count * t.phi)
+            t.lm.pensize(count /45)
+            t.lm.rt(t.my_angle)
+            if count <= 255:
+                t.lm.pencolor(R + count, M - count, B)
+            else:
+                t.lm.pencolor(M, M, X)
+            t.lm.circle(count / t.phi, - t.my_angle, 9)
+            count += 1
+            t.iterable += 1
+            f.save_thumb()
         f.save_final_thumb()
         turtle.setup(5,5)
         f.set_vid_env()
@@ -1338,18 +1429,28 @@ def awesome_mandala_extended():
     Tm.end_time()
 # s.end_screen()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
+    
+    
+    
 
-#novo_18
+#  module_18
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def pretty_awesome_mandala():  # Based on Awesome Manadala
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting pretty_awesome_mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/pretty_awesome_mandala_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting pretty_awesome_mandala() python code by Leon Hatton on  ' + str(Tm.my_time))
-    print('Located @ line 1191- 1264, 16th module of 38')
+    Tm.start_time()
+    my_project = 'Pretty Awesome Mandala'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 1403- 1474, 18th module of 46')
 #     
     t.my_venv()
     # Select which set of angles to run
@@ -1359,11 +1460,10 @@ def pretty_awesome_mandala():  # Based on Awesome Manadala
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Pretty Awesome Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
@@ -1409,25 +1509,313 @@ def pretty_awesome_mandala():  # Based on Awesome Manadala
     # s.end_screen()
     Tm.end_time()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
+    
+    
+
+#  module_19
+#+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
+def mighty_awesome_mandala():  # Based on pretty_awesome Manadala
+    global my_project
+    my_project = t.my_project
+    Tm.set_time()
+    Tm.start_time()
+    my_project = 'Mighty Awesome Mandala'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 1478- 1607, 19th module of 46')
+#     
+    t.my_venv()
+    # Select which set of angles to run
+    a.i_angle = a.i_angle_auto # Select set of angles to use.
+    str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
+    # s.title_screen()
+    for a.i  in range( len(a.i_angle)):
+        t.my_venv()
+        Tm.start_time()
+        au.pick_medium_track()
+        t.my_angle = a.i_angle[a.i]
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
+        f.make_png_folder()
+        os.chdir(f.loc_thumb + f.folder_name)
+        turtle.title(t.my_str)
+        print(str('The featured angle is     ') + str(t.my_angle))
+        R = random.randrange(10, 200, 1)
+        G = 0
+        B = 255
+        print('The value of hue /R/ is   ' + str(G))
+        L = random.randrange(10, 200, 1)
+        print('The value of hue /L/ is   ' + str(L))
+        M = 0
+        N = 0
+        X = 255
+        Y = 255
+        Z = 10
+        t.me.left(t.my_angle / 2)
+        t.le.left(- t.my_angle / 2)
+        t.iterable = 0
+        while t.iterable <= 230:
+            turtle.bgcolor(X- t.iterable, Y - t.iterable, Z)
+            t.le.pensize(t.iterable/24)
+            t.le.rt(t.my_angle)
+            t.le.pencolor(R, G + t.iterable, B - t.iterable % 100)
+            t.le.forward(t.iterable)
+            t.me.pensize(t.iterable/12)
+            t.me.rt(t.my_angle)
+            t.me.pencolor(L, M + t.iterable, X - t.iterable)
+            t.me.circle(t.iterable + t.phi, - t.my_angle)
+            f.save_thumb()
+            t.iterable += 1
+        count = 0
+        t.le.penup()
+        t.me.penup()
+        t.le.setpos(0,0)
+        t.me.setpos(0,0)
+        t.le.pendown()
+        t.me.pendown()
+        R = random.randrange(1, 150, 1)
+        G = 0
+        B = 255
+        print('The value of hue /R/ is   ' + str(G))
+        L = random.randrange(150, 255, 1)
+        print('The value of hue /L/ is   ' + str(L))
+        M = 0
+        N = 0
+        X = 255
+        Y = 255
+        Z = 10
+#         t.me.left(t.my_angle / 2)
+#         t.le.left(- t.my_angle / 2)
+        while t.iterable <= 460: # Second pass
+            t.le.pensize(count/24)
+            t.le.rt(t.my_angle)
+            t.le.pencolor(B - count % 100, count, L)
+            t.le.forward(count)
+            t.me.pensize(count/6)
+            t.me.rt(t.my_angle)
+            t.me.pencolor(X - count, M + count, R)
+            t.me.circle(count + t.phi, - t.my_angle)
+            f.save_thumb()
+            t.iterable += 1
+            count += 1
+        count = 0
+        t.le.penup()
+        t.me.penup()
+        t.le.setpos(0,0)
+        t.me.setpos(0,0)
+        t.le.pendown()
+        t.me.pendown()
+        R = random.randrange(10, 200, 1)
+        G = 0
+        B = 255
+        print('The value of hue /R/ is   ' + str(G))
+        L = random.randrange(10, 200, 1)
+        print('The value of hue /L/ is   ' + str(L))
+        M = 0
+        N = 0
+        X = 255
+        Y = 255
+        Z = 10
+#         t.me.left(t.my_angle)
+#         t.le.left(- t.my_angle)
+        while t.iterable <= 690: # Third pass
+            t.le.pensize(count/24)
+            t.le.rt(t.my_angle)
+            t.le.pencolor(count % 100, count, R)
+            t.le.forward(count)
+            t.me.pensize(count/12)
+            t.me.rt(t.my_angle)
+            t.me.pencolor(count, L, R)
+            t.me.circle(count + t.phi, - t.my_angle)
+            f.save_thumb()
+            t.iterable += 1
+            count += 1
+        f.save_final_thumb()
+        turtle.setup(5,5)
+        f.set_vid_env()
+        f.sync_av()
+        reset_all()
+        t.my_venv()
+    # s.end_screen()
+    Tm.end_time()
+    f.reset_all()
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
+
+
+#  module_20
+#+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
+def mystical_mandala():  # Based on pretty_awesome Manadala
+    global my_project
+    my_project = t.my_project
+    Tm.set_time()
+    Tm.start_time()
+    my_project = 'Mystical Mandala'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 1610- 1751, 20th module of 46')
+    t.my_venv()
+    # Select which set of angles to run
+    a.i_angle = a.i_angle_auto # Select set of angles to use.
+    str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
+    # s.title_screen()
+    for a.i  in range( len(a.i_angle)):
+        t.my_venv()
+        Tm.start_time()
+        au.pick_medium_track()
+        t.my_angle = a.i_angle[a.i]
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
+        f.make_png_folder()
+        os.chdir(f.loc_thumb + f.folder_name)
+        turtle.title(t.my_str)
+        print(str('The featured angle is     ') + str(t.my_angle))
+        R = random.randrange(10, 200, 1)
+        G = 0
+        B = 255
+        print('The value of hue /R/ is   ' + str(G))
+        L = random.randrange(10, 200, 1)
+        print('The value of hue /L/ is   ' + str(L))
+        M = 0
+        N = 0
+        X = 255
+        Y = 255
+        Z = 10
+        t.me.left(t.my_angle * 2)
+        t.le.left(t.my_angle * 2)
+        t.iterable = 0
+        while t.iterable <= 230:
+            turtle.bgcolor(X- t.iterable, Y - t.iterable, Z)
+            t.le.pensize(t.iterable/24)
+            t.le.rt(t.my_angle)
+            t.le.pencolor(R, G + t.iterable, B - t.iterable % 100)
+            t.le.forward(t.iterable)
+            t.le.right(t.my_angle)
+            t.le.forward(t.iterable / t.phi)
+            t.me.pensize(t.iterable/18)
+            t.me.rt(t.my_angle)
+            t.me.pencolor(L, M + t.iterable, X - t.iterable)
+            t.me.circle(t.iterable + t.phi, - t.my_angle, 6)
+            t.me.rt(t.my_angle)
+            t.me.backward(t.iterable/ t.phi)
+            f.save_thumb()
+            t.iterable += 1
+        count = 0
+        t.le.penup()
+        t.me.penup()
+        t.le.setpos(0,0)
+        t.me.setpos(0,0)
+        t.le.pendown()
+        t.me.pendown()
+        R = random.randrange(1, 150, 1)
+        G = 0
+        B = 255
+        print('The value of hue /R/ is   ' + str(G))
+        L = random.randrange(150, 255, 1)
+        print('The value of hue /L/ is   ' + str(L))
+        M = 0
+        N = 0
+        X = 255
+        Y = 255
+        Z = 10
+#         t.me.left(t.my_angle / 2)
+#         t.le.left(- t.my_angle / 2)
+        while t.iterable <= 462: # Second pass
+            t.le.pensize(count/24)
+            t.le.rt(t.my_angle)
+            t.le.pencolor(B - count % 100, count, L)
+            t.le.forward(count)
+            t.le.right(t.my_angle)
+            t.le.forward(count / t.phi)
+            t.me.pensize(count/18)
+            t.me.rt(t.my_angle)
+            t.me.pencolor(X - count, M + count, R)
+            t.me.circle(count + t.phi, - t.my_angle, 6)
+            t.me.rt(t.my_angle)
+            t.me.backward(count/ t.phi)
+            f.save_thumb()
+            t.iterable += 1
+            count += 1
+        count = 0
+        t.le.penup()
+        t.me.penup()
+        t.le.setpos(0,0)
+        t.me.setpos(0,0)
+        t.le.pendown()
+        t.me.pendown()
+        R = random.randrange(10, 200, 1)
+        G = 0
+        B = 255
+        print('The value of hue /R/ is   ' + str(G))
+        L = random.randrange(10, 200, 1)
+        print('The value of hue /L/ is   ' + str(L))
+        M = 0
+        N = 0
+        X = 255
+        Y = 255
+        Z = 10
+#         t.me.left(t.my_angle)
+#         t.le.left(- t.my_angle)
+        while t.iterable <= 694: # Third pass
+            t.le.pensize(count/24)
+            t.le.rt(t.my_angle)
+            t.le.pencolor(count % 100, count, R)
+            t.le.forward(count)
+            t.le.right(t.my_angle)
+            t.le.forward(count / t.phi)
+            t.me.pensize(count/18)
+            t.me.rt(t.my_angle)
+            t.me.pencolor(count, L, R)
+            t.me.circle(count + t.phi, - t.my_angle, 6)
+            t.me.rt(t.my_angle)
+            t.me.backward(count/ t.phi)
+            f.save_thumb()
+            t.iterable += 1
+            count += 1
+        f.save_final_thumb()
+        turtle.setup(5,5)
+        f.set_vid_env()
+        f.sync_av()
+        reset_all()
+        t.my_venv()
+    # s.end_screen()
+    Tm.end_time()
+    f.reset_all()
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
 
-#novo_19
+#  module_21
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def stupendous_mandala():  # Based on Awesome Manadala
-#     time.sleep(3)
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting stupendous_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/stupendous_mandala_' + str(t.file_key) + '_log.txt', 'w')
-    print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-    print('Starting stupendous_mandala by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 1270- 1351, 17th module of 38.')
-#     
+    Tm.start_time()
+    my_project = 'Stupendous Mandala'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 1757- 1843, 21st module of 46')
     t.my_venv()
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1437,11 +1825,10 @@ def stupendous_mandala():  # Based on Awesome Manadala
         print('===============================================================================')
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Stupendous Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
@@ -1498,23 +1885,30 @@ def stupendous_mandala():  # Based on Awesome Manadala
 # s.end_screen()
     Tm.end_time()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
     print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
 
 
 
-#novo_20
+#  module_22
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def multi_hued_polygram():
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting multi_hued_polygram() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open(my_path +'/Logs/multi_hued_polygram_' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting multi_hued_polygram() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 1376- 1446, 18th module of 38')
+    Tm.start_time()
+    my_project = 'Multi-Hued Polygram'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 1848- 1914, 22nd module of 46')
     t.my_venv()
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1523,16 +1917,13 @@ def multi_hued_polygram():
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Multi-Hued Polygram'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
-#             s.splash_screen()
-        # s.watermark() # Be sure to customize to correctly id the music track
         t.iterable = 0
         t.le.right(t.my_angle / 2)
         t.le.speed(0)
@@ -1570,21 +1961,27 @@ def multi_hued_polygram():
      # s.end_screen()
     Tm.end_time()
     f.reset_all()
-        #     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
-#novo_21
+#novo_23
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def brave_mandala():
-#     time.sleep(3)
+    global my_project
+    my_project = t.my_project
     Tm.set_time()
-#     print('Starting brave_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/brave_mandala' + str(t.file_key) + '_log.txt', 'w')
-    print('Starting brave_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 1386 -1449, 19th module of 38')
+    Tm.start_time()
+    my_project = 'Brave Mandala'
+    print('Starting  ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/' + my_project  + '_' + str(t.file_key) + '_log.txt', 'w')
+    print('This is ' + my_project + ' code')
+    print('Located @ line 1386 -1449, 23rd module of 46')
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
     str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
@@ -1592,11 +1989,10 @@ def brave_mandala():
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Brave Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
-        f.folder_name = t.my_project + t.my_key
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
@@ -1636,20 +2032,21 @@ def brave_mandala():
        # s.end_screen()
     Tm.end_time()
     f.reset_all()
-    #  f.pause_option()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
-
-#novo_22
+#novo_24
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def brave_mandala_extended():
     Tm.set_time()
-#     print('Starting brave_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/brave_mandala' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting brave_mandala extended() by Leon Hatton on   ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/brave_mandala _extended' + str(t.file_key) + '_log.txt', 'w')
     print('Starting brave_mandala_extended() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 1446 -1514, 20th module of 38')
+    print('Located @ line 1645 -1736, 24th module of 46')
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
     str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
@@ -1677,12 +2074,10 @@ def brave_mandala_extended():
         X = 255
         Y = 255
         Z = 10
-        
-        
         t.le.rt(t.my_angle/2)
         t.me.left(t.my_angle/2)
         t.iterable = 0
-        while t.iterable <= 255: #255 is default, use lower number for testing
+        while t.iterable <= 255: # First Pass
             turtle.bgcolor(X - t.iterable, Y - t.iterable, Z)
             t.le.pensize(t.iterable/45)
             t.le.left(t.my_angle)
@@ -1696,7 +2091,6 @@ def brave_mandala_extended():
             t.le.circle(t.iterable * 1.26, - t.my_angle)
             t.iterable += 1
             f.save_thumb()  #Screenshot as a png set set up mp4
-        t.iterable = 255
         count = 0
         t.le.penup()
         t.me.penup()
@@ -1706,10 +2100,35 @@ def brave_mandala_extended():
         t.me.left(t.my_angle/2)
         t.le.pendown()
         t.me.pendown()
-        while t.iterable <= 499:
+        while t.iterable <= 510: # Second Pass
 #             print('The value of t.iterable is ' + str(t.iterable))
 #             print('The value of count is  ' + str(count))
             turtle.bgcolor(5, 5,10)
+            t.le.pensize(count/72)
+            t.le.left(t.my_angle)
+            t.le.forward(count)
+            t.le.pencolor(R, G + count, B - count)
+            t.me.pensize(count/27)
+            t.me.pencolor(R, Y - count, L)
+            t.me.circle(count / t.phi, t.my_angle)
+            t.le.rt(t.my_angle)
+            t.le.pencolor(Z + count % 245, M - count, N)
+            t.le.circle(count, - t.my_angle)
+            t.iterable += 1
+            count += 1
+            f.save_thumb()    #Screenshot as a png set set up mp4
+        count = 0
+        t.le.penup()
+        t.me.penup()
+        t.le.setpos(0,0)
+        t.me.setpos(0,0)
+        t.le.rt(t.my_angle/2)
+        t.me.left(t.my_angle/2)
+        t.le.pendown()
+        t.me.pendown()
+        while t.iterable <= 765: # Third Pass
+#             print('The value of t.iterable is ' + str(t.iterable))
+#             print('The value of count is  ' + str(count))
             t.le.pensize(count/72)
             t.le.left(t.my_angle)
             t.le.forward(count)
@@ -1722,7 +2141,7 @@ def brave_mandala_extended():
             t.le.circle(count, - t.my_angle)
             t.iterable += 1
             count += 1
-            f.save_thumb()    #Screenshot as a png set set up mp4
+            f.save_thumb()    #Screenshot as a png set set up mp4    
         f.save_final_thumb() #Saves completed image as a jpeg and a png
         turtle.setup(5,5)
         f.set_vid_env()
@@ -1730,20 +2149,22 @@ def brave_mandala_extended():
         reset_all()
     Tm.end_time()
     f.reset_all()
-    #  f.pause_option()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
-#novo_23
+#novo_25
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def color_shifting_mandala():
     Tm.set_time()
     print('Starting color_shifting_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/color_shifting_mandala_' + str(t.file_key) + '_log.txt', 'w')
-#     print('Starting color_shifting_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 1498 - 1563, 20th module of 38')
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/color_shifting_mandala_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting color_shifting_mandala() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 1498 - 1563, 25th module of 46')
 #     
    # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1752,7 +2173,7 @@ def color_shifting_mandala():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Color Shifting Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -1791,22 +2212,25 @@ def color_shifting_mandala():
     # s.end_screen()
     Tm.end_time()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
 
-#novo_24
+#novo_26
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def gold_red_mandala():
     Tm.set_time()
-#     print('Starting gold_red_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/gold_red_mandala_' + str(t.file_key) + '_log.txt', 'w')
     print('Starting gold_red_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 1801 - 1852, 21st module of 38')
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/gold_red_mandala_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting gold_red_mandala() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 1801 - 1852, 26th module of 46')
 #     
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1816,7 +2240,7 @@ def gold_red_mandala():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Gold Red Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -1848,19 +2272,21 @@ def gold_red_mandala():
     # s.end_screen()
     Tm.end_time()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
-
+#novo_27
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def gold_red_mandala_extended():
-    Tm.set_time()
-#     print('Starting gold_red_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/gold_red_mandala_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting gold_red_mandala() by Leon Hatton on   ' + str(Tm.my_time))
+    stdoutOrigin = sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/gold_red_mandala_extended' + str(t.file_key) + '_log.txt', 'w')
     print('Starting gold_red_mandala_extended() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 1855 - 1954, 21st module of 38')
+    print('Located @ line 1853 - 1963, 27th module of 46')
 #     
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1870,7 +2296,7 @@ def gold_red_mandala_extended():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Gold Red Mandala Extended'
-        au.pick_extended_track()
+        au.pick_medium_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -1880,7 +2306,7 @@ def gold_red_mandala_extended():
         turtle.bgcolor(0,0,0)
         print(str('The featured angle is     ') + str(t.my_angle))
         turtle.bgcolor("indigo")
-        while t.iterable <= (300): # First Pass 
+        while t.iterable <= (250): # First Pass 
             h.pick_gold()
             h.pick_red()
             h.pick_light()
@@ -1904,8 +2330,11 @@ def gold_red_mandala_extended():
         t.la.pendown()
         t.lu.pendown()
         t.le.pendown()
+        t.la.speed(0)
+        t.lu.speed(0)
+        t.le.speed(0)
         count = 0
-        while t.iterable <= (605): # Second Pass
+        while t.iterable <= (505): # Second Pass
             h.pick_gold()
             h.pick_red()
             h.pick_light()
@@ -1929,9 +2358,12 @@ def gold_red_mandala_extended():
         t.le.setpos(0,0)
         t.la.pendown()
         t.lu.pendown()
-        t.le.pendown()    
+        t.le.pendown()
+        t.la.speed(0)
+        t.lu.speed(0)
+        t.le.speed(0)   
         count = 0
-        while t.iterable <= (910): # Third Pass 
+        while t.iterable <= (755): # Third Pass 
             h.pick_gold()
             h.pick_red()
             h.pick_light()
@@ -1957,18 +2389,23 @@ def gold_red_mandala_extended():
     # s.end_screen()
     Tm.end_time()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
-#novo_25
+
+
+#novo_28
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def Hued_freedom_star():
     Tm.set_time()
-#     print('Starting  Hued_freedom_star by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/Hued_freedom_star_' + str(t.file_key) + '_log.txt', 'w')
     print('Starting  Hued_freedom_star by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 1634 - 1715, 22nd module of 38')
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/Hued_freedom_star_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting  Hued_freedom_star by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 1634 - 1715, 28th module of 46')
     Tm.start_time()
 #     
     # Select which set of angles to run
@@ -1979,7 +2416,7 @@ def Hued_freedom_star():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Hued Freedom Star'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -2026,24 +2463,27 @@ def Hued_freedom_star():
     f.reset_all()
     # s.end_screen()
     Tm.end_time()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
-#novo_26
+#novo_29
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def blue_orange_mandala_144():
     Tm.set_time()
-#     print('Starting blue_orange_mandala by Leon Hatton on  ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/blue_orange_mandala_144_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting blue_orange_mandala by Leon Hatton on  ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/blue_orange_mandala_144_' + str(t.file_key) + '_log.txt', 'w')
     print('Starting blue_orange_mandala by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 1720 - 1784, 23rd module of 38')
+    print('Located @ line 1720 - 1784, 29th module of 46')
     t.my_venv()
     Tm.start_time()
     t.my_project = 'A Blue Orange Mandala'
-    au.pick_track()
+    au.pick_short_track()
     t.my_angle = 144
     t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
     f.folder_name = t.my_project + t.my_key
@@ -2091,20 +2531,23 @@ def blue_orange_mandala_144():
 #     s.end_screen()
     Tm.end_time()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
-#novo_27
+#novo_30
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def ribbons_mandala():
     Tm.set_time()
     Tm.start_time()
-#     print('Starting ribbons_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/ribbons_mandala_' + str(t.file_key) + '_log.txt', 'w')
     print('Starting ribbons_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 1848 - 1923, 24th module of 38')
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/ribbons_mandala_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting ribbons_mandala() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 1848 - 1923, 30th module of 46')
 #     
     t.my_venv()
     # Select which set of angles to run
@@ -2114,7 +2557,7 @@ def ribbons_mandala():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Ribbon Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -2162,25 +2605,28 @@ def ribbons_mandala():
   #     s.end_screen()
     Tm.end_time()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
-#novo_28
+#novo_31
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def circular_mandala_205():
     Tm.set_time()
-#     print('Starting circular_mandala_205 on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/circular_mandala_205_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting circular_mandala_205 on   ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/circular_mandala_205_' + str(t.file_key) + '_log.txt', 'w')
     print('Starting circular_mandala on   ' + str(Tm.my_time))
-    print('Located @ line 1790 - 1853, 25th module of 38')
+    print('Located @ line 1790 - 1853, 31st module of 46')
     t.my_venv()
     Tm.start_time()
     t.my_project = 'A Circular Mandala'
-    au.pick_track()
+    au.pick_short_track()
     t.my_angle = a.i_angle[a.i]
     t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
     f.folder_name = t.my_project + t.my_key
@@ -2230,21 +2676,24 @@ def circular_mandala_205():
     f.reset_all()
 #     s.end_screen()
     Tm.end_time()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
-#novo_29
+#novo_32
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def occillating_polygon(): # Needs work
     Tm.set_time()
-    # stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/occillating_polygon_' + str(t.file_key) + '_log.txt', 'w')
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/occillating_polygon_' + str(t.file_key) + '_log.txt', 'w')
     print('This is the occillating polygon() code')
     print('from the master_mandala_maker Python module of LR Hatton')
-    print('Located @ line 1958 - 1929, 26th module of 38')
+    print('Located @ line 1958 - 1929, 32nd module of 46')
     Tm.start_time()
 #     
     # Select which set of angles to run
@@ -2255,7 +2704,7 @@ def occillating_polygon(): # Needs work
         t.my_venv()
         Tm.start_time()
         t.my_project = 'An Occillating Polygon'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -2307,21 +2756,24 @@ def occillating_polygon(): # Needs work
     f.reset_all()
 #     s.end_screen()
     Tm.end_time()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
-#novo_30
+#novo_33
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def arc_star():
     Tm.set_time()
-#     print('Starting arc_star() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/arc_star_' + str(t.file_key) + '_log.txt', 'w')
     print('Starting arc_star() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2088 - 2180, 27th module of 38')
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/arc_star_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting arc_star() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 2088 - 2180, 33rd module of 46')
     print('Ran on:  ' + str(Tm.my_time))
     Tm.start_time()
     # Select which set of angles to run
@@ -2331,7 +2783,7 @@ def arc_star():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'An Arc Star Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -2386,26 +2838,29 @@ def arc_star():
         f.save_final_thumb()
         turtle.setup(5,5)
         f.set_vid_env()
-        au.pick_track()
+        au.pick_short_track()
         f.sync_av()
         reset_all()
         Tm.end_time()
 #     s.end_screen()
     Tm.end_time()
     f.reset_all()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
-#novo_31
+#novo_34
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def home_star():
     Tm.set_time()
-#     print('Starting home_star() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/home_star_' + str(t.file_key) + '_log.txt', 'w')
     print('Starting home_star() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2010 - 2085, 28th module of 38')
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/home_star_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting home_star() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 2010 - 2085, 34th module of 46')
     Tm.start_time()
 #     
     t.my_venv()
@@ -2417,7 +2872,7 @@ def home_star():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Home Star Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -2466,18 +2921,20 @@ def home_star():
     Tm.end_time()
 #     s.end_screen()
     f.reset_all()
-#     #  f.pause_option()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
-#novo_32
+#novo_35
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 #Deals best with whole number angles
 def use_abs():
     Tm.set_time()
     print('Starting use_abs() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2268- 2328, 29th module of 38')
+    print('Located @ line 2268- 2328, 35th module of 46')
     Tm.start_time()
 #     
     # Select which set of angles to run
@@ -2487,7 +2944,7 @@ def use_abs():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Use of Abs() Function'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -2519,22 +2976,23 @@ def use_abs():
 #     s.end_screen()
     Tm.end_time()
     f.reset_all()
-    #  #  f.pause_option()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
-
-#novo_33
+#novo_36
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 #TEMPLATE FOR CODE TO CREATE Six-Pointed Mandalas or doubles.
 def double_take():
     Tm.set_time()
-#     print('Starting double_take() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/double_take_' + str(t.file_key) + '_log.txt', 'w')
     print('Starting double_take() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2232 - 2396, 30th module of 38')
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/double_take_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting double_take() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 2232 - 2396, 36th module of 46')
     Tm.start_time()
 #     
     # Select which set of angles to run
@@ -2545,7 +3003,7 @@ def double_take():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Double Pinned Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -2576,22 +3034,24 @@ def double_take():
 #     s.end_screen()
     f.reset_all()
     Tm.end_time()
-    #  #  f.pause_option()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
-#novo_34
+#novo_37
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 #TEMPLATE FOR CODE TO CREATE Cloverleaf Cross Mandala.
 def cloverleaf():
     Tm.set_time()
     print('Starting cloverleaf() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/cloverleaf' + str(t.file_key) + '_log.txt', 'w')
-#     print('Starting cloverleaf() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2400 - 2462, 31st module of 38')
+    stdoutOrigin = sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/cloverleaf' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting cloverleaf() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 2646 - 2698, 37th module of 46')
     Tm.start_time()
     # Select which set of angles to run
     a.i_angle =a.i_angle_auto # Select set of angles to use.
@@ -2601,7 +3061,7 @@ def cloverleaf():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Cloverleaf Mandala'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         f.folder_name = t.my_project + t.my_key
@@ -2609,7 +3069,7 @@ def cloverleaf():
         os.chdir(f.loc_thumb + f.folder_name)
         turtle.title(t.my_str)
 #             t.le.left(t.my_angle/2)
-        t.le.pensize(10)
+        t.le.pensize(1)
         t.le.speed(0)
         t.le.pencolor(0, 255,0)
         turtle.bgcolor(0,0,0)
@@ -2618,7 +3078,8 @@ def cloverleaf():
                 t.le.pencolor(0 + t.iterable, 255 - t.iterable, 0 + t.iterable)
             else:
                 t.le.pencolor(255, 0, 255)
-            t.le.circle(t.phi + t.iterable, t.my_angle)
+            t.le.pensize(t.iterable / 45)    
+            t.le.circle(t.iterable, t.my_angle)
             t.le.penup()
             t.le.forward(t.iterable)
             t.le.pendown()
@@ -2631,19 +3092,23 @@ def cloverleaf():
         Tm.end_time()
 #     s.end_screen()
     f.reset_all()
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
     Tm.end_time()
-#     f.pause_option()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
 
 
+#novo_38
+#+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
+#TEMPLATE FOR CODE TO CREATE Cloverleaf ExtendedcCross Mandala.
 def cloverleaf_extended():
     Tm.set_time()
     print('Starting cloverleaf_extended() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/cloverleaf' + str(t.file_key) + '_log.txt', 'w')
-#     print('Starting cloverleaf() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2400 - 2462, 31st module of 38')
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/cloverleaf_extended' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting cloverleaf_extended() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 3028 - 3154, 38th module of 46')
     Tm.start_time()
     # Select which set of angles to run
     a.i_angle =a.i_angle_auto # Select set of angles to use.
@@ -2756,20 +3221,24 @@ def cloverleaf_extended():
 #         Tm.end_time()
 #     s.end_screen()
     f.reset_all()
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
     Tm.end_time()
-#     f.pause_option()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
 
 
 
+#novo_39
+#+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
+#TEMPLATE FOR CODE TO CREATE Majestic Extended Mandala.
 def majestic_mandala_extended():
     Tm.set_time()
     print('Starting majestic_mandala_extended() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/cloverleaf' + str(t.file_key) + '_log.txt', 'w')
-#     print('Starting cloverleaf() by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2659 - 2781, 31st module of 38')
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/majestic_mandala_extended' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting cloverleaf() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 3158 - 3298, 39th module of 46')
     Tm.start_time()
     # Select which set of angles to run
     a.i_angle =a.i_angle_auto # Select set of angles to use.
@@ -2894,23 +3363,24 @@ def majestic_mandala_extended():
 #         Tm.end_time()
 #     s.end_screen()
     f.reset_all()
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
     Tm.end_time()
-#     f.pause_option()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
 
 
-#novo_35
+
+#novo_41
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def glorious_mandala():  # Based on Awesome Manadala
-    Tm.set_time()
     Tm.start_time()
-#     print('Starting glorious_mandala by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open(my_path + /Logs/glorious_mandala_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting glorious_mandala by Leon Hatton on   ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.loc_code + '/Logs/glorious_mandala_' + str(t.file_key) + '_log.txt', 'w')
     print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
     print('Starting glorious_mandala by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2534- 2617, 32nd module of 38.')
+    print('Located @ line 3302 - 3387, 41st module of 46')
 #     
     t.my_venv()
     
@@ -2923,7 +3393,7 @@ def glorious_mandala():  # Based on Awesome Manadala
         Tm.start_time()
         t.my_project = 'A Glorious Mandala'
         t.my_angle =  a.i_angle[a.i]
-        au.pick_track()
+        au.pick_short_track()
         t.my_str = t.my_project + '    featuring ' + str(round(t.my_angle)) + '  Degree Angles  with   ' + au.my_track
         f.folder_name = t.my_project + t.my_key
         f.make_png_folder() # Deletes old folder and contents and creates new folder wth folder name
@@ -2981,23 +3451,24 @@ def glorious_mandala():  # Based on Awesome Manadala
 #     s.end_screen()
     Tm.end_time()
     f.reset_all()
-#  #  f.pause_option()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
-
-#novo_36
+#novo_42
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def glorious_mandala_extended():  # Based on Awesome Manadala
     Tm.set_time()
     Tm.start_time()
-#     print('Starting glorious_mandala by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open(my_path + /Logs/glorious_mandala_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting glorious_mandala by Leon Hatton on   ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/glorious_mandala_extended' + str(t.file_key) + '_log.txt', 'w')
     print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
     print('Starting glorious_mandala by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2621- 2704, 32nd module of 38.')
+    print('Located @ line 3391- 3317, 42nd module of 38.')
 #     
     t.my_venv()
     
@@ -3010,7 +3481,7 @@ def glorious_mandala_extended():  # Based on Awesome Manadala
         Tm.start_time()
         t.my_project = 'A Glorious Mandala_Extended'
         t.my_angle =  a.i_angle[a.i]
-        au.pick_extended_track()
+        au.pick_medium_track()
         t.my_str = t.my_project + '    featuring ' + str(round(t.my_angle)) + '  Degree Angles  with   ' + au.my_track
         f.folder_name = t.my_project + t.my_key
         f.make_png_folder() # Deletes old folder and contents and creates new folder wth folder name
@@ -3067,10 +3538,12 @@ def glorious_mandala_extended():  # Based on Awesome Manadala
         t.le.penup()
         t.me.setpos(0,0)
         t.le.setpos(0,0)
-        t.me.rt(t.my_angle /2)
-        t.le.rt(t.my_angle /2)
         t.me.pendown()
         t.le.pendown()
+        t.me.speed(0)
+        t.le.speed(0)
+#         t.me.rt(t.my_angle /2)
+#         t.le.rt(t.my_angle /2)
         while t.iterable < 490: # 359 is default, use lower number for testing.
             turtle.bgcolor(0,0,10)
             if count <= 155:
@@ -3082,7 +3555,7 @@ def glorious_mandala_extended():  # Based on Awesome Manadala
             t.le.left(t.my_angle)
             t.le.forward(count /2)
             t.me.circle(count, - t.my_angle, 6)
-            t.le.pensize(count /108)
+            t.le.pensize(count /49)
             t.le.left(t.my_angle)
             t.le.penup()
             t.me.penup()
@@ -3093,9 +3566,9 @@ def glorious_mandala_extended():  # Based on Awesome Manadala
             t.me.pendown()
             t.le.forward(count / t.phi)
             t.me.forward(count / t.phi)
-            f.save_thumb()
             count += 1
             t.iterable += 1
+            f.save_thumb()
         f.save_final_thumb()
         turtle.setup(5,5)
         f.set_vid_env()
@@ -3106,21 +3579,25 @@ def glorious_mandala_extended():  # Based on Awesome Manadala
 #     s.end_screen()
     Tm.end_time()
     f.reset_all()
-#  #  f.pause_option()
-#     sys.stdout.close()
-#     sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
-#novo_36
+#novo_43
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def Independence_mandala():
     Tm.set_time()
     Tm.start_time()
-#     print('Starting Independence_mandala() by Leon Hatton on   ' + str(Tm.my_time))
+    print('Starting Independence_mandala() by Leon Hatton on   ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/Independence_mandala_' + str(t.file_key) + '_log.txt', 'w')
     print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
     print('Starting Independence_Mandala Python module by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2344- 2408, 33rd module of 38.')
+    print('Located @ line 3521- 3590, 43rd module of 46')
     t.my_venv()
     a.i_angle = a.i_angle_auto # Select set of angles to use from the -my_angles- module.
     str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using list comprehension
@@ -3133,7 +3610,7 @@ def Independence_mandala():
         Tm.start_time()
         t.my_project = 'An Independence Mandala'
         t.my_angle =  a.i_angle[a.i]
-        au. pick_track()
+        au. pick_short_track()
         t.my_str = t.my_project + '  featuring '+ str(round(t.my_angle)) + '  Degree Angles   ' + 'with  ' + '-' + au.my_track
         f.folder_name = t.my_project + t.my_key
 #         f.output_to_file() #Starts saving shell output to a file; optional, comment out for default
@@ -3174,23 +3651,26 @@ def Independence_mandala():
     Tm.end_time()
 #     s.end_screen() # Commented out to facilitate accurate a/v processing of the .png images
     f.reset_all()
-    #  #  f.pause_option()
-   
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
 
-#novo_37
+#novo_44
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def wall_show():
     print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
     Tm.set_time()
     Tm.start_time()
-#     print('Starting Independence_mandala() by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/Independence_mandala_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting Wall Show by Leon Hatton on   ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/Wall_Show_' + str(t.file_key) + '_log.txt', 'w')
     print('Starting Wall Shows by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2408- 2474, 34th module of 38.')
+    print('Located @ line 3595- 3665 44th module of 46')
 #     
     t.my_venv()
     # Select which set of angles to run
@@ -3201,7 +3681,7 @@ def wall_show():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Wall Show'
-        au.pick_track()
+        au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         print(t.my_str)
@@ -3238,31 +3718,165 @@ def wall_show():
             turtle.bgcolor(30, 256 - t.iterable, 60)
             f.save_thumb()
         f.save_final_thumb()
-        time.sleep(6)
         turtle.setup(5,5)
         f.set_vid_env()
         f.sync_av()
         reset_all()
         Tm.end_time()
     f.reset_all()
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
     Tm.end_time()
-    #  #  f.pause_option()
 
 
 
-#novo_38
+
+#novo_45
+#+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
+def wall_show_extended():
+    print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+    Tm.set_time()
+    Tm.start_time()
+    print('Starting wall_show_extended() by Leon Hatton on   ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/Wall_Show_Extended' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting Wall Shows Extended by Leon Hatton on   ' + str(Tm.my_time))
+    print('Located @ line 3670- 3799, 45th module of 46')
+#     
+    t.my_venv()
+    # Select which set of angles to run
+    a.i_angle = a.i_angle_auto # Select set of angles to use.
+    str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using list comprehension
+    for a.i  in range( len(a.i_angle)):
+        print('======================================================================')
+        t.my_venv()
+        Tm.start_time()
+        t.my_project = 'A Wall Show Extended'
+        au.pick_medium_track()
+        t.my_angle = a.i_angle[a.i]
+        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        print(t.my_str)
+        f.folder_name = t.my_project + t.my_key
+        f.make_png_folder()
+        print(f.folder_name)
+        os.chdir(f.loc_thumb + f.folder_name)
+        turtle.title(t.my_str)
+        t.iterable = 0
+        turtle.bgcolor(30,255,60)
+        print('The soundtrack being used for this show is: ' + str(au.my_track))
+        print('The featured angle is     ' + str(t.my_angle))
+        print(('The value of t.rand_num is   ')  + str(t.rand_num))
+        print(('The value of t.rand_pick is   ')  + str(t.rand_pick))
+        print('......................................................................................')
+        while t.iterable <= 255:
+            R =  0
+            G =  150
+            B =  255
+            t.le.color( R + t.iterable, G - t.iterable % 130, B - t.iterable)
+            t.le.forward(t.iterable * t.phi)
+            t.le.left(t.my_angle)
+            t.le.pensize(t.iterable /36)
+            t.le.color(t.iterable, t.rand_num, 255 - t.iterable)
+            t.le.right(t.my_angle)
+            t.le.circle(t.iterable / 3, t.my_angle, 6)
+            t.ce.color( B - t.iterable, G - t.iterable % 150, R + t.iterable )
+            t.ce.forward(t.iterable * t.phi)
+            t.ce.right(t.my_angle)
+            t.ce.forward(t.iterable + t.phi)
+            t.ce.pensize(t.iterable / 27)
+            t.ce.color(255 - t.iterable, t.iterable, t.rand_pick)
+            t.iterable += 1
+            turtle.bgcolor(30, 256 - t.iterable, 60)
+            f.save_thumb()
+        t.le.penup()
+        t.ce.penup()
+        t.le.setpos(0,0)
+        t.ce.setpos(0,0)
+        t.le.pendown()
+        t.ce.pendown()
+        t.le.speed(0)
+        t.ce.speed(0)
+        count = 0    
+        while t.iterable <= 510:
+            R =  255
+            G =  150
+            B =  0
+            print(str(t.le.color))
+            t.le.color(R - count % 255, G - count % 130, B + count %255)
+            t.le.forward(count * t.phi)
+            t.le.left(t.my_angle)
+            t.le.pensize(count /36)
+            t.le.color(R - count, t.rand_num, count)
+            t.le.right(t.my_angle)
+            t.le.circle(count / 3, t.my_angle, 6)
+            t.ce.color(R - count % 255, G - count % 150, B + count % 255 )
+            t.ce.forward(count * t.phi)
+            t.ce.right(t.my_angle)
+            t.ce.forward(count * t.phi)
+            t.ce.pensize(count / 27)
+            t.ce.color(R - count % 255, t.rand_num, t.rand_pick)
+            count += 1
+            t.iterable += 1
+            f.save_thumb()
+        t.le.penup()
+        t.ce.penup()
+        t.le.setpos(0,0)
+        t.ce.setpos(0,0)
+        t.le.pendown()
+        t.ce.pendown()
+        t.le.speed(0)
+        t.ce.speed(0)
+        count = 0
+        while t.iterable <= 765:
+            R =  150
+            G =  0
+            B =  255
+            t.le.color(R - count % 145, count, B - count % 255)
+            t.le.forward(count * t.phi)
+            t.le.left(t.my_angle)
+            t.le.pensize(count /36)
+            t.le.color(count, t.rand_num, 255 - count)
+            t.le.right(t.my_angle)
+            t.le.circle(count / 3, t.my_angle, 6)
+            t.ce.color( R - count % 100, t.rand_pick, B - count % 255)
+            t.ce.forward(count * t.phi)
+            t.ce.right(t.my_angle)
+            t.ce.forward(count * t.phi)
+            t.ce.pensize(count / 27)
+            t.ce.color(R - count % 150, count % 255, t.rand_pick)
+            count += 1
+            t.iterable += 1
+            f.save_thumb()
+        f.save_final_thumb()
+        turtle.setup(5,5)
+        f.set_vid_env()
+        f.sync_av()
+        reset_all()
+        Tm.end_time()
+    f.reset_all()
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
+    
+    
+
+#novo_46
 #===========================================================================
 #Code for Black Seed of Life
 def black_seed():
     Tm.set_time()
-    start = timer()
+    Tm.start_time()
 #     time.sleep(3)
-#     print('Starting black seed mandala by Leon Hatton on   ' + str(Tm.my_time))
-#     stdoutOrigin=sys.stdout
-#     sys.stdout = open('/media/elemen/Container/Logs/glorious_mandala_' + str(t.file_key) + '_log.txt', 'w')
+    print('Starting black seed mandala by Leon Hatton on   ' + str(Tm.my_time))
+    stdoutOrigin=sys.stdout
+    sys.stdout = open(f.my_work_dir + '/Make_Mandalas/Logs/black_seed_' + str(t.file_key) + '_log.txt', 'w')
     print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
     print('Starting black_seed_mandala by Leon Hatton on   ' + str(Tm.my_time))
-    print('Located @ line 2679- 2768, 34th module of 38.')
+    print('Located @ line 3803- 3917, 46th module of 46')
 #     
     t.le.speed(30)
     t.le.pensize(36)
@@ -3282,7 +3896,7 @@ def black_seed():
         t.my_venv()
         Tm.start_time()
         t.my_project = 'A Black Seed Mandala'
-        au.pick_track()
+        au.pick_short_track()
 #         t.my_angle = a.i_angle[a.i]
         t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         print(t.my_str)
@@ -3359,9 +3973,11 @@ def black_seed():
     end = timer()
     print(end - start)
     f.reset_all()
-    #  #  f.pause_option()
-    #     sys.stdout.close()
-    #     sys.stdout=stdoutOrig
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    sys.stdout.close()
+    sys.stdout=stdoutOrigin
+    print('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
+    Tm.end_time()
 
 
 
@@ -3373,17 +3989,25 @@ def black_seed():
  apps should be disabled while this code is running.
 '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 """
-f.sync_mandala_folders()
 '====================================================================================================================================================================='
 #  This first group of modules are extended versions of their parent script, as indicated by their name. The are set to also empoly the list of extended music clips.
+'''
+Run medium_clips
+'''
+# glorious_mandala_extended()  #Created 11/13/2022 Located @ line 2990- 3111, 32nd module of 38.  # 2.43 minutes
+# awesome_mandala_extended() #Created 11/7/2022 'Located @ line 1242 - 1342, 3.57 minutes
+# # # #     #NEEDS Work -- Too Slow!# gold_red_mandala_extended() # Created 11/18/2022; 'Located @ line 1856 - 1961, 21st module of 38')  # 4:12 minutes
+# colorful_mandala_extended() #'Located @ line 187 - 256,  3rd module of 38', created on 11/6/2022 # 2.46 minutes
+# wall_show_extended() #Located @ line 3266- 3393, 34th module of 41.
+# brave_mandala_extended() #Located @ line 1645 -1736, 20th module of 38
+'''
+Run long_clips
+'''
+# cloverleaf_extended() #Located @ line 2648 - 2770, 31st module of 38' Created 11/ 17/2022
+# majestic_mandala_extended()  # Created 11/17/2022; Located @ line 2766 - 2900, 31st module of 38' Derived from cloverleaf_extended; employs lines instead of circles
 
-colorful_mandala_extended() #'Located @ line 187 - 256,  3rd module of 38', created on 11/6/2022
-awesome_mandala_extended() #Created 11/7/2022
-glorious_mandala_extended()  #Created 11/13/2022
-brave_mandala_extended() # Created 11/14/2022
-gold_red_mandala_extended() # Created 11/18/2022
-cloverleaf_extended() # Created 11/ 17/2022
-majestic_mandala_extended()  # created 11/17/2022 Derived from cloverleaf_extended; employs lines instead of circles
+'''Run short clips
+'''
 
 '===================================================================================================================================================================='
 #  This second group of modules specifies a single angle; has no looping lists of angles
@@ -3401,41 +4025,44 @@ majestic_mandala_extended()  # created 11/17/2022 Derived from cloverleaf_extend
 '======================================================================================================================================================================='
 # This third group of modules specifies a list of angles to loop
 
-# colorful_mandala() # *novo_5 Row 101 - 151, #2 of 38 Updated to automate video creation
-
+colorful_mandala() # *novo_5 Row 101 - 151, #2 of 38 Updated to automate video creation
+# 
 # jagged_multigram() # novo_6 #Row 150, 3 of 38, Published to YouTube on 11/2/2021 Updated to automate video creation
-
+# # 
 # Fantastic_Mandala() # novo_8  Row 328 - 384, 5 of 38 # Works well. Updated to automate video creation Implemented 't.phi Offset' Angle on 4/28/2022.
-
-# bold_mandala()  # novo_8 Row 593 - 643, 8 of 38, Updated to automate video creation  Implemented 't.phi Offset' Angle on 4/28/2022.
-
+# 
+bold_mandala()  # novo_8 Row 593 - 643, 8 of 38, Updated to automate video creation  Implemented 't.phi Offset' Angle on 4/28/2022.
+# # 
 # animated_abstraction()  #  novo_9 10 of 38, Thumbs created 11/21/2021
-
+# 
 # hued_polygram()  # novo_13  Located @ line 929 - 989, number 13 of 38, created 11/14/2021; added print to file 3/1/2022
+# 
+awesome_mandala()  #  novo_15 15 of 38, Located at lines 1073 - 1118. Processed to mp4 and published to YouTube on 11/21/2021. modified 11/20/2021, This is exceptional.
+# # 
+glorious_mandala() # novo_18 Created 4/6/2022, based on stupendous mandala. Located @ line 2337- 2419, 32nd module of 38.
+# # 
+pretty_awesome_mandala() # novo_19 Row 997 - 1054, Number 16 of 38. Derived from awesome_mandala. # Processed 90 degrees to MP4 on 12/15/2021
 
-# awesome_mandala()  #  novo_15 15 of 38, Located at lines 1073 - 1118. Processed to mp4 and published to YouTube on 11/21/2021. modified 11/20/2021, This is exceptional.
+mighty_awesome_mandala()
 
-# glorious_mandala() # novo_18 Created 4/6/2022, based on stupendous mandala. Located @ line 2337- 2419, 32nd module of 38.
-
-# pretty_awesome_mandala() # novo_19 Row 997 - 1054, Number 16 of 38. Derived from awesome_mandala. # Processed 90 degrees to MP4 on 12/15/2021
-
-# stupendous_mandala() # novo_18 Row 1034 - 1101, number 17 of 38. Derived from pretty_awesome_mandala. Created 1/8/2022. added print to file 3/1/2022Features a more prominent center than it's parent.  Works well.
-
-# brave_mandala() #novo_19 Located @ line 1386 -1449, Derived from awesome_mandala; 18 of 38
-
-# color_shifting_mandala() # novo_20 Rows 1274 - 1327, 19 of 38 work on
-#       
-# gold_red_mandala()  # novo_25 Located @ line 1801 - 1852, 21st module of 38 Added 12/3/2021; processed to mp4 12/16/2021(added 3 degrees)
-
-# Hued_freedom_star() # novo_26 Row 1358 - 1428, 22 of 38; Added 12/4/2021
-                 
+mystical_mandala()
+stupendous_mandala() # novo_18 Row 1034 - 1101, number 17 of 38. Derived from pretty_awesome_mandala. Created 1/8/2022. added print to file 3/1/2022Features a more prominent center than it's parent.  Works well.
+# # # # 
+brave_mandala() #novo_19 Located @ line 1386 -1449, Derived from awesome_mandala; 18 of 38
+# # # # 
+color_shifting_mandala() # novo_20 Rows 1274 - 1327, 19 of 38 work on
+# # # #       
+# #     #NEEDS Work -- Too slow!# gold_red_mandala()  # novo_25 Located @ line 1801 - 1852, 21st module of 38 Added 12/3/2021; processed to mp4 12/16/2021(added 3 degrees)
+# # # 
+Hued_freedom_star() # novo_26 Row 1358 - 1428, 22 of 38; Added 12/4/2021
+#                  
 # arc_star() #novo_28 27 of 38; Located at lines 1586 - 1654. Added 01/06/2022. Derived from a Thought Matrix arc-star wriiten by me in 2020.\
-                        # Employs first use of automated creation of angle lists using numpy arange.
-
-# home_star() #novo_ 28 of 38; Located at lines 2007 - 2078.  Added 01/06/2022. Derived from a Thought Matrix arc-star scripted by me in 2020.\
-                        # Employs first use of automated creation of angle lists using numpy arange. Called home_star because the turtle\
-                        # pen is picked up and dropped down at the center of the screen(0,0).
-
+# #                         # Employs first use of automated creation of angle lists using numpy arange.
+# # 
+home_star() #novo_ 28 of 38; Located at lines 2007 - 2078.  Added 01/06/2022. Derived from a Thought Matrix arc-star scripted by me in 2020.\
+# #                         # Employs first use of automated creation of angle lists using numpy arange. Called home_star because the turtle\
+# #                         # pen is picked up and dropped down at the center of the screen(0,0).
+# # 
 # ribbons_mandala()  #novo_30  24 of 38; Located at rows 1572 - 1635. Added 12/8/2021 (Edited from Mandala_160_09292020); converted to mult-angles on 1/20/2022
 
 # use_abs() # novo_31 29 of 38; Located at line 1890. Uses the abs() function to draw the sides and points such that it continues until the point of origin is reached.
@@ -3443,11 +4070,11 @@ majestic_mandala_extended()  # created 11/17/2022 Derived from cloverleaf_extend
 # double_take() # novo_32 30 of 38; Located at line 1843 - 1881. Facilitates the creation of a hexagram by using 2 pens drawn\
 #                     # with same angles in opposite directions. Using specific angle array named a.i.angle_double.
 
-# cloverleaf() # novo_33 31 of 38, Located at line  2247 - 2304. Created 3/6/2022.
-
-# wall_show() # novo_34 of 38. Located @ line 2408- 2474. Working on a suitable product to frame and display on a wall. Began development August 2022.
-
-# Independence_mandala() # novo_33  Located @2335 - 2408. Developed June 2022, Added 6/28/2022. 33rd module of 38. Makes beautiful diagrams.
+cloverleaf() # novo_33 31 of 38, Located at line  2247 - 2304. Created 3/6/2022.
+# # # 
+wall_show() # novo_34 of 38. Located @ line 2408- 2474. Working on a suitable product to frame and display on a wall. Began development August 2022.
+# # # 
+Independence_mandala() # novo_33  Located @2335 - 2408. Developed June 2022, Added 6/28/2022. 33rd module of 38. Makes beautiful diagrams.
 
 '===================================================================================================================================================='
 # This set of modules require tweaking and modification
@@ -3469,4 +4096,4 @@ majestic_mandala_extended()  # created 11/17/2022 Derived from cloverleaf_extend
 turtle.setup(550,550) # Minimized turtle window to observe screen and read shell output
 f.move_all() # Moves files to appropriate locations
 f.sync_mandala_folders()  # Sync video and script folders backups
-turtle.exitonclick()  # Waits for mouse click to end the program;  Default is to leave uncommented.
+turtle.bye()  # End the program;  Default is to leave uncommented.
