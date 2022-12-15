@@ -1,4 +1,4 @@
-# Music Clips for merging to video and other projects
+# Music Clips for merging to video and other projects(audio_clips.py)
 import sys
 import random
 import os
