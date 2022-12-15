@@ -3680,12 +3680,11 @@ def wall_show():
         print('======================================================================')
         t.my_venv()
         Tm.start_time()
-        t.my_project = 'A Wall Show'
         au.pick_short_track()
         t.my_angle = a.i_angle[a.i]
-        t.my_str = t.my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
+        t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + au.my_track
         print(t.my_str)
-        f.folder_name = t.my_project + t.my_key
+        f.folder_name = my_project + t.my_key
         f.make_png_folder()
         print(f.folder_name)
         os.chdir(f.loc_thumb + f.folder_name)
