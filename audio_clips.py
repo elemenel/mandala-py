@@ -1,4 +1,4 @@
-# Music Clips for merging to video and other projects(audio_clips.py)
+# Music Clips for merging to video and other projects
 import sys
 import random
 import os
@@ -65,10 +65,10 @@ def print_clips_list():
     print('=================================================================================================================')
     
 
-strauss_clips = [my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Four Symphonic Interludes (from Intermizzo).mp3', # 24  minutes
-                my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Dance of the Seven Veils.mp3',  # 10  minutes
-                my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Also Sprach Zarathustra, Op. 30.mp3'] # 36  minutes
-# for i in strauss_clips:  # prefix_ac
+#  #[my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Four Symphonic Interludes (from Intermizzo).mp3', # 24  minutes
+#                 #my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Dance of the Seven Veils.mp3',  # 10  minutes
+#                 [my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Also Sprach Zarathustra, Op. 30.mp3'] # 36  minutes
+# for i in strauss_clips: 
 #     get_music_file_duration()
 
 
@@ -89,19 +89,11 @@ new_world_symphony = [my_music_path + '/Dvorak, Antonin - Symphony No 9 From the
 #                         my_music_path + '/Dvorak, Antonin - Symphony No 9 From the New World/Scherzo molto vivace.mp3',   7  minutes
                         my_music_path + '/Dvorak, Antonin - Symphony No 9 From the New World/Largo.mp3', # 12  minutes
                         my_music_path + '/Dvorak, Antonin - Symphony No 9 From the New World/Adagio allegro molto.mp3']  # 9  minutes
-for i in new_world_symphony:  # prefix_aa
+for i in new_world_symphony:  
     get_music_file_duration()
     
 
-tchaikovsky_clips = [my_music_path + '/Pjotr Ilyich Tchaikovsky - The Masterpiece Collection Vol. 9/Wedding Dance From \'\'Swan Lake\'\' Suite Op. 20.mp3',   # 2  minutes
-                    my_music_path + '/Pjotr Ilyich Tchaikovsky - The Masterpiece Collection Vol. 9/Capriccio Italien Op. 45.mp3',  # 15  minutes
-                    my_music_path + '/Pjotr Ilyich Tchaikovsky - The Masterpiece Collection Vol. 9/Waltz From \'\'The Sleeping Beauty\'\'.mp3', # 4  minutes 
-                    my_music_path + '/Pjotr Ilyich Tchaikovsky - The Masterpiece Collection Vol. 9/Violin Concerto In D Major Op. 35 - Canzonetta - Adante.mp3', # 6  minutes
-                    my_music_path + '/Pjotr Ilyich Tchaikovsky - The Masterpiece Collection Vol. 9/Waltz from Serenade For Strings.mp3',  # 3  minutes
-                    my_music_path + '/Pjotr Ilyich Tchaikovsky - The Masterpiece Collection Vol. 9/Piano Concerto No. 1.mp3',  # 4  minutes
-                    my_music_path + '/Pjotr Ilyich Tchaikovsky - The Masterpiece Collection Vol. 9/Overture 1812 Op. 49.mp3']  # 15  minutes
-# for i in tchaikovsky_clips:  #  prefix_z
-#     get_music_file_duration()
+
     
     
 the_spinners = [my_music_path + '/Spinners - The Essentials/Cupid-I\'ve Loved You For A Long Time.mp3',
@@ -132,8 +124,8 @@ anthony_hamilton = [my_music_path + '/Anthony Hamiton - Comin From Where I\'m Fr
                     my_music_path + '/Anthony Hamiton - Comin From Where I\'m From/Anthony Hamilton - Since I Seen\'t You.mp3',
                     my_music_path + '/Anthony Hamiton - Comin From Where I\'m From/Anthony Hamilton - Cornbread, Fish & Collard Greens.mp3',
                     my_music_path + '/Anthony Hamiton - Comin From Where I\'m From/Anthony Hamilton - Mama Knew Love.mp3']
-# for i in anthony_hamilton:  
-#     get_music_file_duration()
+for i in anthony_hamilton:  
+    get_music_file_duration()
 
 
 
@@ -151,8 +143,8 @@ bob_marley = [my_music_path + '/Bob Marley - Bob Marley Collection/Bob Marley - 
                 my_music_path + '/Bob Marley - Bob Marley Collection/Bob Marley - Soul Almighty.mp3',  # 2  minutes
                 my_music_path + '/Bob Marley - Bob Marley Collection/Bob Marley - Rebel\'s Hop.mp3',  # 2  minutes
                 my_music_path + '/Bob Marley - Bob Marley Collection/Bob Marley - Jamming.mp3']  # 3  minutes
-# for i in bob_marley:  #prefix_v
-#     get_music_file_duration()
+for i in bob_marley:  
+    get_music_file_duration()
 
 
 
@@ -191,8 +183,8 @@ soul_ballads = [my_music_path + '/Various artists - Soul Ballads/Teddy Pendergra
                 my_music_path + '/Various artists - Soul Ballads/Joe Tex - Hold What You\'ve Got.mp3',
                 my_music_path + '/Various artists - Soul Ballads/Jerry Butler - For Your Precious Love.mp3',
                 my_music_path + '/Various artists - Soul Ballads/The Platters - Only You (And You Alone).mp3']
-# for i in soul_ballads:  
-#     get_music_file_duration()
+for i in soul_ballads:  
+    get_music_file_duration()
 
 
 hits_of_80 = [my_music_path + '/Various artists - The Ultimate Jukebox Hits of the 80s - Volume 2/The Gap Band - Early In The Morning.mp3',
@@ -207,8 +199,8 @@ hits_of_80 = [my_music_path + '/Various artists - The Ultimate Jukebox Hits of t
                 my_music_path + '/Various artists - The Ultimate Jukebox Hits of the 80s - Volume 2/Quincy Jones & James Ingram - One Hundred Ways.mp3',
                 my_music_path + '/Various artists - The Ultimate Jukebox Hits of the 80s - Volume 2/Jocelyn Brown - Somebody Else\'s Guy.mp3',
                 my_music_path + '/Various artists - The Ultimate Jukebox Hits of the 80s - Volume 2/Evelyn \'Champagne\' King - Love Come Down.mp3']
-# for i in hits_of_80: 
-#     get_music_file_duration()
+for i in hits_of_80: 
+    get_music_file_duration()
 
 will_downing = [my_music_path + '/Will Downing - After Tonight/Lover\'s Melody (feat. Roy Ayers).mp3',
                 my_music_path + '/Will Downing - After Tonight/God Is So Amazing.mp3',
@@ -479,8 +471,8 @@ anita_baker = [my_music_path + '/Anita Baker - The Best of Anita Baker/It\'s Bee
                 my_music_path + '/Anita Baker - The Best of Anita Baker/No More Tears.mp3',
                 my_music_path + '/Anita Baker - The Best of Anita Baker/You\'re the Best Thing Yet.mp3',
                 my_music_path + '/Anita Baker - The Best of Anita Baker/Angel (single version).mp3']
-# for i in anita_baker:  #prefix_j
-#     get_music_file_duration()
+for i in anita_baker:  
+    get_music_file_duration()
 
 #Selections for extended modules (Greater than 4 minutes)
 extended_clips = [my_music_path +'/Kenya Rhodes - Pass Me Not/Kenya Rhodes - Pass Me Not.mp3',
@@ -665,3 +657,13 @@ def pick_short_track():
 #             get_duration()
 #            
 #     object.close()
+
+
+    
+    
+    
+    
+    
+    
+    
+
