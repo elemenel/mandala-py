@@ -84,28 +84,13 @@ clip_path = my_work_dir +'/Audio Clips for Python/'
 global full_vid_path
 full_vid_path = my_work_dir + '/Videos/no_audio/' + folder_name +'.mp4'
 
-global open_shell_out_path
-open_shell_out_path = my_work_dir + '/Logs/_log.txt'
 
 
 
 
 
-#Output shell to file
-def output_to_file():
-    global stdoutOrigin
-    t.my_venv()
-    print('Starting shell output to a file.....')
-    stdoutOrigin = sys.stdout
-    sys.stdout = open(open_shell_out_path, 'w')
-    print('Started shell output to file.')
 
-def restore_default_shell():
-    print('Stopping shell output to file...')
-    sys.stdout.close()
-    sys.stdout = stdoutOrigin
-    
-    print('Shell output default restored')
+
 #********************************************************************************************************'
 # Copies completed videos to /home/elemen/Videos/Full_Vids for Plex access on Linux
 def copy_videos():
@@ -327,7 +312,7 @@ def make_video():
                             audio_codec= 'mp3', audio_bitrate= None, audio_bufsize=4000, temp_audiofile = my_work_dir + '/temp',
                             remove_temp= True, write_logfile= True, threads=None,
                             ffmpeg_params= None, logger= 'bar')
-    print('mp4 vid-only duration: ' + str(my_clip.duration / 60) + 'minutes')
+    print('mp4 vid-only duration: ' + str(my_clip.duration / 60) + '  minutes')
     
     print('Thumb images conversion to audio-less mp4 video file completed!')
   
@@ -360,52 +345,22 @@ def sync_av():
     print('File Name is  ' + my_file)
     videoclip = VideoFileClip(my_audio_path + 'Videos/no_audio/' + my_file +'.mp4')
     audioclip = AudioFileClip(au.my_audio_clip)
-    print('The duration of this clip is   ' + str(audioclip.duration / 60) + 'minutes')
+    print('The duration of this clip is   ' + str(audioclip.duration / 60) + '  minutes')
 #     full_vid_path = my_work_dir + str('/Videos/Full_Vids/' + folder_name + '.mp4')
     new_audioclip = CompositeAudioClip([audioclip])
     videoclip.audio = new_audioclip
     videoclip.write_videofile(my_audio_path + str('Videos/Full_Vids/' + t.my_str + '.mp4'))
-    print('The duration of the new video is ' + str(videoclip.duration / 60) + 'minutes')
+    print('The duration of the new video is ' + str(videoclip.duration / 60) + '  minutes')
     print('The new video has been renamed to    ' + t.my_str + '.mp4')
     os.chdir(loc_code)
-    time.sleep(15)
-    print('=========================================')    
+    time.sleep(12)
+    print('====================================================================')    
     
 # sync_av()
 
-#  Output shell to a file
-def begin_output_to_file():
-    import sys
-    original_stdout = sys.stdout
-    filename.txt = str(t.my_str + 'ran on' + str(Tm.date_time))
-    sys.stdout = open('filename.txt', w)
-    print("test sys.stdout")
-    sys.stdout = original_stdout
-# begin_output_to_file()
-
-
-    print('Closing output to file')
-    filename.txt = str(t.my_str + 'ran on' + str(Tm.date_time))
-    sys.stdout = close('filename.txt', w)
-    sys.stdout = original_stdout
 
 
 
-def output_to_text():
-    import sys
-    filename.txt = t.my_str + 'ran on' + str(Tm.date_time)
-    print('filename.txt = str(t.my_str + ran on + str(Tm.date_time))')
-    print(' By LeonRHatton')
-    original_stdout = sys.stdout # Save a reference to the original standard output
-
-    with open('filename.txt', 'w') as f:
-        sys.stdout = f # Change the standard output to the file we created.
-        print('This message will be written to a file.')
-        print('This, too! ')
-        print( 'And this too?')
-        sys.stdout = original_stdout # Reset the standard output to its original value
-        
- 
 
 def append_to_text():
     import sys
@@ -588,4 +543,5 @@ def get_video_duration():
             print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
             print(str(filename) + ': ' + str(round(clip.duration /60)) + ' minutes')   
 # get_video_duration()    
+    
     
