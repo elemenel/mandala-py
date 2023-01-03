@@ -19,9 +19,9 @@ personal library. Containing over 30 unique scripts, the custom python module "m
 
 New users will have to specify the path to their own local audio tracks.
 
-The Thonny app includes a pip gui thatcan search and install any content in the pip repository. Thonny also ensures that the additional
+The Thonny app includes a pip gui that can search and install any content in the pip repository. Thonny also ensures that the additional
 modules from pip are installed on the correct path.
-Thonny can install the following modu;es required to run the Master Mandala Maker.
+Thonny can install the following modules required to run the Master Mandala Maker.
 
  1. open cv-python,
  2. numpy,
@@ -30,7 +30,7 @@ Thonny can install the following modu;es required to run the Master Mandala Make
  5. moviepy with ipython notebook
  6. natsort.
 
-scrot is rquired also, but it is unavailabale in pip. Hence, it has to be installed via apt (Ubuntu).
+scrot is required also, but it is unavailabale in pip. Hence, it has to be installed via apt (Ubuntu).
 
 This code first sets up the file environment, then selects an angle as a base template for the mandala. Then an audio track is randomly selected.
 The code then initiates the video-making process. With each loop of code, .png images are saved. The looped collection of .pngs is then sorted sequentially
