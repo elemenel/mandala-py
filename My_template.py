@@ -1,13 +1,36 @@
 """  My_template.py contains file manipulation scripts associated with master_mandala_maker.py.
  This custom module is needed to run master_mandala_maker. It sets up the environment that each of the
-  30 or so mandala makers (modular scripts) depend upon to run all functions to successful completions.
+  40+ mandala makers (modular scripts) depend upon to run all functions to successful completions.
  by LeonRHatton using Thonny IDE.
 """
 import time
 # from functools import lru_cache
 
+
+
 global file_name
 file_name = 'novonno_file'
+
+global folder_name
+folder_name = 'novanno_files'
+
+global count
+count = 0
+
+global bg_count, bg_count_2,bg_count_3
+bg_count = 0
+bg_count_2 = 0
+bg_count_3 = 0
+
+global file_key, my_key # Used to set a random number to avoid making duplicate file names.
+import random
+file_key = random.randrange(100,10000,1)
+my_key = ' -r.' + str(file_key)
+
+global my_project
+my_project = 'Master Mandala Maker'
+
+
 
 def my_venv():
     import turtle # The main turtle module is used in this module.
@@ -20,12 +43,15 @@ def my_venv():
     import my_angles as a
     import math
     import gc
+    
+    
     Tm.set_time()
     
     global turtle
     turtle.setup(1950, 1070)  # This is the default screen size. Choose any size.
     turtle.title('The Novonno Healing Mandalas by LeonRHatton') # Placeholder. Is unique to each mandala maker
     turtle.shape('blank')
+    turtle.mode('standard') #standard
     turtle.colormode(255)
     turtle.pensize(2)
     R = 255
@@ -55,131 +81,103 @@ def my_venv():
     global phi
     phi = ( 1 + math.sqrt(5) ) / 2
     
-    global my_pen # An instance of turtle. Used exclusivley to write on the images.
+    global my_pen # 1. An instance of turtle. Used exclusivley to write on the Turtle canvas.
     my_pen = turtle.Turtle()
     my_pen.speed(0)
     my_pen.shape('blank')
     my_pen.pensize(1)
     
-    global le # An instance of turtle.
+    global le # 2. An instance of turtle. Used by my_hues module as ' pick_light' pen.
     le = turtle.Turtle()
     le.speed(0)
     le.shape('blank')
     le.pensize(1)
     
-    global ce # An instance of turtle.
+    global ce # 3. An instance of turtle. Used by my_hues module as 'pick_random' pen.
     ce = turtle.Turtle()
     ce.speed(0)
     ce.shape('blank')
     ce.pensize(1)
     
-    global lr # An instance of turtle.
+    global lr # 4. An instance of turtle. Used by my_hues module as ' pick_random_a' pen
     lr = turtle.Turtle()
     lr.speed(0)
     lr.shape('blank')
     lr.pensize(1)
     
-    global li  # An instance of turtle.
+    global li  # 5. An instance of turtle. Used by my_hues module as 'pick_indigo' pen.
     li = turtle.Turtle()
     li.speed(0)
     li.shape('blank')
     li.pensize(1)
     
-    global lu # An instance of turtle.
+    global lu # 6. An instance of turtle. Used by my_hues module as 'pick_red' pen.
     lu = turtle.Turtle()
     lu.speed(0)
     lu.shape('blank')
     lu.pensize(1)
     
-    global ld  # An instance of turtle.
+    global ld  # 7. An instance of turtle. Used by my_hues module as 'pick_dot' pen.
     ld = turtle.Turtle()
     ld.speed(0)
     ld.shape('blank')
     ld.pensize(1)
     
-    global la # An instance of turtle.
+    global la # 8. An instance of turtle. Used by my_hues module as 'pick_gold' pen.
     la = turtle.Turtle()
     la.speed(0)
     la.shape('blank')
     la.pensize(1)
     
-    global lg # An instance of turtle.
+    global lg # 9. An instance of turtle. Used by my_hues module as 'pick_green' pen.
     lg = turtle.Turtle()
     lg.speed(0)
     lg.shape('blank')
     lg.pensize(1)
     
-    global lb # An instance of turtle.
+    global lb # 10. An instance of turtle. Used by my_hues module as 'pick_blue' pen.
     lb = turtle.Turtle()
     lb.speed(0)
     lb.shape('blank')
     lb.pensize(1)
     
-    global lc  # An instance of turtle.
+    global lc  # 11. An instance of turtle.
     lc = turtle.Turtle()
     lc.speed(0)
     lc.shape('blank')
     lc.pensize(1)
     
-    global lm # An instance of turtle.
+    global lm # 12. An instance of turtle.
     lm = turtle.Turtle()
     lm.speed(0)
     lm.shape('blank')
     lm.pensize(1)
     
-    global ll # An instance of turtle.
+    global ll # 13. An instance of turtle.
     ll = turtle.Turtle()
     ll.speed(0)
     ll.shape('blank')
     ll.pensize(1)
     
-    global me # An instance of turtle.
+    global me # 14. An instance of turtle. Used by my_hues module as 'pick_magenta' pen.
     me = turtle.Turtle()
     me.speed(0)
     me.shape('blank')
     me.pensize(1)
     
-    global lz # An instance of turtle.
+    global lz # 15. An instance of turtle. Used by my_hues module as 'pick_dark' pen.
     lz = turtle.Turtle()
     lz.speed(0)
     lz.shape('blank')
     lz.pensize(1)
     
-    global iterable # Universal counter used as iterator.
+    
+   # Universal counter used as iterator.
+    global iterable 
     iterable = 0
-    
-    global file_key, my_key # Used to set a random number to avoid making duplicate file names.
-    file_key = random.randrange(100,10000,1)
-    my_key = ' -r.' + str(file_key)
-    
-        
-    
-    
+      
+    #Garbage collector  
     gc.enable()   
     
     
       
-    #Utility to clear screen and reset to sequence next screen drawing
-def reset_all():
-    import time
-    turtle.reset()
-    my_pen.reset()
-    le.reset()
-    me.reset()
-    lb.reset()
-    la.reset()
-    lg.reset()
-    ld.reset()
-    lr.reset()
-    lc.reset()
-    ll.reset()
-    lu.reset()
-    lm.reset()
-    lu.reset()
-    li.reset()
-    time.sleep(9)
-    
-    print('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
-    
-    
-    

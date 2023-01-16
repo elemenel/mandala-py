@@ -5,7 +5,7 @@ MASTER MANDALA MAKER (master_mandala_maker.py); developer: Leon Hatton, elementa
     Default  platform is Linux. Currently using Kubuntu, which I think has a good balance between performance and
     ease of use.
     
-    Imported from PyPy through Thonny are the following:
+    Modules imported from PyPy through Thonny are the following:
     Turtle, MoviePy, PyAutogui, NatSort, Numpy, Random, CV2, DateTime, TimeIt, OS,  Sys, Logging,  gc, \
     DirSync, Pillow, Shutil, PathLib, Glob, Imagio, Functools, Math, Mutagen. PyAutoGui  running on Linux needs scrot,
     which is installed from apt(Ubuntu).
@@ -13,7 +13,7 @@ MASTER MANDALA MAKER (master_mandala_maker.py); developer: Leon Hatton, elementa
     In addition to the above-listed imported modules from Pypy,
     the the author has developed and is actively maintaining the following custom Python modules:
         1. master_mandala_maker.py; primary module, initiates and runs code for the animations.
-        2. My_template.py; sets up the enviroment
+        2. My_template.py; sets up the environment
         3. my_angles.py; processes angle selections
         4. my_hues.py; selects custom color hues
         5. my_splash_screen.py; starts the show; ends the show (not being used due to issues with sort)
@@ -62,10 +62,11 @@ else:
 
 t.my_venv()   #Initializes mandala drawing environments
 
-count = 0
+t.count = 0
 
 my_project = str('The Novanno Angles')
 
+# Set up Logger
 def startup_script():
     global my_filename
     global logger
@@ -85,11 +86,12 @@ def startup_script():
     logger.info('Starting  ' + my_project + ' @  ' + str( Tm.my_time))
     logger.info('This is ' + my_project + ' code')
 
+# Creates working folders and declares variables; gets things rolling
 def make_folder():
     logger.info('Setting up directories and files for video production  @  '+ str(Tm.my_time))
     t.my_angle = a.i_angle_auto[a.i]
     t.my_str = my_project + '    featuring   ' + str(round( t.my_angle)) + '    Degree Angles,   with   '  + str(au.my_track)
-    s.title_screen()
+    s.splash_screen()
     t.folder_name = my_project + '_' + str(t.my_angle) + '_' + str(au.my_track)
     logger.info('Folder name is   ' + str(t.folder_name))
     f.make_png_folder()
@@ -97,7 +99,7 @@ def make_folder():
     turtle.title(t.my_str)
     logger.info('Presenting  ' + t.my_str)
 
-
+# Starts video creation process
 def stage_video():
     f.save_final_thumb()
     logger.info(' Starting video creation @ ' + str(Tm.my_time) + '.........')
@@ -112,7 +114,7 @@ def stage_video():
     
     
     
-
+# Shuts down module processing and closes Turtle
 def finalize():
     logger.info('************************************************************************')
     logger.info('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
@@ -157,20 +159,25 @@ def reset_all():   #Utility to clear screen and reset to sequence next screen dr
     logger.info('********************************************************************************************************************')
     time.sleep(9)
 
-def count_one():
+def count_it():
     t.iterable += 1
     return t.iterable
 
-def count_two():
+def count_it_c():
     t.iterable += 1
-    count += 1
-    return t.iterable, count
+    t.count += 1
+    return t.iterable, t.count
+
+def count_it_bg():
+    t.iterable += 1
+    t.bg_count += 1
+    return t.iterable, t.bg_count
 
 def count_three():
     t.iterable += 1
-    count += 1
+    t.count += 1
     t.bg_count += 1
-    return t.iterable, count, t.bg_count
+    return t.iterable, t.count, t.bg_count
 
 
 
@@ -218,7 +225,7 @@ def basic_yin_yang(): # **
         t.le.color(255,255,255) # 255,255,255 is default (White)
         t.le.rt(-t.my_angle)
         t.le.circle(250)
-        count_one()
+        count_it()
         f.save_thumb()
     stage_video()
     finalize()
@@ -268,7 +275,7 @@ def colorful_mandala():  # **
             t.li.right(t.my_angle)
             t.li.forward(t.iterable + t.phi)
             t.li.pensize(t.iterable / 54)
-            count_one
+            count_it()
             f.save_thumb()
 #         time.sleep(10)     #For testing only. comment out for normal run.
         stage_video()
@@ -324,12 +331,12 @@ def colorful_mandala_extended():  # **
             t.li.right(t.my_angle)
             t.li.forward(t.iterable + t.phi)
             t.li.pensize(t.iterable / 27)
-            count_one()
+            count_it()
             f.save_thumb()
         # Start second pass
         logger.info('Starting Second Loop of 3')
         t.iterable = 244
-        count = 0
+        t.count = 0
         t.la.penup()
         t.li.penup()
         t.la.setpos(0,0)
@@ -343,26 +350,27 @@ def colorful_mandala_extended():  # **
             G =  140
             B =  255
             if R == 240:
-                t.la.color( 240, count %100, B - count %250)
-                t.li.color( 240, G -count % 140, B - count % 240)
+                t.la.color( 240, t.count %100, B - t.count %250)
+                t.li.color( 240, G - t.count % 140, B - t.count % 240)
             else:
-                t.la.color( count %240, G - count %140, B - count %100)
-                t.li.color( count %100, G - count %140, B - count % 240)
-            t.la.forward(count * t.phi)
+                t.la.color( t.count %240, G - t.count %140, B - t.count %100)
+                t.li.color( t.count %100, G - t.count %140, B - t.count % 240)
+            t.la.forward(t.count * t.phi)
             t.la.left(t.my_angle)
-            t.la.pensize(count / 54)
+            t.la.pensize(t.count / 54)
             t.la.right(t.my_angle)
-            t.la.circle(count + t.phi, t.my_angle, 6)
-            t.li.forward(count + t.phi)
+            t.la.circle(t.count + t.phi, t.my_angle, 6)
+            t.li.forward(t.count + t.phi)
             t.li.right(t.my_angle)
-            t.li.forward(count)
-            t.li.pensize(count / 45)
-            count_two()
+            t.li.forward(t.count)
+            t.li.pensize(t.count / 45)
+            count_it()
+            t.count += 1
             f.save_thumb()
           # Start second pass
         logger.info('Starting Third Loop of 3')
         t.iterable = 505
-        count = 0
+        t.count = 0
         t.la.penup()
         t.li.penup()
         t.la.setpos(0,0)
@@ -376,21 +384,22 @@ def colorful_mandala_extended():  # **
             G =  140
             B = 0
             if B == 240:
-                t.la.color( R - count, G + count %140, 240)
-                t.li.color( R - count, G - count%140, 240)
+                t.la.color( R - t.count, G + t.count %140, 240)
+                t.li.color( R - t.count, G - t.count%140, 240)
             else:
-                t.la.color( R - count, G - count %140, count %100)
-                t.li.color(R - count %100, G - count %140,  count % 240)
-            t.la.forward(count * t.phi)
+                t.la.color( R - t.count, G - t.count %140, t.count %100)
+                t.li.color(R - t.count %100, G - t.count %140,  t.count % 240)
+            t.la.forward(t.count * t.phi)
             t.la.left(t.my_angle)
-            t.la.pensize(count / 45)
+            t.la.pensize(t.count / 45)
             t.la.right(t.my_angle)
-            t.la.circle(count + t.phi, t.my_angle, 6)
-            t.li.forward(count + t.phi)
+            t.la.circle(t.count + t.phi, t.my_angle, 6)
+            t.li.forward(t.count + t.phi)
             t.li.right(t.my_angle)
-            t.li.forward(count)
-            t.li.pensize(count /36)
-            count_two()
+            t.li.forward(t.count)
+            t.li.pensize(t.count /36)
+            count_it()
+            t.count += 1
             f.save_thumb()    
         stage_video()
     finalize()
@@ -419,7 +428,7 @@ def jagged_multigram():  # **
     s.title_screen()
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
-        au.pick_medium_track()
+        au.pick_extended_track()
         make_folder()
         my_hue = random.randint(5, 100)
         my_hue_a = random.randint(100, 200)
@@ -432,43 +441,48 @@ def jagged_multigram():  # **
         logger.info('The value of my_hue_a is' + '   ' + str(my_hue_a))
         t.iterable = 0
         t.bg_count = 0
-        my_length = 255
+        my_length = 700
+        # First pass
         while t.iterable <= my_length: #250 is default. Use lower number for testing. Loops limited by maximum color value of 255.
-            h.bg_fade_dark_to_yellow()
+            h.bg_fade_skyblue_to_dark()
+            h.pick_blue() # Blue pen
             R =  my_hue  #Pen le color
-            G =  my_length  #Pen le color
+            G =  255  #Pen le color
             B =  0  #Pen le color
-            L = my_length  #Pen me color
+            L = 255  #Pen me color
             M = my_hue_a  #Pen me color
             N = 0  #Pen me color
             D = 0  #Pen lb color
             E = my_hue  #Pen lb color
-            F = my_length  #Pen lb color
-            t.le.color( R , G - t.iterable ,  t.iterable )
-            t.me.color( L - t.iterable, M,  t.iterable )
-            t.lb.color( D + t.iterable, E, F - t.iterable)
+            F = 255  #Pen lb color
+            t.le.color( R , G - t.iterable %100 ,  t.iterable %100 )
+            t.me.color( L - t.iterable %50, M,  t.iterable % 50 )
+#             t.lb.color( D + t.iterable %75, E, F - t.iterable %75)
             t.le.left(t.my_angle)
             t.me.left(t.my_angle)
             t.lb.left( t.my_angle / t.phi)
-            t.le.forward( t.iterable * 3 )
-            t.me.forward( t.iterable  * 2 + t.phi )
-            t.lb.forward( t.iterable  * 2.5)
+            t.le.forward( t.iterable / 3)
+            t.me.forward( t.iterable + t.phi )
+            t.lb.forward( t.iterable / 2)
             t.le.rt(t.my_angle)
             t.me.left( - t.my_angle)
             t.lb.rt( t.my_angle)
-            t.me.forward(t.iterable  / 2)
-            t.le.forward(t.iterable  / 1.5)
+            t.me.forward(t.iterable /3)
             t.lb.forward(t.iterable  / 2.5)
-            t.le.circle(t.iterable / 63,  t.my_angle, 5)
+            t.le.circle(t.iterable / 63,  t.my_angle, 3)
             t.me.circle(t.iterable / 72,  t.my_angle)
             t.lb.circle(t.iterable / 54, t.my_angle)
-            t.me.pensize(t.iterable  / 45)
-            t.le.pensize(t.iterable  / 50 )
-            t.lb.pensize(t.iterable  / 50)
-            t.iterable += 1
+            t.le.penup()
+            t.le.left(t.my_angle)
+            t.le.backward(t.iterable / 7)
+            t.le.pendown()
+            t.me.pensize(t.iterable  / 145)
+            t.le.pensize(t.iterable  / 150 )
+            t.lb.pensize(t.iterable  / 150)
+            count_it()
             t.bg_count += 1
             f.save_thumb()
-        count = 0
+        t.count = 0
         t.bg_count = 0
         t.le.penup()
         t.me.penup()
@@ -479,40 +493,45 @@ def jagged_multigram():  # **
         t.le.pendown()
         t.me.pendown()
         t.lb.pendown()
-        while count <= my_length: #255 is default. Use lower number for testing. Loops limited by maximum color value of 255.
-            h.bg_fade_yellow_to_dark()
+        # Second pass
+        while t.count <= my_length: #255 is default. Use lower number for testing. Loops limited by maximum color value of 255.
+            h.bg_fade_dark_to_skyblue()
+            h.pick_magenta() # Magenta pen
             R =  my_hue  #Pen le color
-            G =  my_length  #Pen le color
+            G = 255  #Pen le color
             B =  0  #Pen le color
-            L = my_length  #Pen me color
+            L = 255  #Pen me color
             M = my_hue_a  #Pen me color
             N = 0  #Pen me color
             D = 0  #Pen lb color
             E = my_hue  #Pen lb color
-            F = my_length  #Pen lb color
+            F = 255  #Pen lb color
             logger.info('The value of my_hue is' + '   ' + str(my_hue))
             logger.info('The value of my_hue_a is' + '   ' + str(my_hue_a))
-            t.le.color( R , G - count ,  count )
-            t.me.color( L - count, M,  count )
-            t.lb.color( D + count, E, F - count)
+            t.le.color( G - t.count %100 ,  t.count %100, R )
+#             t.me.color( L - t.count %50, M,  E)
+            t.lb.color(F - t.count %75, E, D + t.count %75)
             t.le.left(t.my_angle)
             t.me.left(t.my_angle)
             t.lb.left( t.my_angle / t.phi)
-            t.le.forward( count * 3 )
-            t.me.forward( count  * 2 + t.phi )
-            t.lb.forward( count  * 2.5)
+            t.le.forward( t.count / 3)
+            t.me.forward( t.count + t.phi )
+            t.lb.forward( t.count / 2)
             t.le.rt(t.my_angle)
             t.me.left( - t.my_angle)
             t.lb.rt( t.my_angle)
-            t.me.forward(count  / 2)
-            t.le.forward(count  / 1.5)
-            t.lb.forward(count  / 2.5)
-            t.le.circle(count / 63,  t.my_angle, 5)
-            t.me.circle(count / 72,  t.my_angle)
-            t.lb.circle(count / 54, t.my_angle)
-            t.me.pensize(count  / 45)
-            t.le.pensize(count  / 50 )
-            t.lb.pensize(count  / 50)
+            t.me.forward(t.count /3)
+            t.lb.forward(t.count  / 2.5)
+            t.le.circle(t.count / 63,  t.my_angle, 3)
+            t.me.circle(t.count / 72,  t.my_angle)
+            t.lb.circle(t.count / 54, t.my_angle)
+            t.le.penup()
+            t.le.left(t.my_angle)
+            t.le.backward(t.count / 7)
+            t.le.pendown()
+            t.me.pensize(t.count  / 145)
+            t.le.pensize(t.count  / 150 )
+            t.lb.pensize(t.count  / 150)
             count_three()
             f.save_thumb()    
         stage_video()
@@ -529,8 +548,11 @@ def hued_polygonial():  # Uses 2 pens with offset t.phi angle
     t.my_project = my_project
     my_project = 'Hued Polygonial v.' + Tm.project_time
     startup_script()
-    logger.info('Located @ line 513 - 561, 5th module of 48')
+    logger.info('Located @ line 541 - 591, 5th module of 48')
     t.my_venv()
+     # Select which set of angles to run
+    a.i_angle = a.i_angle_auto # Select set of angles to use.
+    str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
     t.my_title = str('This Show Features Hued Polygonial Mandalas with   ' + str(str_angles) + '  ' + 'angles')
     logger.info(t.my_title)
     for a.i  in range( len(a.i_angle)):
@@ -538,6 +560,7 @@ def hued_polygonial():  # Uses 2 pens with offset t.phi angle
         au.pick_medium_track()
         make_folder()
         logger.info('The offset angle value is  ' + str(t.my_angle * (t.pi/2)))
+        h.bg_fade_skyblue_to_dark()
         h.pick_gold()
         t.la.rt(t.my_angle / 2)
         h.pick_blue()
@@ -545,27 +568,18 @@ def hued_polygonial():  # Uses 2 pens with offset t.phi angle
         t.iterable = 0
         t.lb.speed(0)
         t.la.speed(0)
-        turtle.bgcolor(a.i + 25 % 100, a.i + 20 %110, a.i + 50 % 250)
         t.bg_count = 0
-        while t.iterable <= 255:    #255 is default. Use lower number for testing.
+        while t.iterable <= 900:    #255 is default. Use lower number for testing.
             h.bg_fade_skyblue_to_dark()
-            t.lb.pensize(t.iterable / 9)
-            t.la.pensize(t.iterable /18)
-            R = random.randrange(50, 100, 6)
-            G = 0
-            B = 255
-            V = 0
-            W = random.randrange(0, 81, 7)
-            X =  255
-            t.lb.color( R + t.iterable % 100,  t.iterable,  B - t.iterable)
-#             t.la.color( X - t.iterable, V + t.iterable, W)
+            t.lb.pensize(t.iterable / 200)
+            t.la.pensize(t.iterable /250)
+            h.pick_blue()
             h.pick_gold()
-            t.la.left(t.my_angle * t.phi)
-            t.la.fd(t.iterable * t.phi)
+            t.la.left(t.my_angle / t.phi)
+            t.la.fd(t.iterable / t.phi)
             t.lb.left(t.my_angle)
-            t.lb.circle(t.iterable + t.phi, t.my_angle)
-            turtle.bgcolor(255 - t.iterable, 255 - t.iterable, 30)
-            count_two()
+            t.lb.circle(t.iterable / 3, t.my_angle, 3)
+            count_it_bg()
             f.save_thumb()
         stage_video()
     finalize()
@@ -613,7 +627,7 @@ def Fantastic_Mandala():  #  On 4/28/2022, assigned an 'Offset Angle' to second 
             t.le.fd(t.iterable * t.pi/2)
             t.le.circle(t.iterable, t.my_angle, 6) # le is a random light hue.
             t.li.circle(t.iterable, -t.my_angle * t.phi) # This is the offset angle
-            t.iterable += 1
+            count_it()
             f.save_thumb()
         stage_video()
     finalize()
@@ -630,58 +644,66 @@ def dark_mandala():
     startup_script()
     logger.info('Located @ line 614 - 677,   7th module of 48')
     t.my_venv()
-    make_folder()
+     # Select which set of angles to run
+    a.i_angle = a.i_angle_auto # Select set of angles to use.
+    str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
+    t.my_title = str('This Show Features Dark Mandalas with   ' + str(str_angles) + '  ' + 'angles')
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         au.pick_medium_track()
         make_folder()
-        turtle.bgcolor(0, 0,100)
-        print ("The pick_random pen is:   ",  h.hue_dict ['pick_random']  )
-        print ("The pick_dark pen is:  ", h.hue_dict ['pick_dark']  )
-        print ("The pick_indigo pen is':   ", h.hue_dict ['pick_indigo']  )
-        print ("The pick_dot pen is':   ", h.hue_dict ['pick_dot']  )
+        
+#         logger.info("The pick_random pen is:   ",  h.hue_dict ['pick_random']  )
+#         logger.info("The pick_dark pen is:  ", h.hue_dict ['pick_dark']  )
+#         logger.info("The pick_indigo pen is':   ", h.hue_dict ['pick_indigo']  )
+#         logger.info("The pick_dot pen is':   ", h.hue_dict ['pick_dot']  )
         t.bg_count = 0
-        while t.iterable <= 300:
-            h.bg_fade_dark_to_green_to_dark()
-            if t.iterable <= 255:
-                t.lz.pencolor(200, 50, 10)
-                t.my_pen.color(10, 10, 30)
+        while t.iterable <= 500:
+            t.lz.pensize(t.iterable / 36)
+            t.me.pensize(t.iterable /84)
+            t.li.pensize(t.iterable / 24)
+            h.bg_fade_dark_to_green()
+            if t.iterable <= 100:
+                t.lz.pencolor(200, 50, 255- t.iterable % 50)
+                t.me.pencolor(255 - t.iterable % 50, 10, 30)
+                t.li.pencolor(t.iterable % 50, 10, 100)
             else:
                 h.pick_magenta() #pen t.me
                 h.pick_dark()  # pen t.lz
                 h.pick_indigo() # pen t.li
-            for i in range(2):
-                t.li.right(t.my_angle / 2)
-                t.me.right(t.my_angle)
-                t.me.pensize(t.iterable/24)
-                t.li.pensize(t.iterable / 54)
-                t.lz.right(t.my_angle / 2)
-                t.lz.pensize(t.iterable / 54)
-                t.lz.circle(t.iterable / 4, t.my_angle, 6)
-                t.lz.penup()
-                t.lz.backward(t.iterable / t.phi + i)
-                t.lz.pendown()
-                t.li.forward(t.iterable / t.phi)
-                t.lz.right(t.my_angle / 2)
-                t.lz.forward(t.iterable  / 2)
-                t.li.right(t.my_angle)
-                t.li.forward(t.iterable )
-                t.lz.penup()
-                t.lz.right(t.my_angle)
-                t.me.forward(t.iterable/9)
-                t.lz.pendown()
-                t.lz.forward(t.iterable * t.phi)
-                t.li.forward(t.iterable / t.phi)
-                t.li.circle(t.iterable /3, - t.my_angle)
-            #make dots
+#             t.li.right(t.my_angle / 2)
+#             t.lz.right(t.my_angle / 2)
+            
+            t.lz.circle(t.iterable / 9, t.my_angle, 3)
+            t.lz.penup()
+            t.lz.right(t.my_angle)
+            t.lz.backward(t.iterable )
+            t.lz.pendown()
+          
+            t.li.forward(t.iterable / t.pi)
+            t.lz.right(t.my_angle / 2)
+            t.lz.forward(t.iterable / 2)
+            t.li.right(t.my_angle)
+            t.li.forward(t.iterable / 24 )
+#             t.lz.penup()
+#             t.lz.right(t.my_angle)
+#             
+#             t.lz.pendown()
+#             t.lz.forward(t.iterable / 5)
+            t.li.forward(t.iterable / t.phi)
+            t.li.circle(t.iterable / 12, - t.my_angle)
+        #make dots
             t.me.left(t.my_angle / 2)
-            t.me.dot(t.iterable /24)
+            t.me.forward(t.iterable / 6)
+            t.me.dot(t.iterable /100)
             t.me.penup()
-            t.me.backward(t.iterable)
+            t.me.backward(t.iterable / 3)
             t.me.pendown()
-            t.me.forward(t.iterable / 60)
-            count_two()
+            t.me.forward(t.iterable / 6)
+            t.me.dot(3)
+            
             f.save_thumb()
+            count_it_bg()
         stage_video()
     finalize()
 
@@ -707,8 +729,8 @@ def iridescent_polygram():  # Uses 2 pens with offset t.phi angle
         turtle.bgcolor(50, 10, 255)
         t.le.right(t.my_angle /2)
         t.me.right(t.my_angle / 2)
-        for t.iterable in range (255):  #255 is default. Use lower number for testing.
-            turtle.bgcolor(50 - t.iterable %49, 10 + t.iterable %200, 255 - t.iterable)
+        while  t.iterable in range (0, 255):  #255 is default. Use lower number for testing.
+            h.bg_fade_yellow_to_dark()
             t.le.pensize(t.iterable / 49)
             t.me.pensize(t.iterable / 72)
             t.le.right(t.my_angle)
@@ -723,6 +745,7 @@ def iridescent_polygram():  # Uses 2 pens with offset t.phi angle
             t.le.dot(t.iterable / t.phi / 18)
             t.me.dot(t.iterable / t.phi / 9)
             f.save_thumb()
+            count_it_bg()
         stage_video()
     finalize()
 
@@ -764,9 +787,10 @@ def bold_mandala():
             t.la.backward(t.iterable * t.phi)
             t.la.left(t.my_angle /3)
             t.la.forward(t.iterable)
-            t.iterable += 1, t.bg_count += 1
+            count_it()
+            t.bg_count += 1
             f.save_thumb()
-        count = 0
+        t.count = 0
         t.bg_count = 0
         t.li.penup()
         t.la.penup()
@@ -774,7 +798,7 @@ def bold_mandala():
         t.la.setpos(0,0)
         t.li.pendown()
         t.la.pendown()
-        while count <= 255:    
+        while t.count <= 255:    
             h.bg_fade_yellow_to_dark()
             h.pick_indigo() #Indigo hues
             h.pick_gold() #Gold hues
@@ -782,15 +806,15 @@ def bold_mandala():
             t.la.penup()
             t.la.setpos(0,0)
             t.la.pendown()
-            t.la.pensize(count /my_pensize)
+            t.la.pensize(t.count /my_pensize)
             logger.info('The value of my_pensize is  ' + str(my_pensize))
-            t.la.circle(count, t.my_angle, 3)
+            t.la.circle(t.count, t.my_angle, 3)
             
-            t.li.pensize(count / 21)  #Indigo pen
+            t.li.pensize(t.count / 21)  #Indigo pen
             t.li.left(t.my_angle)
-            t.li.backward(count * t.phi)
+            t.li.backward(t.count * t.phi)
             t.li.left(t.my_angle / 3)
-            t.li.forward(count)
+            t.li.forward(t.count)
             count_three()
             f.save_thumb()
         time.sleep(6)
@@ -866,7 +890,7 @@ def bold_mandala():
             t.me.dot(9)
             t.me.pensize(t.iterable / 12)
             t.le.pensize(t.iterable / 24)
-            t.iterable += 1
+            count_it()
             f.save_thumb()
         time.sleep(1)
         f.save_final_thumb()
@@ -1058,7 +1082,7 @@ def animated_hued_polygram():
             t.le.pensize(t.iterable / 15)
             t.li.pensize(t.iterable / 18)
             t.la.pensize(t.iterable / 33)
-            t.iterable += 1
+            count_it()
             t.bg_count += 1
             f.save_thumb()
         stage_video()
@@ -1118,7 +1142,7 @@ def animated_hued_polygram():
                 t.lg.circle(-t.iterable /9, t.my_angle, 9)
                 t.lm.circle(t.iterable /6 ,t.my_angle, 9)
                 f.save_thumb()
-                t.iterable += 1
+                count_it()
             f.save_final_thumb()
             turtle.setup(5,5)
             f.set_vid_env()
@@ -1133,6 +1157,7 @@ def animated_hued_polygram():
 
 
 
+
 #  module_16
 #**************************************************************************************************************
   # First Published to YouTube on 11/21/2021
@@ -1142,7 +1167,7 @@ def awesome_mandala():
     t.my_project = my_project
     my_project = 'Awesome Mandala v.' + Tm.project_time
     startup_script()
-    logger.info('Located @ line 1148 - 1189, 16th module of 48')
+    logger.info('Located @ line 1148 - 1204, 16th module of 48')
     t.my_venv()
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1163,22 +1188,30 @@ def awesome_mandala():
         Y = 255
         Z = 255
         h.pick_gold() #Pen la
-        t.la.rt(t.my_angle)
-        t.lm.rt(t.my_angle)
+#         t.la.rt(t.my_angle)
+#         t.lm.rt(t.my_angle)
         t.bg_count = 0
         logger.info('The Value of color B is    ' + str(B))
         logger.info('The Value of color L is    ' + str(L))
+        if t.my_angle % 150 == 0:
+            t.la.seth(150)
+            t.lm.seth(150)
+        else:
+            t.la.seth(90)
+            t.lm.seth(90)
         while t.iterable <= 600:  # 450 is default, use any number
             h.pick_gold() #Pen la
             h.bg_fade_skyblue_to_dark()
             t.la.pensize(t.iterable/150)
-            t.la.left(t.my_angle)
             t.la.forward(t.iterable / 2) # /t.phi
+            t.la.left(t.my_angle)
+           
+           
             t.lm.pensize(t.iterable / 150)
             t.lm.rt(t.my_angle)
             t.lm.pencolor(L, M - t.iterable % 180, B)
             t.lm.circle(t.iterable / 2, - t.my_angle, 3)
-            t.iterable += 1
+            count_it()
             t.bg_count += 1
             f.save_thumb()
         stage_video()
@@ -1194,7 +1227,7 @@ def awesome_mandala_extended():
     t.my_project = my_project
     my_project = 'Awesome Mandala Extended v.' + Tm.project_time
     startup_script()
-    logger.info('Located @ line 1184 - 1306, 17th module of 48')
+    logger.info('Located @ line 1208 - 1331, 17th module of 48')
     t.my_venv()
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1203,7 +1236,7 @@ def awesome_mandala_extended():
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         Tm.start_time()
-        au.pick_medium_track() # Randomly selects a track from dymaically created medium_clips list
+        au.pick_extended_track() # Randomly selects a track from dymaically created medium_clips list
         make_folder()
         turtle.bgcolor(0,0,0)
         logger.info(str('The featured angle is     ') + str(t.my_angle))
@@ -1235,7 +1268,7 @@ def awesome_mandala_extended():
             t.lm.circle(t.iterable / t.phi, - t.my_angle, 9)
             s.watermark()
             t.bg_count += 1
-            t.iterable += 1
+            count_it()
             f.save_thumb()
         logger.info('The Value of color B is    ' + str(B))
         logger.info('The Value of color L is    ' + str(L))
@@ -1252,25 +1285,25 @@ def awesome_mandala_extended():
         t.me.speed(0)
         t.lm.speed(0)
         t.la.speed(0)
-        count = 0
+        t.count = 0
         t.bg_count = 0
         while t.iterable <= 510:  # 450 is default, use any number Second pass
             h.bg_fade_dark_to_skyblue()
             h.pick_magenta() #Pen me
             turtle.bgcolor(X, 0, 0)
-            t.me.pensize(count/27)
-            t.me.forward(count * t.phi)
+            t.me.pensize(t.count/27)
+            t.me.forward(t.count * t.phi)
             t.me.left(t.my_angle)
-            t.lm.pensize(count /45)
+            t.lm.pensize(t.count /45)
             t.lm.rt(t.my_angle)
             s.watermark()
             if count <= 255:
-                t.lm.pencolor(R + count, M - count, B)
+                t.lm.pencolor(R + count, M - t.count, B)
             else:
                 t.lm.pencolor(M, M, X)
-            t.lm.circle(count / t.phi, - t.my_angle, 9)
-            count += 1
-            t.iterable += 1
+            t.lm.circle(t.count / t.phi, - t.my_angle, 9)
+            t.count += 1
+            count_it()
             t.bg_count += 1
             f.save_thumb()
         h.pick_indigo() #Pen li
@@ -1286,27 +1319,27 @@ def awesome_mandala_extended():
         t.li.speed(0)
         t.lm.speed(0)
         t.la.speed(0)
-        count = 0
+        t.count = 0
         t.bg_count = 0
         while t.iterable <= 740:  # 450 is default, use any number Third pass
             h.bg_fade_skyblue_to_dark()
             h.pick_indigo() #Pen li
             h.pick_gold()  #Pen la
-            t.li.pensize(count/27)
+            t.li.pensize(t.count/27)
             t.li.left(t.my_angle)
-            t.li.forward(count * t.phi)
-            t.lm.pensize(count /45)
+            t.li.forward(t.count * t.phi)
+            t.lm.pensize(t.count /45)
             t.lm.rt(t.my_angle)
-#             t.la.pensize(count/54)
+#             t.la.pensize(t.count/54)
 #             t.la.left(t.my_angle)
-#             t.la.backward(count)
+#             t.la.backward(t.count)
             if count <= 255:
-                t.lm.pencolor(R + count, M - count, B)
+                t.lm.pencolor(R + count, M - t.count, B)
             else:
                 t.lm.pencolor(M, M, X)
-            t.lm.circle(count / t.phi, - t.my_angle, 9)
-            count += 1
-            t.iterable += 1
+            t.lm.circle(t.count / t.phi, - t.my_angle, 9)
+            t.count += 1
+            count_it()
             t.bg_count += 1
             f.save_thumb()
         stage_video()
@@ -1361,7 +1394,7 @@ def pretty_awesome_mandala():  # Based on Awesome Mandala
             t.le.pensize(t.iterable/ 56)
             t.me.pensize(t.iterable / 75)
             t.bg_count += 1
-            t.iterable += 1
+            count_it()
             f.save_thumb()
         stage_video()
     finalize()
@@ -1399,24 +1432,23 @@ def mighty_awesome_mandala():  # Based on pretty_awesome Mandala
         X = 255
         Y = 255
         Z = 10
-        t.me.left(t.my_angle * 2)
-        t.le.left(- t.my_angle * 2)
         t.iterable = 0
         t.bg_count = 0
+        t.le.seth(t.my_angle / 2)
+        t.me.seth(t.my_angle / 2)
         while t.iterable <= 255:
             h.bg_fade_skyblue_to_dark()
-            t.le.rt(t.my_angle)
             t.le.pencolor(R, G + t.iterable, B - t.iterable % 100)
             t.le.forward(t.iterable)
-            t.me.rt(t.my_angle)
+            t.le.rt(t.my_angle)
             t.me.pencolor(L, M + t.iterable, X - t.iterable %50)
             t.me.circle(t.iterable + t.phi, - t.my_angle)
-            t.le.pensize(t.iterable/48)
-            t.me.pensize(t.iterable / 48)
-            t.iterable += 1
-            t.bg_count += 1
+            t.me.rt(t.my_angle)
+            t.le.pensize(t.iterable/24)
+            t.me.pensize(t.iterable / 24)
+            count_it_bg()
             f.save_thumb()
-        count = 0
+        t.count = 0
         t.bg_count = 0
         t.le.penup()
         t.me.penup()
@@ -1430,7 +1462,7 @@ def mighty_awesome_mandala():  # Based on pretty_awesome Mandala
         G = 0
         B = 255
         logger.info('The value of hue /R/ is   ' + str(G))
-        L = random.randrange(75, 255, 1)
+        L = random.randrange(175, 255, 1)
         logger.info('The value of hue /L/ is   ' + str(L))
         M = 0
         N = 0
@@ -1439,19 +1471,17 @@ def mighty_awesome_mandala():  # Based on pretty_awesome Mandala
         Z = 10
         while t.iterable <= 510: # Second pass
             h.bg_fade_dark_to_skyblue()
+            t.le.pencolor(B - t.count % 100, t.count, L)
+            t.le.forward(t.count)
             t.le.rt(t.my_angle)
-            t.le.pencolor(B - count % 100, count, L)
-            t.le.forward(count)
+            t.me.pencolor(X - t.count, M + t.count % 50, R)
+            t.me.circle(t.count + t.phi, - t.my_angle)
             t.me.rt(t.my_angle)
-            t.me.pencolor(X - count, M + count % 50, R)
-            t.me.circle(count + t.phi, - t.my_angle)
-            t.le.pensize(count / 48)
-            t.me.pensize(count / 48)
-            t.iterable += 1
-            t.bg_count += 1
-            count += 1
+            t.le.pensize(t.count / 24)
+            t.me.pensize(t.count / 24)
+            count_three()
             f.save_thumb()
-        count = 0
+        t.count = 0
         t.bg_count = 0
         t.le.penup()
         t.me.penup()
@@ -1474,17 +1504,15 @@ def mighty_awesome_mandala():  # Based on pretty_awesome Mandala
         Z = 10
         while t.iterable <= 765: # Third pass
             h.bg_fade_skyblue_to_dark()
+            t.le.pencolor(t.count % 84, t.count, R)
+            t.le.forward(t.count)
             t.le.rt(t.my_angle)
-            t.le.pencolor(count % 100, count, R)
-            t.le.forward(count)
+            t.me.pencolor(t.count % 50, L, R)
+            t.me.circle(t.count + t.phi, - t.my_angle)
             t.me.rt(t.my_angle)
-            t.me.pencolor(count % 50, L, R)
-            t.me.circle(count + t.phi, - t.my_angle)
-            t.le.pensize(count / 48)
-            t.me.pensize(count / 48)
-            t.iterable += 1
-            t.bg_count += 1
-            count += 1
+            t.le.pensize(t.count / 24)
+            t.me.pensize(t.count / 24)
+            count_three()
             f.save_thumb()
         stage_video()
     finalize()
@@ -1538,7 +1566,7 @@ def mystical_mandala():  # Based on pretty_awesome Mandala
             t.me.circle(t.iterable + t.phi, - t.my_angle)
             t.me.left(t.my_angle)
             t.me.backward(t.iterable)
-            t.iterable += 1
+            count_it()
             t.bg_count +=1  
             f.save_thumb()
         t.le.penup()
@@ -1561,26 +1589,26 @@ def mystical_mandala():  # Based on pretty_awesome Mandala
         logger.info('Starting second pass....')
         logger.info('Local iterator  created to restrict maximum count at 255')
         t.bg_count = 0
-        count = 0
+        t.count = 0
         while t.iterable <= 502: # Second pass
             h.bg_fade_dark_to_green()
-            t.le.pensize(count /36)
-            t.le.pencolor(B - count % 50, count, L)
+            t.le.pensize(t.count /36)
+            t.le.pencolor(B - t.count % 50, t.count, L)
             t.le.rt(t.my_angle)
-            t.le.forward(count + t.phi)
+            t.le.forward(t.count + t.phi)
             t.le.rt(t.my_angle)
-            t.le.forward(count / t.phi)
-            t.me.pensize(count / 36)
+            t.le.forward(t.count / t.phi)
+            t.me.pensize(t.count / 36)
             t.me.rt(t.my_angle)
-            t.me.pencolor(X - count, M + count, R)
-            t.me.circle(count + t.phi, - t.my_angle)
+            t.me.pencolor(X - t.count, M + t.count, R)
+            t.me.circle(t.count + t.phi, - t.my_angle)
             t.me.left(t.my_angle)
-            t.me.backward(count)
-            t.iterable += 1
+            t.me.backward(t.count)
+            count_it()
             t.bg_count += 1
-            count += 1
+            t.count += 1
             f.save_thumb()
-        count = 0
+        t.count = 0
         t.bg_count = 0
         t.le.penup()
         t.me.penup()
@@ -1598,20 +1626,20 @@ def mystical_mandala():  # Based on pretty_awesome Mandala
         logger.info('Starting third pass....')
         while t.iterable <= 756: # Third pass
             h.bg_fade_green_to_dark()
-            t.le.pensize(count /36)
-            t.le.pencolor(count % 25, count, R)
+            t.le.pensize(t.count /36)
+            t.le.pencolor(t.count % 25, t.count, R)
             t.le.rt(t.my_angle)
-            t.le.forward(count + t.phi)
+            t.le.forward(t.count + t.phi)
             t.le.rt(t.my_angle)
-            t.le.forward(count / t.phi)
-            t.me.pensize(count /36)
+            t.le.forward(t.count / t.phi)
+            t.me.pensize(t.count /36)
             t.me.rt(t.my_angle)
-            t.me.pencolor(count, L, R)
-            t.me.circle(count + t.phi, - t.my_angle)
+            t.me.pencolor(t.count, L, R)
+            t.me.circle(t.count + t.phi, - t.my_angle)
             t.me.left(t.my_angle)
-            t.me.backward(count )
-            t.iterable += 1
-            count += 1
+            t.me.backward(t.count )
+            count_it()
+            t.count += 1
             t.bg_count += 1
             f.save_thumb()
         stage_video()
@@ -1623,13 +1651,13 @@ def mystical_mandala():  # Based on pretty_awesome Mandala
 
 #  module_21
 #+++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
-def stupendous_mandala():  # Based on Awesome Manadala
+def stupendous_mandala():  
     global my_project
     global log
     t.my_project = my_project
     my_project = 'Stupendous Mandala v.' + Tm.project_time
     startup_script()
-    logger.info('Located @ line 1852- 1919, 21st module of 48')
+    logger.info('Located @ line 1652- 1722, 21st module of 48')
     t.my_venv()
     # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
@@ -1638,53 +1666,79 @@ def stupendous_mandala():  # Based on Awesome Manadala
     for a.i  in range( len(a.i_angle)):
         logger.info('===============================================================================')
         t.my_venv()
-        logger.info('Picking random short track')
+        logger.info('Picking random medium track')
         au.pick_medium_track()
         make_folder()
-        turtle.bgcolor(0,0,0)
         logger.info('The soundtrack being used for this show is:   ' + au.my_track)
         logger.info('The featured angle is     ' + str(t.my_angle))
-        R = 255
-        G = 255
-        B = random.randrange(150, 255, 20)
-        logger.info('The value of hue /B/ is   ' + str(B))
-        L = random.randrange(10, 150, 25)
-        logger.info('The value of hue /L/ is   ' + str(L))
-        M = 0
-        N = 0
-        X = 255
-        Y = 255
-        Z = 10
-        turtle.bgcolor(10, 255, 255)
-#             t.le.rt(t.my_angle /2)
+        t.le.rt(t.my_angle /2)
         t.me.rt(t.my_angle)
+        t.lg.rt(t.my_angle / 2)
+        t.li.rt(t.my_angle)
         t.bg_count = 0
-        while t.iterable <= 300: # 255 is default, use lower number for testing; 300 for audio sync.
-            h.bg_fade_skyblue_to_dark()
-            h.pick_red()
-            if t.iterable <= 255:
-                t.me.pencolor(L, M + t.iterable, N + t.iterable)
-                t.lu.pencolor(R - t.iterable, B, G - t.iterable)
+        t.bg_count_2 = 0
+        t.count = 0
+        while t.iterable <= 764:
+            h.bg_fade_gold_to_dark()
+            if t.iterable <= (764 / 2):
+                h.pick_red() # Pen t.lu (Pen 1)
+                h.pick_magenta() #Pen t.me  (Pen 2)
+                h.pick_light() #Pen t.le  (Pen 3)
+                
+                t.lu.pensize(t.iterable / 72)
+                t.me.pensize(t.iterable / 98)
+                t.le.pensize(t.iterable / 84)
+               
+                t.me.left(t.my_angle)  # Pen 2
+                t.le.circle(t.iterable, - t.my_angle, 3)  # Pen 3
+                t.le.forward(t.iterable / 3)  # Pen 3
+                t.lu.backward(t.iterable / t.pi)  # Pen 1
+                t.lu.right(t.my_angle / 2)  # Pen 1
+                t.me.left(t.my_angle)  #Pen 2
+                t.me.forward(t.iterable /2)  #Pen 2
+                t.lu.rt(t.my_angle)  # Pen 1
+                t.lu.forward(t.iterable / 5)  # Pen 1
+                t.iterable += 1
+                h.iterate_gold_to_dark()
+#                 t.bg_count  = t.iterable / 3 # This extends the RGB count by a multiple of 3, so instead of 255, it is now incrementing up to 765 with no errors.
+#                 t.bg_count_2 = t.bg_count * .6  # Calculate RGB value of hue divided by 255 for multiplier
+#                 t.bg_count_3 = t.bg_count * .0392156  # Calculate RGB value of hue divided by 255 for multiplier
+                logger.info('The value of t.bg_count_2 is  ' + str(t.bg_count_2))
+                logger.info('The value of t.iterable is  ' + str(t.iterable))
+                logger.info('The value of t.bg_count_3 is  ' + str(t.bg_count_3))
+                logger.info('The value of G is  ' + str(h.G))
+                logger.info('The value of R is  ' +str(h.R))
+                logger.info('The value of G is  ' + str(h.B))
+                f.save_thumb()
             else:
-                t.me.pencolor(t.iterable - 100, 55, 25)
-                t.me.pensize(4)
-#                     t.me.pencolor(L, t.iterable - 75, t.iterable - 112)
-                t.lu.pencolor(t.iterable - 75, t.iterable - 112, B)
-#                 t.le.left(t.my_angle)
-            t.me.circle(t.iterable / t.phi, - t.my_angle, 9)
-            t.me.forward(t.iterable / t.phi)
-            t.lu.backward(t.iterable / t.phi)
-            t.lu.right(t.my_angle / 2)
-            t.lu.pensize(t.iterable /45)
-            t.le.pensize(t.iterable /81)
-            t.le.left(t.my_angle)
-            t.le.forward(t.iterable)
-            t.me.pensize(t.iterable / 24)
-            t.me.rt(t.my_angle)
-            t.me.forward(t.iterable / 6)
-            t.iterable + = 1
-            t.bg_count += 1
-            f.save_thumb()
+                h.pick_indigo() #Pen t.li    (Pen 1)
+                h.pick_green() #Pen t.lg     (Pen 2)
+                h.pick_gold() # Pen t.la        (Pen 3)
+                
+                t.li.pensize(t.count / 72)    # (Pen 1)
+                t.lg.pensize(t.count / 98)   # (Pen 2)
+                t.la.pensize(t.count / 84)   #  (Pen 3)
+                
+                t.lg.left(t.my_angle)  #Pen 2
+                t.la.circle(t.count, - t.my_angle, 3) # Pen 3
+                t.la.forward(t.count / 3)  # Pen 3
+                t.li.backward(t.count/ t.pi)  # Pen 1
+                t.li.right(t.my_angle / 2)   # Pen 1
+                t.lg.left(t.my_angle)   # Pen 2
+                t.lg.forward(t.count /2)  # Pen  2
+                t.li.rt(t.my_angle)   #Pen 1
+                t.li.forward(t.count / 5)   # Pen 1
+                t.iterable += 1
+                h.iterate_gold_to_dark()
+                t.count += 1
+                logger.info('The value of t.bg_count  is  ' + str(t.bg_count))
+                logger.info('The value of t.iterable is ' + str(t.iterable))
+                logger.info('The value of t.bg_count_2 is  ' + str(t.bg_count_2))
+                logger.info('The value of t.bg_count_3  is  ' +str(t.bg_count_3))
+                logger.info('The value of G is  ' + str(h.G))
+                logger.info('The value of R is  ' +str(h.R))
+                logger.info('The value of B is  ' + str(h.B))
+                f.save_thumb()
         stage_video()
     finalize()    
         
@@ -1736,7 +1790,7 @@ def multi_hued_polygram():
             t.le.forward(t.iterable * t.phi)
             h.bg_fade_dark_to_green()
             t.bg_count += 1
-            t.iterable += 1
+            count_it()
             f.save_thumb()
 #             gc.collect()
         stage_video()
@@ -1790,7 +1844,7 @@ def brave_mandala():
             t.le.rt(t.my_angle)
             t.le.pencolor(L, M - t.iterable, N - t.iterable)
             t.le.circle(t.iterable * 1.26, - t.my_angle)
-            t.iterable += 1
+            count_it()
             t.bg_count += 1
             f.save_thumb()   #Screenshot as a png set set up mp4
         stage_video()
@@ -1842,9 +1896,9 @@ def brave_mandala_extended():
             t.le.rt(t.my_angle)
             t.le.pencolor(L, M - t.iterable, N - t.iterable)
             t.le.circle(t.iterable * t.phi, - t.my_angle)
-            t.iterable += 1
+            count_it()
             f.save_thumb()  #Screenshot as a png set set up mp4
-        count = 0
+        t.count = 0
         t.le.penup()
         t.me.penup()
         t.le.setpos(0,0)
@@ -1855,20 +1909,20 @@ def brave_mandala_extended():
         t.me.speed(0)
         while t.iterable <= 505: # Second Pass
             h.bg_fade_yellow_to_dark()
-            t.le.pensize(count/72)
+            t.le.pensize(t.count/72)
             t.le.left(t.my_angle)
-            t.le.forward(count)
-            t.le.pencolor(R, G + count, B - count)
-            t.me.pensize(count/27)
-            t.me.pencolor(R, Y - count, L)
-            t.me.circle(count / t.phi, t.my_angle)
+            t.le.forward(t.count)
+            t.le.pencolor(R, G + t.count, B - t.count)
+            t.me.pensize(t.count/27)
+            t.me.pencolor(R, Y - t.count, L)
+            t.me.circle(t.count / t.phi, t.my_angle)
             t.le.rt(t.my_angle)
-            t.le.pencolor(Z + count % 230, M - count, N)
-            t.le.circle(count, - t.my_angle)
-            t.iterable += 1
-            count += 1
+            t.le.pencolor(Z + count % 230, M - t.count, N)
+            t.le.circle(t.count, - t.my_angle)
+            count_it()
+            t.count += 1
             f.save_thumb()    #Screenshot as a png set set up mp4
-        count = 0
+        t.count = 0
         t.le.penup()
         t.me.penup()
         t.le.setpos(0,0)
@@ -1880,18 +1934,18 @@ def brave_mandala_extended():
         t.bg_count = 0
         while t.iterable <= 760: # Third Pass
             h.bg_fade_yellow_to_dark()
-            t.le.pensize(count/72)
+            t.le.pensize(t.count/72)
             t.le.left(t.my_angle)
-            t.le.forward(count)
-            t.le.pencolor(R, G + count, B - count)
-            t.me.pensize(count/27)
-            t.me.pencolor(R, Y - count, L)
-            t.me.circle(count / t.phi, t.my_angle)
+            t.le.forward(t.count)
+            t.le.pencolor(R, G + t.count, B - t.count)
+            t.me.pensize(t.count/27)
+            t.me.pencolor(R, Y - t.count, L)
+            t.me.circle(t.count / t.phi, t.my_angle)
             t.le.rt(t.my_angle)
-            t.le.pencolor(L, M - count, N - count)
-            t.le.circle(count, - t.my_angle)
-            t.iterable += 1
-            count += 1
+            t.le.pencolor(L, M - t.count, N - t.count)
+            t.le.circle(t.count, - t.my_angle)
+            count_it()
+            t.count += 1
             t.bg_count += 1
             f.save_thumb()    #Screenshot as a png set set up mp4    
         stage_video()
@@ -1944,10 +1998,10 @@ def brave_mandala_decimated():
             t.le.rt(t.my_angle/x)
             t.le.pencolor(L, M - t.iterable, N - t.iterable)
             t.le.circle(t.iterable * 1.26, - t.my_angle/x)
-            t.iterable += 1
+            count_it()
             t.bg_count += 1
             f.save_thumb()  #Screenshot as a png set set up mp4
-        count = 0
+        t.count = 0
         t.le.penup()
         t.me.penup()
         t.le.setpos(0,0)
@@ -1959,21 +2013,21 @@ def brave_mandala_decimated():
         t.bgbg_count = 0
         while t.iterable <= 510: # Second Pass
             h.bg_fade_green_to_dark()
-            t.le.pensize(count/56)
+            t.le.pensize(t.count/56)
             t.le.left(t.my_angle/ x)
-            t.le.forward(count)
-            t.le.pencolor(R, G + count, B - count)
-            t.me.pensize(count/18)
-            t.me.pencolor(R, Y - count, L)
-            t.me.circle(count / t.phi, t.my_angle/x)
+            t.le.forward(t.count)
+            t.le.pencolor(R, G + t.count, B - t.count)
+            t.me.pensize(t.count/18)
+            t.me.pencolor(R, Y - t.count, L)
+            t.me.circle(t.count / t.phi, t.my_angle/x)
             t.le.rt(t.my_angle/x)
-            t.le.pencolor(Z + count % 225, M - count, N)
-            t.le.circle(count, - t.my_angle/x)
-            t.iterable += 1
-            count += 1
+            t.le.pencolor(Z + count % 225, M - t.count, N)
+            t.le.circle(t.count, - t.my_angle/x)
+            count_it()
+            t.count += 1
             t.bg_count += 1
             f.save_thumb()    #Screenshot as a png set set up mp4
-        count = 0
+        t.count = 0
         t.le.penup()
         t.me.penup()
         t.le.setpos(0,0)
@@ -1985,19 +2039,19 @@ def brave_mandala_decimated():
         t.bg_count = 0
         while t.iterable <= 765: # Third Pass
             logger.info('The value of t.iterable is ' + str(t.iterable))
-            logger.info('The value of count is  ' + str(count))
-            t.le.pensize(count/56)
+            logger.info('The value of count is  ' + str(t.count))
+            t.le.pensize(t.count/56)
             t.le.left(t.my_angle/x)
-            t.le.forward(count)
-            t.le.pencolor(R, G + count, B - count)
-            t.me.pensize(count/27)
-            t.me.pencolor(R, Y - count, L)
-            t.me.circle(count / t.phi, t.my_angle/x)
+            t.le.forward(t.count)
+            t.le.pencolor(R, G + count, B - t.count)
+            t.me.pensize(t.count/27)
+            t.me.pencolor(R, Y - t.count, L)
+            t.me.circle(t.count / t.phi, t.my_angle/x)
             t.le.rt(t.my_angle / x)
-            t.le.pencolor(L, M - count, N - count)
-            t.le.circle(count, - t.my_angle/x)
-            t.iterable += 1
-            count += 1
+            t.le.pencolor(L, M - t.count, N - t.count)
+            t.le.circle(t.count, - t.my_angle/x)
+            count_it()
+            t.count += 1
             t.bg_count += 1
             f.save_thumb()    #Screenshot as a png set set up mp4    
         stage_video()
@@ -2142,7 +2196,7 @@ def gold_red_mandala_extended():
             t.le.left(t.my_angle)
             t.le.forward(t.iterable/2)
             f.save_thumb()
-            t.iterable += 1
+            count_it()
             
         t.la.penup()
         t.lu.penup()
@@ -2156,22 +2210,22 @@ def gold_red_mandala_extended():
         t.la.speed(0)
         t.lu.speed(0)
         t.le.speed(0)
-        count = 0
+        t.count = 0
         while t.iterable <= (505): # Second Pass
             h.pick_gold()
             h.pick_red()
             h.pick_light()
-            t.lu.pensize(count / 27)
-            t.lu.circle(count *t.phi, - t.my_angle)
-            t.la.pensize(count/18)
-            t.la.backward(count *t.pi)
+            t.lu.pensize(t.count / 27)
+            t.lu.circle(t.count *t.phi, - t.my_angle)
+            t.la.pensize(t.count/18)
+            t.la.backward(t.count *t.pi)
             t.la.right(t.my_angle)
             t.le.dot(5)
             t.le.left(t.my_angle)
-            t.le.forward(count/2)
+            t.le.forward(t.count/2)
             f.save_thumb()
-            t.iterable += 1
-            count += 1
+            count_it()
+            t.count += 1
             
         t.la.penup()
         t.lu.penup()
@@ -2185,22 +2239,22 @@ def gold_red_mandala_extended():
         t.la.speed(0)
         t.lu.speed(0)
         t.le.speed(0)   
-        count = 0
+        t.count = 0
         while t.iterable <= (755): # Third Pass 
             h.pick_gold()
             h.pick_red()
             h.pick_light()
-            t.le.pensize(count / 27)
-            t.le.circle(count *t.phi, - t.my_angle)
-            t.lu.pensize(count/18)
-            t.lu.backward(count *t.pi)
+            t.le.pensize(t.count / 27)
+            t.le.circle(t.count *t.phi, - t.my_angle)
+            t.lu.pensize(t.count/18)
+            t.lu.backward(t.count *t.pi)
             t.lu.right(t.my_angle)
             t.la.dot(5)
             t.la.left(t.my_angle)
-            t.la.forward(count/2)
+            t.la.forward(t.count/2)
             f.save_thumb()
-            t.iterable += 1
-            count += 1
+            count_it()
+            t.count += 1
         f.save_final_thumb()
         turtle.setup(5,5)
         f.set_vid_env()
@@ -2522,7 +2576,7 @@ def occillating_polygon(): # Needs work
             t.le.circle( t.iterable * 3, t.my_angle)
             t.lu.dot(t.iterable / 6)
             t.le.pensize(t.iterable / 27)
-            t.iterable += 1
+            count_it()
             f.save_thumb()
         f.save_final_thumb()
             # The Undo routine which animates the shrinking
@@ -2615,7 +2669,7 @@ def arc_star():
             t.le.pendown()
             t.le.color(R + t.iterable %50, t.iterable %75, 0)
             t.le.circle(t.iterable + t.phi, t.my_angle, 5)
-            t.iterable += 1
+            count_it()
             f.save_thumb()
         f.save_final_thumb()
         turtle.setup(5,5)
@@ -2683,7 +2737,7 @@ def home_star():
             t.le.setposition(0, 0)
             t.le.pendown()
             t.le.circle(t.iterable, t.my_angle, 5)
-            t.iterable += 1
+            count_it()
 #         time.sleep(10) #for testing only
             f.save_thumb()
         f.save_final_thumb()
@@ -2890,7 +2944,7 @@ def cloverleaf_extended():
             t.le.forward(t.iterable)
             t.le.pendown()
             f.save_thumb()
-            t.iterable += 1
+            count_it()
             
         logger.info('Starting Second Pass at  ' + str(Tm.my_time))
         t.le.pensize(5) # Second Pass
@@ -2899,21 +2953,21 @@ def cloverleaf_extended():
         t.le.penup()
         t.le.setpos(0,0)
         t.le.pendown()
-        count = 0
+        t.count = 0
         logger.info('The value of t.iterable is   ' + str(t.iterable))
         while t.iterable <= 605:
             if count <= 253:
-                t.le.pencolor(255 - count, 255 - count, count)
+                t.le.pencolor(255 - t.count, 255 - t.count, count)
             else:
                 t.le.pencolor(0, 0, 255)
-            t.le.circle(count, t.my_angle)
+            t.le.circle(t.count, t.my_angle)
             t.le.penup()
             
-            t.le.forward(count)
+            t.le.forward(t.count)
             t.le.pendown()
             f.save_thumb()
-            count += 1
-            t.iterable += 1
+            t.count += 1
+            count_it()
         logger.info('Starting Third Pass at  ' + str(Tm.my_time))
         t.le.pensize(3) # Third Pass
         t.le.speed(0)
@@ -2921,21 +2975,21 @@ def cloverleaf_extended():
         t.le.penup()
         t.le.setpos(0,0)
         t.le.pendown()
-        count = 0
+        t.count = 0
         logger.info('The value of t.iterable is   ' + str(t.iterable))
         while t.iterable <= 910:
             if count <= 254:
-                t.le.pencolor(count, 255 - count, 255 - count)
+                t.le.pencolor(t.count, 255 - t.count, 255 - t.count)
             else:
                 t.le.pencolor(255, 0, 0)
-            t.le.circle(count, t.my_angle)
+            t.le.circle(t.count, t.my_angle)
             t.le.penup()
             
-            t.le.forward(count)
+            t.le.forward(t.count)
             t.le.pendown()
             f.save_thumb()
-            count += 1
-            t.iterable += 1
+            t.count += 1
+            count_it()
         logger.info('Starting Fourth Pass at  ' + str(Tm.my_time)) 
         t.le.pensize(2) # Fourth Pass
         t.le.speed(0)
@@ -2944,22 +2998,22 @@ def cloverleaf_extended():
         t.le.penup()
         t.le.setpos(0,0)
         t.le.pendown()
-        count = 0
+        t.count = 0
 #         t.le.left(t.my_angle)
         logger.info('The value of t.iterable is   ' + str(t.iterable))
         while t.iterable <= 1215:
             if count <= 255:
-                t.le.pencolor(255 - count, count, 255- count)
+                t.le.pencolor(255 - t.count, count, 255- t.count)
             else:
                 t.le.pencolor(0, 255, 0)
-            t.le.circle(count, t.my_angle)
+            t.le.circle(t.count, t.my_angle)
             t.le.penup()
             
-            t.le.forward(count)
+            t.le.forward(t.count)
             t.le.pendown()
             f.save_thumb()
-            count += 1
-            t.iterable += 1
+            t.count += 1
+            count_it()
         logger.info('The value of t.iterable is   ' + str(t.iterable))    
         f.save_final_thumb()
         turtle.setup(5,5)
@@ -3016,7 +3070,7 @@ def majestic_mandala_extended():
             t.le.left(t.my_angle)
             t.le.forward(t.iterable + t.pi)
             f.save_thumb()
-            t.iterable += 1
+            count_it()
             
         logger.info('Starting Second Pass...')    
         t.le.pensize(5) # Second Pass
@@ -3025,25 +3079,25 @@ def majestic_mandala_extended():
         t.le.penup()
         t.le.setpos(0,0)
         t.le.pendown()
-        count = 0
+        t.count = 0
         logger.info('The value of t.iterable is   ' + str(t.iterable))
         while t.iterable <= 605:
             if count <= 253:
-                t.le.pencolor(255 - count, 255 - count, count)
+                t.le.pencolor(255 - t.count, 255 - t.count, count)
             else:
                 t.le.pencolor(0, 0, 255)
             t.le.left(t.my_angle)
-            t.le.forward(count * t.phi)
+            t.le.forward(t.count * t.phi)
             t.le.penup()
             t.le.left(t.my_angle)
-            t.le.forward(count)
+            t.le.forward(t.count)
             t.le.pendown()
             t.le.left(t.my_angle)            
-            t.le.forward(count + t.pi)
+            t.le.forward(t.count + t.pi)
             
             f.save_thumb()
-            count += 1
-            t.iterable += 1
+            t.count += 1
+            count_it()
         logger.info('Starting Third Pass....')    
         t.le.pensize(3) # Third Pass
         t.le.speed(0)
@@ -3051,24 +3105,24 @@ def majestic_mandala_extended():
         t.le.penup()
         t.le.setpos(0,0)
         t.le.pendown()
-        count = 0
+        t.count = 0
         logger.info('The value of t.iterable is   ' + str(t.iterable))
         while t.iterable <= 910:
             if count <= 254:
-                t.le.pencolor(count, 255 - count, 255 - count)
+                t.le.pencolor(t.count, 255 - t.count, 255 - t.count)
             else:
                 t.le.pencolor(255, 0, 0)
             t.le.left(t.my_angle)
-            t.le.forward(count * t.phi)
+            t.le.forward(t.count * t.phi)
             t.le.penup()
             t.le.left(t.my_angle)
-            t.le.forward(count)
+            t.le.forward(t.count)
             t.le.pendown()
             t.le.left(t.my_angle)
-            t.le.forward(count + t.pi)
+            t.le.forward(t.count + t.pi)
             f.save_thumb()
-            count += 1
-            t.iterable += 1
+            t.count += 1
+            count_it()
         logger.info('Starting Fourth Pass...')   
         t.le.pensize(2) # Fourth Pass
         t.le.speed(0)
@@ -3076,25 +3130,25 @@ def majestic_mandala_extended():
         t.le.penup()
         t.le.setpos(0,0)
         t.le.pendown()
-        count = 0
+        t.count = 0
 #         t.le.left(t.my_angle)
         logger.info('The value of t.iterable is   ' + str(t.iterable))
         while t.iterable <= 1215:
             if count <= 255:
-                t.le.pencolor(count, count, 255 - count)
+                t.le.pencolor(t.count, t.count, 255 - t.count)
             else:
                 t.le.pencolor(255, 255, 0)
             t.le.left(t.my_angle)
-            t.le.forward(count * t.phi)
+            t.le.forward(t.count * t.phi)
             t.le.penup()
             t.le.left(t.my_angle)
-            t.le.forward(count)
+            t.le.forward(t.count)
             t.le.pendown()
             t.le.left(t.my_angle)
-            t.le.forward(count + t.pi)
+            t.le.forward(t.count + t.pi)
             f.save_thumb()
-            count += 1
-            t.iterable += 1
+            t.count += 1
+            count_it()
         logger.info('The value of t.iterable is   ' + str(t.iterable))    
         f.save_final_thumb()
         turtle.setup(5,5)
@@ -3170,7 +3224,7 @@ def glorious_mandala():  # Based on Awesome Manadala
             t.la.backward(t.iterable / 6)
             t.la.pensize(t.iterable / 110)
             t.lb.pensize(t.iterable / 112)
-            t.iterable += 1
+            count_it()
             t.bg_count += 1
             f.save_thumb()
         stage_video()
@@ -3244,11 +3298,11 @@ def glorious_mandala_extended():  # Based on Awesome Manadala
             t.me.pendown()
             t.le.forward(t.iterable / t.phi)
             t.me.forward(t.iterable / t.phi)
-            t.iterable += 1
+            count_it()
             f.save_thumb()
         logger.info('Starting Second Pass....')    
         # Second Pass
-        count = 0
+        t.count = 0
         t.me.penup()
         t.le.penup()
         t.me.setpos(0,0)
@@ -3262,26 +3316,26 @@ def glorious_mandala_extended():  # Based on Awesome Manadala
             turtle.bgcolor(0,0,10)
             if count <= 155:
                 t.me.pencolor(M + count, N + count, L)
-                t.le.pencolor(Z + count %100, R - count, G)
+                t.le.pencolor(Z + count %100, R - t.count, G)
             else:
                 h.pick_random()
                 h.pick_light()
             t.le.left(t.my_angle)
-            t.le.forward(count /2)
-            t.me.circle(count, - t.my_angle, 6)
-            t.le.pensize(count /49)
+            t.le.forward(t.count /2)
+            t.me.circle(t.count, - t.my_angle, 6)
+            t.le.pensize(t.count /49)
             t.le.left(t.my_angle)
             t.le.penup()
             t.me.penup()
-            t.le.forward(count)
-            t.me.pensize(count /144)
+            t.le.forward(t.count)
+            t.me.pensize(t.count /144)
             t.me.rt(t.my_angle)
             t.le.pendown()
             t.me.pendown()
-            t.le.forward(count / t.phi)
-            t.me.forward(count / t.phi)
-            count += 1
-            t.iterable += 1
+            t.le.forward(t.count / t.phi)
+            t.me.forward(t.count / t.phi)
+            t.count += 1
+            count_it()
             f.save_thumb()
         stage_video()
     finalize()   
@@ -3334,7 +3388,7 @@ def Independence_mandala():
             t.ce.right(t.my_angle)
             t.ce.pensize(t.iterable /36)
             t.ce.forward(t.iterable /2)
-            t.iterable += 1
+            count_it()
 #             time.sleep(9) #for testing only. Comment out normally
             f.save_thumb()
         stage_video()
@@ -3395,7 +3449,7 @@ def wall_show():
             t.ce.forward(t.iterable * t.phi)
             t.ce.pensize(t.iterable / 27)
             t.ce.color(255 - t.iterable, t.iterable, t.rand_pick)
-            t.iterable += 1
+            count_it()
             turtle.bgcolor(30, 256 - t.iterable, 60)
             f.save_thumb()
         f.save_final_thumb()
@@ -3461,7 +3515,7 @@ def wall_show_extended():
             t.ce.forward(t.iterable + t.phi)
             t.ce.pensize(t.iterable / 27)
             t.ce.color(255 - t.iterable, t.iterable, t.rand_pick)
-            t.iterable += 1
+            count_it()
             turtle.bgcolor(30, 256 - t.iterable, 60)
             f.save_thumb()
         t.le.penup()
@@ -3472,27 +3526,27 @@ def wall_show_extended():
         t.ce.pendown()
         t.le.speed(0)
         t.ce.speed(0)
-        count = 0    
+        t.count = 0    
         while t.iterable <= 503:
             R =  255
             G =  150
             B =  0
 #             logger.info(str(t.le.color))
-            t.le.color(R - count % 255, G - count % 130, B + count %255)
-            t.le.forward(count * t.phi)
+            t.le.color(R - t.count % 255, G - t.count % 130, B + count %255)
+            t.le.forward(t.count * t.phi)
             t.le.left(t.my_angle)
-            t.le.pensize(count /36)
-            t.le.color(R - count, t.rand_num, count)
+            t.le.pensize(t.count /36)
+            t.le.color(R - t.count, t.rand_num, count)
             t.le.right(t.my_angle)
-            t.le.circle(count / 3, t.my_angle, 6)
-            t.ce.color(R - count % 255, G - count % 150, B + count % 255 )
-            t.ce.forward(count * t.phi)
+            t.le.circle(t.count / 3, t.my_angle, 6)
+            t.ce.color(R - t.count % 255, G - t.count % 150, B + count % 255 )
+            t.ce.forward(t.count * t.phi)
             t.ce.right(t.my_angle)
-            t.ce.forward(count * t.phi)
-            t.ce.pensize(count / 27)
-            t.ce.color(R - count % 255, t.rand_num, t.rand_pick)
-            count += 1
-            t.iterable += 1
+            t.ce.forward(t.count * t.phi)
+            t.ce.pensize(t.count / 27)
+            t.ce.color(R - t.count % 255, t.rand_num, t.rand_pick)
+            t.count += 1
+            count_it()
             f.save_thumb()
         t.le.penup()
         t.ce.penup()
@@ -3502,26 +3556,26 @@ def wall_show_extended():
         t.ce.pendown()
         t.le.speed(0)
         t.ce.speed(0)
-        count = 0
+        t.count = 0
         while t.iterable <= 758:
             R =  150
             G =  0
             B =  255
-            t.le.color(R - count % 145, count, B - count % 255)
-            t.le.forward(count * t.phi)
+            t.le.color(R - t.count % 145, t.count, B - t.count % 255)
+            t.le.forward(t.count * t.phi)
             t.le.left(t.my_angle)
-            t.le.pensize(count /36)
-            t.le.color(count, t.rand_num, B - count % 255)
+            t.le.pensize(t.count /36)
+            t.le.color(t.count, t.rand_num, B - t.count % 255)
             t.le.right(t.my_angle)
-            t.le.circle(count / 3, t.my_angle, 6)
-            t.ce.color( R - count % 100, B - count % 255, t.rand_pick)
-            t.ce.forward(count * t.phi)
+            t.le.circle(t.count / 3, t.my_angle, 6)
+            t.ce.color( R - t.count % 100, B - t.count % 255, t.rand_pick)
+            t.ce.forward(t.count * t.phi)
             t.ce.right(t.my_angle)
-            t.ce.forward(count * t.phi)
-            t.ce.pensize(count / 27)
-            t.ce.color(R - count % 150, count % 255, t.rand_pick)
-            count += 1
-            t.iterable += 1
+            t.ce.forward(t.count * t.phi)
+            t.ce.pensize(t.count / 27)
+            t.ce.color(R - t.count % 150, count % 255, t.rand_pick)
+            t.count += 1
+            count_it()
             f.save_thumb()
         f.save_final_thumb()
         turtle.setup(5,5)
@@ -3610,7 +3664,7 @@ def black_seed():
                 t.le.left(t.my_angle)
                 t.le.circle(length)
                 f.save_thumb()
-                t.iterable += 1
+                count_it()
 
                 del t.iterable
                 gc.collect()
@@ -3650,11 +3704,12 @@ def dark_mandala_extended():
     t.my_project = my_project
     my_project = 'A Dark Mandala Extended v.' + Tm.project_time
     startup_script()
-    logger.info('Located @ line 3662 - 3828,   47th module of 48')
+    logger.info('Located @ line 3671 - 3834,   47th module of 48')
     t.my_venv()
      # Select which set of angles to run
     a.i_angle = a.i_angle_auto # Select set of angles to use.
     str_angles = [str(round(i)) for i in (a.i_angle)] #Convert integers in angle list to string for use in title screen, using iteration
+    t.my_title = str('This Show Features Dark Mandalas Extended with   ' + str(str_angles) + '  ' + 'angles')
     for a.i  in range( len(a.i_angle)):
         t.my_venv()
         au.get_special_5_min_track()
@@ -3663,9 +3718,9 @@ def dark_mandala_extended():
         turtle.bgcolor(255, 255,100)
         my_iteration =280 # 300 is default; use lower number for testing
         t.bg_count = 0
-        print ("The pick_dark pen is:  ", h.hue_dict ['pick_dark']  )
-        print ("The pick_indigo pen is':   ", h.hue_dict ['pick_indigo']  )
-        print ("The pick_magenta pen is':   ", h.hue_dict ['pick_magenta']  )
+        logger.info("The pick_dark pen is:  ", h.hue_dict ['pick_dark']  )
+        logger.info("The pick_indigo pen is':   ", h.hue_dict ['pick_indigo']  )
+        logger.info("The pick_magenta pen is':   ", h.hue_dict ['pick_magenta']  )
         while t.iterable <= my_iteration:  # First Loop of 3
             h.bg_fade_dark_to_yellow()
             h.pick_magenta() #pen t.me
@@ -3706,108 +3761,103 @@ def dark_mandala_extended():
             t.me.pendown()
             t.me.forward(t.iterable / 60)
             f.save_thumb()
-            t.iterable += 1
-            t.bg_count += 1
+            count_it_bg()
         logger.info('The value of t.iterable is   ' + str(t.iterable))
-        count = 0
+        t.count = 0
         t.bg_count = 0
         t.lb.setpos(0,0)
         t.lg.setpos(0,0)
         t.le.setpos(0,0)
-        while   count  <= my_iteration: # Second Loop of 3
+        while t.count  <= my_iteration: # Second Loop of 3
             h.bg_fade_yellow_to_dark()
             h.pick_blue() #pen t.lb
             h.pick_green()  # pen t.lg
             h.pick_light() # pen t.le
             
             t.le.right(t.my_angle / 2) # Light pen
-            t.le.pensize(count / 54)
-            t.le.circle(count / 3, t.my_angle, 6)
+            t.le.pensize(t.count / 54)
+            t.le.circle(t.count / 3, t.my_angle, 6)
             t.le.penup()
-            t.le.backward(count / t.phi  + count)
+            t.le.backward(t.count / t.phi  + t.count)
             t.le.pendown()
             
             t.lg.right(t.my_angle) # Green pen
-            t.lg.pensize(count / 54)
-            t.lg.backward(count / t.phi)
+            t.lg.pensize(t.count / 54)
+            t.lg.backward(t.count / t.phi)
             
             t.le.right(t.my_angle / 2) # Light pen
-            t.le.forward(count  / 2)
+            t.le.forward(t.count  / 2)
             
             t.lg.right(t.my_angle)  # Green pen
-            t.lg.forward(count )
+            t.lg.forward(t.count )
             
             t.le.penup()  #Light pen
             t.le.right(t.my_angle)
-            t.le.forward(count/9)
+            t.le.forward(t.count/9)
             t.le.pendown()
-            t.le.forward(count * t.phi)
+            t.le.forward(t.count * t.phi)
             
-            t.lg.backward(count / t.phi) # Green pen
-            t.lg.circle(count /3, - t.my_angle, 9)
+            t.lg.backward(t.count / t.phi) # Green pen
+            t.lg.circle(t.count /3, - t.my_angle, 9)
             #make dots
-            t.lb.pensize(count/24)   # Blue pen 
+            t.lb.pensize(t.count/24)   # Blue pen 
             t.lb.left(t.my_angle / 2)
-            t.lb.dot(count /24)
+            t.lb.dot(t.count /24)
             t.lb.penup()
-            t.lb.backward(count)
+            t.lb.backward(t.count)
             t.lb.pendown()
-            t.lb.forward(count / 60)
-            count += 1
-            t.iterable += 1
-            t.bg_count += 1
+            t.lb.forward(t.count / 60)
             f.save_thumb()
+            count_three()
         logger.info('The value of t.iterable is   ' + str(t.iterable))    
-        count = 0
+        t.count = 0
         t.bg_count = 0
         t.lz.penup()
         t.lz.setpos(0,0)
         t.lz.pendown()
         t.la.setpos(0,0)
         t.lu.setpos(0,0)
-        while count  <= my_iteration: # Third (Final) Loop
+        while t.count  <= my_iteration: # Third (Final) Loop
             h.bg_fade_dark_to_yellow()
             h.pick_dark() #pen t.lz
             h.pick_gold()  # pen t.la
             h.pick_red() # pen t.lu
            
             t.lu.right(t.my_angle / 2) # Red pen
-            t.lu.pensize(count / 54)
-            t.lu.circle(count / 3, t.my_angle, 6)
+            t.lu.pensize(t.count / 54)
+            t.lu.circle(t.count / 3, t.my_angle, 6)
             t.lu.penup()
-            t.lu.backward(count / t.phi + count)
+            t.lu.backward(t.count / t.phi + t.count)
             t.lu.pendown()
             
             t.lz.right(t.my_angle) # Dark pen
-            t.lz.pensize(count / 54)
-            t.lz.backward(count / t.phi)
+            t.lz.pensize(t.count / 54)
+            t.lz.backward(t.count / t.phi)
             
             t.lu.right(t.my_angle / 2) # Red pen
-            t.lu.forward(count  / 2)
+            t.lu.forward(t.count  / 2)
             
             t.lz.right(t.my_angle)  # Dark pen
-            t.lz.forward(count )
+            t.lz.forward(t.count )
             
             t.lu.penup()  #Red pen
             t.lu.right(t.my_angle)
-            t.lu.forward(count/9)
+            t.lu.forward(t.count/9)
             t.lu.pendown()
-            t.lu.forward(count * t.phi)
+            t.lu.forward(t.count * t.phi)
             
-            t.lz.backward(count / t.phi) # Dark pen
-            t.lz.circle(count /3, - t.my_angle, 9)
+            t.lz.backward(t.count / t.phi) # Dark pen
+            t.lz.circle(t.count /3, - t.my_angle, 9)
             #make dots
-            t.la.pensize(count/24)    
+            t.la.pensize(t.count/24)    
             t.la.left(t.my_angle / 2) # Gold pen
-            t.la.dot(count /24)
+            t.la.dot(t.count /24)
             t.la.penup()
-            t.la.backward(count)
+            t.la.backward(t.count)
             t.la.pendown()
-            t.la.forward(count / 60)
-            t.iterable += 1
-            count += 1
-            t.bg_count += 1
+            t.la.forward(t.count / 60)
             f.save_thumb()
+            count_three()
         logger.info('The value of t.iterable is   ' + str(t.iterable))    
         stage_video()
     finalize()
@@ -3885,24 +3935,24 @@ def awesome_mandala_old():
 '''
 Run medium_clips
 '''
-mystical_mandala() #Working ok as of 1/1 2023, still an issue with the log file all rolling up into a single one per run, which is ok.
+# mystical_mandala() #Working ok as of 1/1 2023, still an issue with the log file all rolling up into a single one per run, which is ok.
 # glorious_mandala_extended()  #Created 11/13/2022 Located @ line 2990- 3111, 32nd module of 48.  # 2.43 minutes
 
 # awesome_mandala()
 # awesome_mandala_extended() #Created 11/7/2022 'Located @ line 1242 - 1342, 3.57 minutes
 # awesome_mandala_old()
-colorful_mandala_extended() # Tested and verified on 1/3/2023; 'Located @ line 260 - 385,  3rd module of 48', created on 11/6/2022 
+# colorful_mandala_extended() # Tested and verified on 1/3/2023; 'Located @ line 260 - 385,  3rd module of 48', created on 11/6/2022 
 # wall_show_extended() #Located @ line 3266- 3393, 34th module of 41.
 # brave_mandala_extended() #Located @ line 1645 -1736, 20th module of 48
 # brave_mandala_decimated()
-dark_mandala_extended() # Tested and verified on 1/6/2023; Created 1/4/2023; Located at lines 3717 - 3873; 47th module of 48.
+# dark_mandala_extended() # Tested and verified on 1/6/2023; Created 1/4/2023; Located at lines 3717 - 3873; 47th module of 48.
 
 '''
 Run long_clips
 '''
 # cloverleaf_extended() #Located @ line 2648 - 2770, 31st module of 48' Created 11/ 17/2022
 # majestic_mandala_extended()  # Created 11/17/2022; Located @ line 3300 - 3442, 39th module of 48' Derived from cloverleaf_extended; employs lines instead of circles
-
+# jagged_multigram() # module_4 #Tested and verified on 1/12/2023; Located @ line 397 - 466, 4th module of 48' 4 of 48, Published to YouTube on 11/2/2021
 '''Run short clips
 '''
 
@@ -3922,22 +3972,22 @@ Run long_clips
 '======================================================================================================================================================================='
 # This third group of modules specifies a list of angles to loop
 
-colorful_mandala() # module_2; Tested and verified on 1/3/2023; Row 200 - 254, #2 of 48 
-jagged_multigram() # module_4 #Tested and verified on 1/4/2023; Located @ line 397 - 466, 4th module of 48' 4 of 48, Published to YouTube on 11/2/2021
-hued_polygonial() # module_5; Tested and verified 1/4/2023; Rows 465 - 515,   5th module of 48. Features Blue and Red Hues. Modified 12/17/2021 Updated to automate video creation# 
-Fantastic_Mandala() # module_6 Tested and verified 1/4/2023; Located @ line 520 - 576,   6th module of 48. Works well. Updated to automate video creation Implemented 't.phi Offset' Angle on 4/28/2022.
-dark_mandala() #module_7 Tested and verified 1/4/2023; Rows 568 - 640, 7 of 48, Revised 1/4/2023
-iridescent_polygram()  # module_8; Tested and verified 1/4/2023; Row 645 - 723, 8 of 48; Modified 1/2/2022 Updated to automate video creation
-bold_mandala()  # module_9 Modified, tested and verified on 1/8/2023; Located @ line 713 - 782, 9th module of 48', Updated to automate video creation  Implemented 't.phi Offset' Angle on 4/28/2022.
+# colorful_mandala() # module_2; Tested and verified on 1/3/2023; Row 200 - 254, #2 of 48 
+
+# hued_polygonial() # module_5; Tested and verified 1/4/2023; Rows 465 - 515,   5th module of 48. Features Blue and Red Hues. Modified 12/17/2021 Updated to automate video creation# 
+# Fantastic_Mandala() # module_6 Tested and verified 1/4/2023; Located @ line 520 - 576,   6th module of 48. Works well. Updated to automate video creation Implemented 't.phi Offset' Angle on 4/28/2022.
+# dark_mandala() #module_7 Tested and verified 1/4/2023; Rows 568 - 640, 7 of 48, Revised 1/4/2023
+# iridescent_polygram()  # module_8; Tested and verified 1/4/2023; Row 645 - 723, 8 of 48; Modified 1/2/2022 Updated to automate video creation
+# bold_mandala()  # module_9 Modified, tested and verified on 1/8/2023; Located @ line 713 - 782, 9th module of 48', Updated to automate video creation  Implemented 't.phi Offset' Angle on 4/28/2022.
 # animated_abstraction()  #  module_9 10 of 48, Thumbs created 11/21/2021
 # animated_hued_polygram()  # module_13  Located @ line 929 - 989, number 13 of 48, created 11/14/2021; added print to file 3/1/2022
-awesome_mandala()  #  Tested and verified on 1/7/2023. module_15 15 of 48, Located at lines 1135 - 1189. Processed to mp4 and published to YouTube on 11/21/2021. modified 11/20/2021, This is exceptional.
- 
-glorious_mandala() # module_18 Tested and verified 1/10/2023; Created 4/6/2022, based on stupendous mandala. Located @ line 3153- 3219, 41st module of 48.
-pretty_awesome_mandala() # module_19; Tested and verified 1/10/2023; Located @ line 1331- 1380, 18th module of 48. Derived from awesome_mandala. # Processed 90 degrees to MP4 on 12/15/2021
-mighty_awesome_mandala() # Tested and verified 01/11/2023; Located @ line 1385- 1497, 19th module of 48; Based on pretty awesome mandala
-# 
-# stupendous_mandala() # module_18 Row 1034 - 1101, number 17 of 48. Derived from pretty_awesome_mandala. Created 1/8/2022. added print to file 3/1/2022Features a more prominent center than it's parent.  Works well.
+# awesome_mandala()  #  Tested and verified on 1/7/2023. module_15 15 of 48, Located at lines 1135 - 1189. Processed to mp4 and published to YouTube on 11/21/2021. modified 11/20/2021, This is exceptional.
+#  
+# glorious_mandala() # module_18 Tested and verified 1/10/2023; Created 4/6/2022, based on stupendous mandala. Located @ line 3153- 3219, 41st module of 48.
+# pretty_awesome_mandala() # module_19; Tested and verified 1/10/2023; Located @ line 1331- 1380, 18th module of 48. Derived from awesome_mandala. # Processed 90 degrees to MP4 on 12/15/2021
+# mighty_awesome_mandala() # Tested and verified 01/11/2023; Located @ line 1385- 1497, 19th module of 48; Based on pretty awesome mandala
+
+stupendous_mandala() # module_19 Row 1652 - 1101, number 17 of 48. Derived from pretty_awesome_mandala. Created 1/8/2022. added print to file 3/1/2022Features a more prominent center than it's parent.  Works well.
 # brave_mandala() #module_19 Located @ line 1386 -1449, Derived from awesome_mandala; 18 of 48
 # color_shifting_mandala() # module_20 Rows 1274 - 1327, 19 of 48 work on
 # Hued_freedom_star() # module_26 Row 1358 - 1428, 22 of 48; Added 12/4/2021

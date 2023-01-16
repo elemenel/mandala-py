@@ -4,15 +4,32 @@ import random
 import os
 import platform
 from moviepy.editor import *
-import audio_clips as au
 from moviepy.editor import AudioFileClip, ImageClip
 from functools import lru_cache
 from mutagen.mp3 import MP3
 from mutagen.flac import FLAC
 import Timer as Tm
-# from logging2 import Logger
+import My_logger as l
+import logging
+import My_template as t
+import natsort
 
-global my_path, my_music_path, my_audio_clip
+
+
+logger_a = logging.getLogger(t.my_project)
+logger_a.info('Child Logger in audio_clips.py is working')
+fileHandler = logging.FileHandler ('/media/elemen/Inland SSD1/Make_Mandalas/Logs/Durations.log')
+fileHandler.setLevel(logging.INFO)
+# consoleHandler = logging.StreamHandler()
+# consoleHandler.setLevel(logging.INFO)
+logger_a.setLevel(logging.INFO)
+logger_a.addHandler(fileHandler)
+# logger_a.addHandler(consoleHandler)
+
+
+
+global my_path, my_music_path, my_audio_clip, my_track
+
 if sys.platform.startswith('linux'):
     my_path = '/media/elemen/Inland SSD1'
     my_no_audio_video_path = '/media/elemen/Inland SSD1/no_audio/'
@@ -24,9 +41,10 @@ else:
     my_path = 'M:'
     my_no_audio_video_path = 'M:/Videos/no_audio/'
     my_full_vids_video_path = 'M:/Videos/Full_Vids/'
+
+Tm.set_time()
     
-    
-print(my_music_path) 
+# logger.info(my_music_path) 
 extra_long_clips = []
 long_clips = []
 medium_clips = []
@@ -37,36 +55,41 @@ i = 0
 # Tm.set_time()
 # music_clips  ---Music list
 
+# Determine and manage the duration categories (i.e short, medium, long, extra long)
+suffix = '.mp3'
+suffix_a = '.flac'
+
 def get_music_file_duration():
-    print(str(Tm.my_time))
     Audio_length = MP3(i)
     musicclip_duration = round(int(Audio_length.info.length/60))
-    print(str('For ' + str(i) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
-    print('=================================================================================================')
-    if musicclip_duration in range(9, 25, 1):
+    logger_a.info(str('For ' + str(i) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
+    logger_a.info('=================================================================================================')
+    if musicclip_duration in range(int(8.1), 1000): #Adjustable
         extra_long_clips.append(i)
-    elif musicclip_duration in range(6, 8, 1): #5.5
+    elif musicclip_duration in range(int(6.5), 8): #5.5 Adjustable
         long_clips.append(i)
-    elif musicclip_duration in range(3, 5, 1):
+    elif musicclip_duration in range(int(3.7), int(6.4)): # Adjustable
         medium_clips.append(i)
-    else:
+    elif musicclip_duration in range(int(2.0), int(3.6)): # Adjustable
         short_clips.append(i)
-    print_clips_list()
+    else:
+        pass
+    
         
 
 def print_clips_list():
-    print('For this run, the list of short clips is:   ' + str(short_clips))
-    print('=================================================================================================================')
-    print('For this run, the list of medium clips is:   ' + str(medium_clips))
-    print('=================================================================================================================')
-    print('For this run, the list of long clips is:   ' + str(long_clips))
-    print('=================================================================================================================')
-    print('For this run, the list of extra long clips is:   ' + str(extra_long_clips))
-    print('=================================================================================================================')
+    logger_a.info('For ' + Tm.my_time + ', ' + 'the list of short clips is:   ' + str(short_clips))
+    logger_a.info('=================================================================================================================')
+    logger_a.info('For ' + Tm.my_time + ', ' + 'the list of medium clips is:   ' + str(medium_clips))
+    logger_a.info('=================================================================================================================')
+    logger_a.info('For ' + Tm.my_time + ', ' + 'the list of long clips is:   ' + str(long_clips))
+    logger_a.info('=================================================================================================================')
+    logger_a.info('For ' + Tm.my_time + ', ' + 'the list of extra long clips is:   ' + str(extra_long_clips))
+    logger_a.info('=================================================================================================================')
     
 
-#  #[my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Four Symphonic Interludes (from Intermizzo).mp3', # 24  minutes
-#                 #my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Dance of the Seven Veils.mp3',  # 10  minutes
+# strauss_clips = [my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Four Symphonic Interludes (from Intermizzo).mp3', # 24  minutes
+#                my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Dance of the Seven Veils.mp3',  # 10  minutes
 #                 [my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Also Sprach Zarathustra, Op. 30.mp3'] # 36  minutes
 # for i in strauss_clips: 
 #     get_music_file_duration()
@@ -79,8 +102,8 @@ classical_melodies = [my_music_path + '/Various artists - Dream Melodies Vol.  2
                     my_music_path + '/Various artists - Dream Melodies Vol.  2 - Classical Symphonies/Beethoven- Marcia funebre, from Symphony No. 3 in E flat, \'\'Eroica\'\'.mp3', # 16 minutes
                     my_music_path + '/Various artists - Dream Melodies Vol.  2 - Classical Symphonies/Haydn- Andante, from Symphony No. 94 in G, \'\'Surprise\'\'.mp3', #  6  minutes
                     my_music_path + '/Various artists - Dream Melodies Vol.  2 - Classical Symphonies/Mozart- Molto allegro, from Symphony No. 40 in G minor.mp3'] #  7  minutes
-for i in classical_melodies:  # prefix_ab
-    get_music_file_duration()
+# for i in classical_melodies:  # prefix_ab
+#     get_music_file_duration()
 
 
 
@@ -89,8 +112,8 @@ new_world_symphony = [my_music_path + '/Dvorak, Antonin - Symphony No 9 From the
 #                         my_music_path + '/Dvorak, Antonin - Symphony No 9 From the New World/Scherzo molto vivace.mp3',   7  minutes
                         my_music_path + '/Dvorak, Antonin - Symphony No 9 From the New World/Largo.mp3', # 12  minutes
                         my_music_path + '/Dvorak, Antonin - Symphony No 9 From the New World/Adagio allegro molto.mp3']  # 9  minutes
-for i in new_world_symphony:  
-    get_music_file_duration()
+# for i in new_world_symphony:  
+#     get_music_file_duration()
     
 
 
@@ -108,8 +131,8 @@ the_spinners = [my_music_path + '/Spinners - The Essentials/Cupid-I\'ve Loved Yo
                 my_music_path + '/Spinners - The Essentials/Could It Be I\'m Falling In Love.mp3',
                 my_music_path + '/Spinners - The Essentials/How Could I Let You Get Away.mp3',
                 my_music_path + '/Spinners - The Essentials/I\'ll Be Around.mp3']
-for i in the_spinners:  
-    get_music_file_duration()
+# for i in the_spinners:  
+#     get_music_file_duration()
 
 
 anthony_hamilton = [my_music_path + '/Anthony Hamiton - Comin From Where I\'m From/Anthony Hamilton - I Tried.mp3',
@@ -124,8 +147,8 @@ anthony_hamilton = [my_music_path + '/Anthony Hamiton - Comin From Where I\'m Fr
                     my_music_path + '/Anthony Hamiton - Comin From Where I\'m From/Anthony Hamilton - Since I Seen\'t You.mp3',
                     my_music_path + '/Anthony Hamiton - Comin From Where I\'m From/Anthony Hamilton - Cornbread, Fish & Collard Greens.mp3',
                     my_music_path + '/Anthony Hamiton - Comin From Where I\'m From/Anthony Hamilton - Mama Knew Love.mp3']
-for i in anthony_hamilton:  
-    get_music_file_duration()
+# for i in anthony_hamilton:  
+#     get_music_file_duration()
 
 
 
@@ -143,8 +166,8 @@ bob_marley = [my_music_path + '/Bob Marley - Bob Marley Collection/Bob Marley - 
                 my_music_path + '/Bob Marley - Bob Marley Collection/Bob Marley - Soul Almighty.mp3',  # 2  minutes
                 my_music_path + '/Bob Marley - Bob Marley Collection/Bob Marley - Rebel\'s Hop.mp3',  # 2  minutes
                 my_music_path + '/Bob Marley - Bob Marley Collection/Bob Marley - Jamming.mp3']  # 3  minutes
-for i in bob_marley:  
-    get_music_file_duration()
+# for i in bob_marley:  
+#     get_music_file_duration()
 
 
 
@@ -169,8 +192,8 @@ messiah_clips = [my_music_path + '/Oratorio Society of New York - Handel\'s Mess
                 my_music_path + '/Oratorio Society of New York - Handel\'s Messiah Highlights/Oratorio Society of New York - Aria \'Ev\'ry valley shall be exalted\' (Tenor).mp3',
                 my_music_path + '/Oratorio Society of New York - Handel\'s Messiah Highlights/Oratorio Society of New York - Accompagnato \'Comfort ye My people\' (Tenor).mp3',
                 my_music_path + '/Oratorio Society of New York - Handel\'s Messiah Highlights/Oratorio Society of New York - Symphony (Grave - Allegro moderato).mp3']
-for i in messiah_clips: 
-    get_music_file_duration()
+# for i in messiah_clips: 
+#     get_music_file_duration()
 
 
 soul_ballads = [my_music_path + '/Various artists - Soul Ballads/Teddy Pendergrass - You\'re My Latest, My Greatest Inspiration.mp3',
@@ -183,8 +206,8 @@ soul_ballads = [my_music_path + '/Various artists - Soul Ballads/Teddy Pendergra
                 my_music_path + '/Various artists - Soul Ballads/Joe Tex - Hold What You\'ve Got.mp3',
                 my_music_path + '/Various artists - Soul Ballads/Jerry Butler - For Your Precious Love.mp3',
                 my_music_path + '/Various artists - Soul Ballads/The Platters - Only You (And You Alone).mp3']
-for i in soul_ballads:  
-    get_music_file_duration()
+# for i in soul_ballads:  
+#     get_music_file_duration()
 
 
 hits_of_80 = [my_music_path + '/Various artists - The Ultimate Jukebox Hits of the 80s - Volume 2/The Gap Band - Early In The Morning.mp3',
@@ -199,8 +222,8 @@ hits_of_80 = [my_music_path + '/Various artists - The Ultimate Jukebox Hits of t
                 my_music_path + '/Various artists - The Ultimate Jukebox Hits of the 80s - Volume 2/Quincy Jones & James Ingram - One Hundred Ways.mp3',
                 my_music_path + '/Various artists - The Ultimate Jukebox Hits of the 80s - Volume 2/Jocelyn Brown - Somebody Else\'s Guy.mp3',
                 my_music_path + '/Various artists - The Ultimate Jukebox Hits of the 80s - Volume 2/Evelyn \'Champagne\' King - Love Come Down.mp3']
-for i in hits_of_80: 
-    get_music_file_duration()
+# for i in hits_of_80: 
+#     get_music_file_duration()
 
 will_downing = [my_music_path + '/Will Downing - After Tonight/Lover\'s Melody (feat. Roy Ayers).mp3',
                 my_music_path + '/Will Downing - After Tonight/God Is So Amazing.mp3',
@@ -212,24 +235,24 @@ will_downing = [my_music_path + '/Will Downing - After Tonight/Lover\'s Melody (
                 my_music_path + '/Will Downing - After Tonight/No One Can Love You More (feat. Gerald Albright).mp3',
                 my_music_path + '/Will Downing - After Tonight/Satisfy You.mp3',
                 my_music_path + '/Will Downing - After Tonight/Will\'s Groove.mp3']
-for i in will_downing:  #prefix_q
-    get_music_file_duration()
+# for i in will_downing:  #prefix_q
+#     get_music_file_duration()
 
-winston_rhodes_resting = [my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Resting In The Arms Of God.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/On My Way To Heaven.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/He\'s Risen.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Freedom.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Walking In The Rain.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/As Time Goes By.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/What\'s This World Coming To.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Rescue Me.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Strolling On The Beach.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Music In The Wind.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Jah-Love Makes Me Glad.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Here, There, Everywhere.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Mellow Chimes.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Crossing To The Other Side.mp3',
-                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Return To The Motherland.mp3']
+winston_rhodes_resting = [my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Resting In The Arms Of God.mp3',  #5 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/On My Way To Heaven.mp3', #6 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/He\'s Risen.mp3',  # 3 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Freedom.mp3',  # 4 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Walking In The Rain.mp3',  # 5 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/As Time Goes By.mp3', # 4 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/What\'s This World Coming To.mp3',  #  4 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Rescue Me.mp3',  # 4 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Strolling On The Beach.mp3',  # 5 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Music In The Wind.mp3',  # 6 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Jah-Love Makes Me Glad.mp3',  # 5 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Here, There, Everywhere.mp3',  # 4 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Mellow Chimes.mp3',  #  5 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Crossing To The Other Side.mp3',  # 4 minutes
+                    my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Return To The Motherland.mp3'] # 6 minutes
 for i in winston_rhodes_resting: 
     get_music_file_duration()
 
@@ -257,8 +280,8 @@ alicia_keys = [my_music_path + '/Alicia Keys - As I Am/Sure looks good to me.mp3
                 my_music_path + '/Alicia Keys - As I Am/Superwoman.mp3',
                 my_music_path + '/Alicia Keys - As I Am/Go ahead.mp3',
                 my_music_path + '/Alicia Keys - As I Am/As I am [Intro].mp3']
-for i in alicia_keys:  #prefix_n
-    get_music_file_duration()
+# for i in alicia_keys:  #prefix_n
+#     get_music_file_duration()
 
 sense_of_serenity = [my_music_path + '/Sense of Serenity - Ocean Breezes/Water Dance.mp3',  #  3  minutes
                     my_music_path + '/Sense of Serenity - Ocean Breezes/Song Of The Seagull.mp3',  # 3  minutes
@@ -303,7 +326,7 @@ for i in winston_rhodes: #prefix_a
 
     
 spa_style = [my_music_path + '/Spa Style - Refresh/At Peace.mp3',  # 5  minutes
-                my_music_path + '/Spa Style - Refresh/Song of the Angels.mp3',  # 1  minute
+               #my_music_path + '/Spa Style - Refresh/Song of the Angels.mp3',  # 1  minute
                 my_music_path + '/Spa Style - Refresh/Reverie.mp3',  # 5  minutes
                 my_music_path + '/Spa Style - Refresh/On the Water.mp3',  # 6  minutes
                 my_music_path + '/Spa Style - Refresh/In Paradise.mp3',  # 3  minutes
@@ -320,8 +343,8 @@ marvin_gaye = [my_music_path + '/Marvin Gaye - What\'s Going On/Marvin Gaye - Go
                 my_music_path + '/Marvin Gaye - What\'s Going On/Marvin Gaye - Save the Children.mp3',
                 my_music_path + '/Marvin Gaye - What\'s Going On/Marvin Gaye - Inner City Blues (Make Me Wanna Holler).mp3',
                 my_music_path + '/Marvin Gaye - What\'s Going On/Marvin Gaye - Right On.mp3']
-for i in marvin_gaye:  #prefix_c
-    get_music_file_duration()
+# for i in marvin_gaye:  #prefix_c
+#     get_music_file_duration()
 
 meditation_music = [my_music_path + '/Meditation - Music and Nature/Transcend.mp3',  #  4  minutes
                     my_music_path + '/Meditation - Music and Nature/The Heart Of Reiki.mp3',  # 62  minutes
@@ -331,7 +354,6 @@ meditation_music = [my_music_path + '/Meditation - Music and Nature/Transcend.mp
                     my_music_path + '/Meditation - Music and Nature/Sapphire Blue (Indian Head Massage).mp3',  # 60  minutes
                     my_music_path + '/Meditation - Music and Nature/Relaxation & Meditation With Music & Nature.mp3',  # 59  minutes
                     my_music_path + '/Meditation - Music and Nature/Daybreak- Sunrise.mp3',  # 7  minutes
-                    
                     my_music_path + '/Meditation - Music and Nature/Water Pearls.mp3',  # 3  minutes
                     my_music_path + '/Meditation - Music and Nature/Low Tide - Silent Paradise.mp3',  # 5  minutes
                     my_music_path + '/Meditation - Music and Nature/Evening Song.mp3',  # 3  minutes
@@ -372,8 +394,8 @@ classical_clips =  [my_music_path + '/Various artists - Relaxing with the Classi
                     my_music_path + '/Various artists - Relaxing with the Classics (London Symphony Orchestra, Don Jackson)/Rimsky-Korsakov - Scheherazade.mp3',  # 2  minutes
                     my_music_path + '/Various artists - Relaxing with the Classics (London Symphony Orchestra, Don Jackson)/Pachelbel - Canon in D.mp3',  # 4  minutes
                     my_music_path + '/Various artists - Relaxing with the Classics (London Symphony Orchestra, Don Jackson)/Grieg - Morning Mood from Peer Gynt Suite.mp3']  # 4  minutes
-for i in classical_clips:  #prefix_f
-    get_music_file_duration()
+# for i in classical_clips:  #prefix_f
+#     get_music_file_duration()
 
 yanni_clips = [my_music_path + '/Yanni - Tribute/Yanni - Nightingale.mp3',  #  5  minutes
                     my_music_path + '/Yanni - Tribute/Yanni - Waltz In 7\'8.mp3',  #  5  minutes
@@ -385,8 +407,8 @@ yanni_clips = [my_music_path + '/Yanni - Tribute/Yanni - Nightingale.mp3',  #  5
                     my_music_path + '/Yanni - Tribute/Yanni - Renegade.mp3',  # 7  minutes
                     my_music_path + '/Yanni - Tribute/Yanni - Adagio In C Minor.mp3',  # 3  minutes
                     my_music_path + '/Yanni - Tribute/Yanni - Deliverance.mp3']  # 3  minutes
-for i in yanni_clips:  
-    get_music_file_duration()
+# for i in yanni_clips:  
+#     get_music_file_duration()
 
 
 stevie_wonder = [my_music_path + '/Stevie Wonder - A Time To Love/Stevie Wonder - A Time To Love (feat. India. Arie).mp3',
@@ -404,8 +426,8 @@ stevie_wonder = [my_music_path + '/Stevie Wonder - A Time To Love/Stevie Wonder 
                     my_music_path + '/Stevie Wonder - A Time To Love/Stevie Wonder - Moon Blue.mp3',
                     my_music_path + '/Stevie Wonder - A Time To Love/Stevie Wonder - Sweetest Somebody I Know.mp3',
                     my_music_path + '/Stevie Wonder - A Time To Love/Stevie Wonder - If Your Love Cannot Be Moved (feat. Kim Burrell).mp3']
-for i in stevie_wonder: 
-    get_music_file_duration()
+# for i in stevie_wonder: 
+#     get_music_file_duration()
 
 india_arie = [my_music_path + '/India.Arie - Testimony - Vol. 1, Life & Relationship/India.Arie - This Too Shall Pass.mp3',
                 my_music_path + '/India.Arie - Testimony - Vol. 1, Life & Relationship/India.Arie - I Choose.mp3',
@@ -423,8 +445,8 @@ india_arie = [my_music_path + '/India.Arie - Testimony - Vol. 1, Life & Relation
                 my_music_path + '/India.Arie - Testimony - Vol. 1, Life & Relationship/India.Arie - The Heart Of The Matter.mp3',
                 my_music_path + '/India.Arie - Testimony - Vol. 1, Life & Relationship/India.Arie - These Eyes.mp3',
                 my_music_path + '/India.Arie - Testimony - Vol. 1, Life & Relationship/India.Arie - (Intro) Loving.mp3']
-for i in india_arie:  #prefix_i
-    get_music_file_duration()
+# for i in india_arie:  #prefix_i
+#     get_music_file_duration()
 
 the_whispers = [my_music_path + '/The Whispers - Song Book Volume 1/My, My, My.mp3',
                 my_music_path + '/The Whispers - Song Book Volume 1/I Love You Babe.mp3',
@@ -453,6 +475,7 @@ roberta_flack = [my_music_path + '/Roberta Flack - The Soul Of Roberta Flack In 
 # for i in roberta_flack:  #prefix_k
 #     get_music_file_duration()
 
+
 anita_baker = [my_music_path + '/Anita Baker - The Best of Anita Baker/It\'s Been You (single version).mp3',
                 my_music_path + '/Anita Baker - The Best of Anita Baker/I Apologize (single version).mp3',
                 my_music_path + '/Anita Baker - The Best of Anita Baker/Body and Soul (radio edit).mp3',
@@ -471,9 +494,62 @@ anita_baker = [my_music_path + '/Anita Baker - The Best of Anita Baker/It\'s Bee
                 my_music_path + '/Anita Baker - The Best of Anita Baker/No More Tears.mp3',
                 my_music_path + '/Anita Baker - The Best of Anita Baker/You\'re the Best Thing Yet.mp3',
                 my_music_path + '/Anita Baker - The Best of Anita Baker/Angel (single version).mp3']
-for i in anita_baker:  
-    get_music_file_duration()
+# for i in anita_baker:  
+#     get_music_file_duration()
 
+
+
+
+native_american = [my_music_path + '/Various artists - Tribal Winds - Music From Native American Flutes/ Andrew Vasques - Memory Of Earth Mother.mp3',
+                                my_music_path + '/Various artists - Tribal Winds - Music From Native American Flutes/ Bryan Akipa - First Flute Song.mp3',
+                                my_music_path + '/Various artists - Tribal Winds - Music From Native American Flutes/ Tokeye Inajin (kevin Locke) - Medicine Of The Meadowlark.mp3',
+                                my_music_path  +'/Various artists - Tribal Winds - Music From Native American Flutes/ Andrew Vasques - Eagle\'s Journey.mp3',
+                                my_music_path + '/Various artists - Tribal Winds - Music From Native American Flutes/ Tokeye Inajin (kevin Locke) - Lakota Prayer.mp3',
+                                my_music_path + '/Various artists - Tribal Winds - Music From Native American Flutes/ Fernando Cellicion - Eagle Dance Song.mp3',
+                                my_music_path + '/Various artists - Tribal Winds - Music From Native American Flutes/ R. Carlos Nakai and William Eaton - Covenants Shared.mp3',
+                                my_music_path + '/Various artists - Tribal Winds - Music From Native American Flutes/ William Gutierrez - Song For Grandfather.mp3',
+                                my_music_path + '/Various artists - Tribal Winds - Music From Native American Flutes/ Tom Mauchahty-Ware - Circle Of Life.mp3',
+                                my_music_path + '/Various artists - Tribal Winds - Music From Native American Flutes/ Joseph Fire Crow - Creator\'s Prayer.mp3']
+# for i in native_american:
+#     get_music_file_duration()
+
+
+
+
+
+rimsky_korsakov = [my_music_path + '/Nikolay Rimsky-Korsakov - The Royal Philharmonic Collection/ Nikolay Rimsky-Korsakov - Scena e canto gitano.mp3',
+                                my_music_path + '/Nikolay Rimsky-Korsakov - The Royal Philharmonic Collection/ Nikolay Rimsky-Korsakov - Alborada.mp3',
+                                my_music_path + '/Nikolay Rimsky-Korsakov - The Royal Philharmonic Collection/ Nikolay Rimsky-Korsakov - Variazioni.mp3',
+                                my_music_path + '/Nikolay Rimsky-Korsakov - The Royal Philharmonic Collection/05 - Nikolay Rimsky-Korsakov - Alborada.mp3',
+                                my_music_path + '/Nikolay Rimsky-Korsakov - The Royal Philharmonic Collection/ Nikolay Rimsky-Korsakov - The Festival of Bagdad.mp3',
+                                my_music_path + '/Nikolay Rimsky-Korsakov - The Royal Philharmonic Collection/ Nikolay Rimsky-Korsakov - The Young Prince and Princess.mp3',
+                                my_music_path + '/Nikolay Rimsky-Korsakov - The Royal Philharmonic Collection/ Nikolay Rimsky-Korsakov - The Story of the Kalandar Prince.mp3',
+                                my_music_path + '/Nikolay Rimsky-Korsakov - The Royal Philharmonic Collection/ Nikolay Rimsky-Korsakov - The Sea and Sinbad\'s Ship.mp3']
+# for i in rimsky_korsakov:
+#     get_music_file_duration()
+
+
+chuck_brown = [my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Funky Get Down.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Sound for the Town Interlude.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Love Nationwide.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - The Party Roll.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Everyday I Have the Blues.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - If You Had to Pick One Interlude.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - We Come To Party.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Latin Interlude.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Feelin\' Good.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Jock It In.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Peacemaker Interlude.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Chuck Baby.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Eye Candy.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Block Party.flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Love Theme from ''The Godfather".flac',
+my_music_path + '/Chuck Brown - We\'re About the Business/ Chuck Brown - Chuck Town Intro.flac']
+
+
+
+
+                                
 #Selections for extended modules (Greater than 4 minutes)
 extended_clips = [my_music_path +'/Kenya Rhodes - Pass Me Not/Kenya Rhodes - Pass Me Not.mp3',
                   my_music_path +'/Kenya Rhodes - Pass Me Not/Kenya Rhodes - Waiting on You.mp3',
@@ -517,10 +593,7 @@ extended_clips = [my_music_path +'/Kenya Rhodes - Pass Me Not/Kenya Rhodes - Pas
                    my_music_path + '/India.Arie - Testimony - Vol. 1, Life & Relationship/India.Arie - The Heart Of The Matter.mp3',
                    my_music_path + '/India.Arie - Testimony - Vol. 1, Life & Relationship/India.Arie - These Eyes.mp3',
                   my_music_path + '/India.Arie - Testimony - Vol. 1, Life & Relationship/India.Arie - This Too Shall Pass.mp3',
-                  my_music_path + '/Roberta Flack - The Soul Of Roberta Flack In Concert/The First Time Ever I Saw Your Face.mp3',
-                   my_music_path + '/Roberta Flack - The Soul Of Roberta Flack In Concert/Killing Me Softly With His Song.mp3',
-                 my_music_path + '/Roberta Flack - The Soul Of Roberta Flack In Concert/Feel Like Makin\' Love.mp3',
-                 my_music_path + '/Anita Baker - The Best of Anita Baker/It\'s Been You (single version).mp3',
+                  my_music_path + '/Anita Baker - The Best of Anita Baker/It\'s Been You (single version).mp3',
                 my_music_path + '/Anita Baker - The Best of Anita Baker/I Apologize (single version).mp3',
                  my_music_path + '/Anita Baker - The Best of Anita Baker/Fairy Tales (edit).mp3',
                 my_music_path + '/Anita Baker - The Best of Anita Baker/Lead Me Into Love (single version).mp3',
@@ -539,8 +612,34 @@ extended_clips = [my_music_path +'/Kenya Rhodes - Pass Me Not/Kenya Rhodes - Pas
 #     get_music_file_duration()  
 
 # extended_clips.append(long_clips)
-# print(extended_clips)
- 
+# logger_a.info(extended_clips)
+
+# Special 5 minute tracks selections
+special_clips = [my_music_path + '/Various artists - The Ultimate Jukebox Hits of the 80s - Volume 2/Lionel Richie - Love Will Conquer All.mp3',
+                                my_music_path + '/Will Downing - After Tonight/Lover\'s Melody (feat. Roy Ayers).mp3',
+                                my_music_path + '/Will Downing - After Tonight/God Is So Amazing.mp3',
+                                my_music_path + '/Will Downing - After Tonight/Fantasy (Spending Time With You).mp3',
+                                my_music_path + '/Will Downing - After Tonight/All I Need Is You (feat. Kirk Whalum).mp3',
+                                my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Resting In The Arms Of God.mp3',
+                                 my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Walking In The Rain.mp3',
+                                my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Strolling On The Beach.mp3',
+                                 my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Jah-Love Makes Me Glad.mp3',
+                                my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Mellow Chimes.mp3',
+                                my_music_path + '/Alicia Keys - As I Am/I need you.mp3',
+                                my_music_path + '/Alicia Keys - As I Am/Like you\'ll never see me again.mp3',
+                                 my_music_path +'/Kenya Rhodes - Pass Me Not/Kenya Rhodes - When I Get To Heaven.mp3',
+                                 my_music_path + '/Winston Rhodes - Jubilee/On The Hallelujah Trail.mp3',  # 5  minutes
+                                my_music_path + '/Winston Rhodes - Jubilee/His Majesty, God.mp3',  # 5  minutes
+                               my_music_path + '/Winston Rhodes - Jubilee/On The Hallelujah Trail.mp3',  # 5  minutes
+                                my_music_path + '/Winston Rhodes - Jubilee/His Majesty, God.mp3',  # 5  minutes 
+                                my_music_path + '/Winston Rhodes - Jubilee/Drink From The Living Water.mp3', 
+                                my_music_path + '/Spa Style - Refresh/At Peace.mp3', # 5  minutes
+                                my_music_path + '/Spa Style - Refresh/Reverie.mp3',  # 5  minutes
+                                my_music_path + '/Spa Style - Refresh/On the Water.mp3',  # 6  minutes
+                                 my_music_path + '/Spa Style - Refresh/Like a Swan.mp3',
+                                my_music_path + '/Meditation - Music and Nature/Low Tide - Silent Paradise.mp3',
+                                my_music_path + '/Meditation - Music and Nature/Silent Walk.mp3']  # 5  minutes
+
 
                               
                   
@@ -564,9 +663,6 @@ extended_clips = [my_music_path +'/Kenya Rhodes - Pass Me Not/Kenya Rhodes - Pas
                    
 
 
-suffix = '.mp3'
-suffix_a = '.flac'
-
 
 '''
 This script removes directory path and extension from clip, leaving the file name only
@@ -575,17 +671,16 @@ def pick_medium_track():
     global my_audio_clip
     global my_track
     my_audio_clip = random.choice(medium_clips)
-    print(my_audio_clip)
     ch = '/'
     clipped_track = my_audio_clip.split(ch, 5)
-    print('The clipped_track value is  ' + str(clipped_track))
     if len(clipped_track) > 0:
         this_track = clipped_track[5]
     if suffix in this_track:
         my_track = this_track.removesuffix(suffix)
     else:
         my_track = this_track.removesuffix(suffix_a)
-    print('The selected track is ' + str(my_track))    
+
+
 
 
 def pick_extended_track():
@@ -600,8 +695,10 @@ def pick_extended_track():
         my_track = this_track.removesuffix(suffix)
     else:
         my_track = this_track.removesuffix(suffix_a)
-    print(my_track)
-    
+   
+
+
+
 def pick_short_track():
     global my_audio_clip
     global my_track
@@ -614,16 +711,43 @@ def pick_short_track():
         my_track = this_track.removesuffix(suffix)
     else:
         my_track = this_track.removesuffix(suffix_a)
-    print('The selected track is ' + str(my_track))        
- 
-  
+        
+def get_special_5_min_track():
+    global my_audio_clip
+    global my_track
+    my_audio_clip = random.choice(special_clips)
+    ch = '/'
+    clipped_track = my_audio_clip.split(ch, 5)
+    if len(clipped_track) > 0:
+        this_track = clipped_track[5]
+    if suffix in this_track:
+        my_track = this_track.removesuffix(suffix)
+    else:
+        my_track = this_track.removesuffix(suffix_a)
+    
 
 
-      
 
-# print('Contents of long_clips list are   ' + str(long_clips))
-# print('Contents of regular_clips list are   ' + str(regular_clips))
-# print('Contents of short_clips list are   ' + str(short_clips))
+
+def pick_x_long_track():
+    global my_audio_clip
+    global my_track
+    my_audio_clip = random.choice(extra_long_clips)
+    ch = '/'
+    clipped_track = my_audio_clip.split(ch, 5)
+    if len(clipped_track) > 0:
+        this_track = clipped_track[5]
+    if suffix in this_track:
+        my_track = this_track.removesuffix(suffix)
+    else:
+        my_track = this_track.removesuffix(suffix_a)
+print_clips_list()
+
+
+
+# logger_a.info('Contents of long_clips list are   ' + str(long_clips))
+# logger_a.info('Contents of regular_clips list are   ' + str(extended_clips))
+# logger_a.info('Contents of short_clips list are   ' + str(short_clips))
 
 
 
@@ -631,39 +755,37 @@ def pick_short_track():
 
 
 # audioclip = AudioFileClip(my_audio_clip)
-# print(str(audioclip.duration))
+# logger_a.info(str(audioclip.duration))
 # # new_clip = audioclip.set_duration(400)
-# # print(str(new_clip.duration))
+# # logger_a.info(str(new_clip.duration))
 # list = long_clips
 # # Getting length of list using len() function
 # length = len(list)
 # i = 0
 
 # while i < length:
-#     print(list[i])
+#     logger_a.info(list[i])
 #     i += 1
 
 # METHOD 2 from Geeksforgeeks.com
-# Prints list of files with duration to shell
+# logger_a.infos list of files with duration to shell
 
 
 #     import os
 #     path_of_the_directory = my_path + '/Lengthy Audio/'
 #     object = os.scandir(path_of_the_directory)
-#     print("Files and Directories in '% s':" % path_of_the_directory)
+#     logger_a.info("Files and Directories in '% s':" % path_of_the_directory)
 #     for n in object :
 #         if n.is_dir() or n.is_file():
-#             print(n.name)
+#             logger_a.info(n.name)
 #             get_duration()
 #            
 #     object.close()
 
 
-    
-    
-    
-    
-    
-    
-    
 
+
+    
+    
+    
+    

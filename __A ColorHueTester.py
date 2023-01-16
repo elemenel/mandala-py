@@ -21,7 +21,7 @@ my_hue.shape('blank')
 
 # Future: set up error handling here
 
-# save the result to file
+#Future save the result to file
 my_path = '/media/elemen/Inland SSD1/Images/ColorHueTests/'
 def save_image():
     my_region = 715, 290, 505, 505

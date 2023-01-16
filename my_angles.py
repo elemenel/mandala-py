@@ -3,20 +3,22 @@
              # by LeonRHatton
 
 import turtle
-# import My_template as t
 import random
 import numpy as np
 import math
-#import FileScripts as f
 import sys
 import os
 import platform
 import time
 global r_angle
-r_angle = random.randrange(72, 1500, 9)
 import Timer as Tm
-
 import sys
+import My_logger as l
+import logging
+import My_template as t
+
+logger = logging.getLogger(t.my_project)
+logger.info('Child Logger in my_angles is working')
 
 if sys.platform.startswith('linux'):
     my_path = '/media/elemen/'
@@ -27,14 +29,16 @@ else:
 
 Tm.time_functions()
 
-print(sys.platform)
-print(my_path)   
+logger.info(sys.platform)
+logger.info(my_path)   
     
-    
+ 
 turtle.setup(10,10)
 
+r_angle = random.randrange(72, 1500, 9)
+
 # filter_360 = [i for i in np.arange(float(357.01), float(363.99), .01) if i % float(180) != 0]
-# print(str(filter_360))
+# logger.info(str(filter_360))
 #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 # past auto angles: # 72,1500, 72 on 1/8/2022. Produces 5 points or sides.
                     # 257.142857, 1500, 51.42857 on 1/8/2022. Produces 7 points or sides.
@@ -84,20 +88,25 @@ turtle.setup(10,10)
 # global i_angle_auto
 def pick_angles():
     global i_angle_auto
-    angle_min = 462.85714 #  random.randrange(150, 450, 10)
-    angle_max = 700
-    key = 51.428
-    angle_min_a = 1350
-    angle_max_a = 1800
-    key_a = 150
     
-    i_angle_auto =  [i for i in np.arange(float(angle_min), float(angle_max), key) if i % float(180) != 0 ] + \
-                   [i for i in np.arange(float(angle_min_a), float(angle_max_a), key_a) if i % float(180) != 0] #\
-                             # [462.85713] #, 925.71426, 977.14283, 514.2857142, 565.7142857, 617.142857, 668.57142, 771.428571] #,\
-#        822.8571428, 874.28571, 925.714285, 977.142857, ]
+    angle_min = 257.142857
+    angle_max =2100
+    key = 257.142857
+
+    
+    angle_min_a = 288
+    angle_max_a = 1200
+    key_a = 288
+    
+    angle_min_b = 1350
+    angle_max_b = 6000
+    key_b = 1350
+          
+    i_angle_auto = [i for i in np.arange(float(angle_min), float(angle_max), key) if i % float(180) != 0]  + [126] + \
+                   [i for i in np.arange(float(angle_min_a), float(angle_max_a), key_a) if i % float(180) != 0] + \
+                   [i for i in np.arange(float(angle_min_b), float(angle_max_b), key_b) if i % float(180) != 0]  #+ [ 221.5385]
+                   
  
-#     [i for i in np.arange(float(216), float(1500),300) if i % float(180) != 0 ] 
-#     i_angle_auto.remove([i for i in np.arange(float(356.99), float(363.99), .01)])
     return i_angle_auto          
 pick_angles()
 # i_angle_auto =[120, 90, 72, 60, 51.42857142857143, 45, 40, 36, 32.72727272727273, 30, 27.692307692307693,\
@@ -125,8 +134,8 @@ pick_angles()
 # start_prime = 371
 # end_prime = 470
 # i_angle_primes = [x for x in range(start_prime, end_prime) if x not in noprimes]
-# # print('These are prime numbers from ' + str(start_prime) + '  to ' + str(end_prime) +':' + str(i_angle_primes))
-# print('The number of primes list elements is: ' + str(len(i_angle_primes)))
+# # logger.info('These are prime numbers from ' + str(start_prime) + '  to ' + str(end_prime) +':' + str(i_angle_primes))
+# logger.info('The number of primes list elements is: ' + str(len(i_angle_primes)))
 
 
 
@@ -178,8 +187,7 @@ pick_angles()
 
 # i_angle_basic = [585, 1170, 1755] # Mainly for testing
 # 
-# i_angle_o = [141, 91.5, 227, 1211] # odd angles
-# 
+ 
 # freedom_angle = [360/1.75]
 # 
 # # length = len(i_angle)
@@ -219,7 +227,7 @@ pick_angles()
 #   
 # # Using for loop
 # for i in list:
-#     print(i)
+#     logger.info(i)
 #     
 # # getting length of list
 # length = len(list)
@@ -227,20 +235,20 @@ pick_angles()
 # # Iterating the index
 # # same as 'for i in range(len(list))'
 # for i in range(length):
-#     print(list[i])    
+#     logger.info(list[i])    
 # 
 # # Iterating using while loop
 # #i = 0
 # while i < length:
-#     print(list[i])
+#     logger.info(list[i])
 #     i += 1
     
  
 # Using list comprehension
-# [print(i) for i in list]
+# [logger.info(i) for i in list]
 
 
-# print(list(i_angle))
+# logger.info(list(i_angle))
 #================================================================================
 # function to analyze numerical sequences such as 120 = 1+2+0 = 3
 # Using List comphension
@@ -252,15 +260,15 @@ pick_angles()
 # y = sum([int(a) for a in str(num_b)])
 # z = sum([int(a) for a in str(num_c)])
 # 
-# print('For   ' + str(num_a) + ',   ' +  'the sum of digits is ' + str(x))
-# print('For   ' + str(num_b) + ',   ' +  'the sum of digits is ' + str(y))
-# print('For   ' + str(num_c) + ',   ' +  'the sum of digits is ' + str(z))
+# logger.info('For   ' + str(num_a) + ',   ' +  'the sum of digits is ' + str(x))
+# logger.info('For   ' + str(num_b) + ',   ' +  'the sum of digits is ' + str(y))
+# logger.info('For   ' + str(num_c) + ',   ' +  'the sum of digits is ' + str(z))
 #==================================================================================
 # Find sum of odd digits in a number, and can be used to find even, too by tweaking code in set [2468]
 # num = "123"
 # odds = re.findall(r'[13579]', num)
 # sum = sum(int(odd) for odd in odds)
-# print("the sum is: " + str(sum))
+# logger.info("the sum is: " + str(sum))
 
 
 # Function to analyze numerical squences from auto angle list output
@@ -274,7 +282,7 @@ pick_angles()
 # a = 1
 # b = 2
 # for i in range(10):
-#     print(a*i +b)
+#     logger.info(a*i +b)
 # i_angle_auto = i_angle_5
 
 
@@ -287,58 +295,58 @@ pick_angles()
 #     else:
 #         pass
 # filter_360()    
-
+# i_angle_auto = [1296]
 valuesRounded = [round(float) for float in i_angle_auto]
 #Output to log file
-print('Starting shell output to a file.....')
-print('*******************************************************************************************************')
-print('*******************************************************************************************************')
-open_shell_out_path = my_log_path +'/mandala scripts.log'
-stdoutOrigin = sys.stdout
-sys.stdout = open(open_shell_out_path, 'a')
-print('Started shell output to file.')
-print('*******************************************************************************************************')
-print('*******************************************************************************************************')
-print('Running Scripts from Master Mandala Maker @' +str(Tm.my_time) + '')
-print('...................................................................................................')
-print('The Automated Set of Angles to be Drawn Are:')
-print(valuesRounded)
-print('....................................................................................................')
-print('The number of Automated Angle Generator elements is: ' + str(len(valuesRounded)))
+# logger.info('Starting shell output to a file.....')
+# logger.info('*******************************************************************************************************')
+# print('*******************************************************************************************************')
+# open_shell_out_path = my_log_path +'/mandala scripts.log'
+# stdoutOrigin = sys.stdout
+# sys.stdout = open(open_shell_out_path, 'a')
+# print('Started shell output to file.')
+# print('*******************************************************************************************************')
+logger.info('*******************************************************************************************************')
+logger.info('Running Scripts from Master Mandala Maker @' +str(Tm.my_time) + '')
+logger.info('...................................................................................................')
+logger.info('The Automated Set of Angles to be Drawn Are:')
+logger.info(valuesRounded)
+logger.info('....................................................................................................')
+logger.info('The number of Automated Angle Generator elements is: ' + str(len(valuesRounded)))
 
 # Python3 code to demonstrate
 # Sum of number digits in List
 # using sum() + list comprehension
 x = list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded))
-# print(x)
-print('...................................................................................................')      
-print('Sum of digits in the elements of the list are:   ' )
-print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded)))
-# print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
-print('*******************************************************************************************************')
-print('*******************************************************************************************************')
-print('Stopping shell output to file...')
-sys.stdout.close()
-sys.stdout = stdoutOrigin
-print('Shell output default restored')
+# logger.info(x)
+logger.info('...................................................................................................')      
+logger.info('Sum of digits in the elements of the list are:   ' )
+logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded)))
+# logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
+logger.info('*******************************************************************************************************')
+# logger.info('*******************************************************************************************************')
+# logger.info('Stopping shell output to file...')
+# sys.stdout.close()
+# sys.stdout = stdoutOrigin
+# logger.info('Shell output default restored')
 
 #Output to shell
-print('Running Scripts from Master Mandala Maker @' +str(Tm.my_time) + '')
-print('...................................................................................................')
-print('The Automated Set of Angles to be Drawn Are:')
-print(valuesRounded)
-print('....................................................................................................')
-print('The number of Automated Angle Generator elements is: ' + str(len(valuesRounded)))
+logger.info('Running Scripts from Master Mandala Maker @' +str(Tm.my_time) + '')
+logger.info('...................................................................................................')
+logger.info('The Automated Set of Angles to be Drawn Are:')
+logger.info(valuesRounded)
+logger.info('....................................................................................................')
+logger.info('The number of Automated Angle Generator elements is: ' + str(len(valuesRounded)))
 
 # Python3 code to demonstrate
 # Sum of number digits in List
 # using sum() + list comprehension
 x = list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded))
-# print(x)
-print('...................................................................................................')      
-print('Sum of digits in the elements of the list are:   ' )
-print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded)))
-# print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
+# logger.info(x)
+logger.info('...................................................................................................')      
+logger.info('Sum of digits in the elements of the list are:   ' )
+logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded)))
+# logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
 
 
 
@@ -351,14 +359,14 @@ print(list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded)))
 #****************************************************************************************************************
 def log_factorial():
     my_title = '/Factorial_output.txt'
-    stdoutOrigin=sys.stdout
-    sys.stdout = open(my_path + my_title + '_log.txt', 'w')
+#     stdoutOrigin=sys.stdout
+#     sys.stdout = open(my_path + my_title + '_log.txt', 'w')
     count = 1
     x = 360
     while count <= 361:
-        print('Factorial '+ str(count) + ':    ' + str(x / count))
+        logger.info('Factorial '+ str(count) + ':    ' + str(x / count))
         count += 1
-    sys.stdout.close()
-    sys.stdout=stdoutOrigin
+#     sys.stdout.close()
+#     sys.stdout=stdoutOrigin
     
 #  log_factorial()    

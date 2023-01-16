@@ -5,7 +5,7 @@ import turtle
 import time
 import My_template as t
 import my_angles as a
-from PIL import Image #module for converting python output to image
+# from PIL import Image #module for converting python output to image
 import numpy as np
 import cv2
 import pyautogui
@@ -23,52 +23,55 @@ turtle.colormode(255)
 
 def splash_screen():
     turtle.colormode(255)
-    turtle.bgcolor('purple')
+    turtle.bgcolor(10, 15, 15)
     t.my_pen.penup()
-    t.my_pen.setposition(-600, 0)
+    t.my_pen.setposition(-750, 0)
     t.my_pen.color(255, 255, 199)
     t.my_pen.pendown()
-    t.my_pen.write( t.my_str, move = 'False', font = ("Garamond ", 24, "bold italic"), align = 'center')
+    t.my_pen.write( t.my_str, move = 'False', font = ("Garamond ", 18, "bold italic"))
     t.my_pen.penup()
     t.my_pen.setposition(-300, -150)
     t.my_pen.pendown()
-    t.my_pen.write(" graphics by LeonRHatton, music by Winston Rhodes and others   " \
+    t.my_pen.write(" created by LeonRHatton, music credits by Winston Rhodes and others   " \
                    + tm.my_date, move = 'False', font = ("Garamond ", 14 , "italic"), align = 'center')
     s_image = pyautogui.screenshot()
     s_image = cv2.cvtColor(np.array(s_image), cv2.COLOR_RGB2BGR)
-    cv2.imwrite(t.my_str + '_splash' +'.png', s_image)
+    cv2.imwrite(t.my_str + '_splash' +'.jpeg', s_image)
     time.sleep(4)
     t.my_pen.reset()
+    
+    
+    
 
 def title_screen():
     turtle.colormode(255)
     t.my_pen.penup()
-    turtle.bgcolor('navy')
-#     t.my_pen.setposition(-900, 0)
-    t.my_pen.color(255,255,199)
+    turtle.bgcolor(0, 0, 0)
+    t.my_pen.setposition(-850, 0)
+    t.my_pen.color(255, 255, 255)
     t.my_pen.pendown()
-    t.my_pen.write( t.my_title, move = 'False', font = ("Garamond ", 13, "bold italic"), align = 'center')
+    t.my_pen.write( t.my_title, move = 'False', font = ("Garamond ", 16, "bold italic"))
     t.my_pen.penup()
-    t.my_pen.setposition(-500,-350)
+    t.my_pen.setposition(-450, -150)
     t.my_pen.pendown()
-    t.my_pen.write("graphics by LeonRHatton   " \
-                   + tm.my_date, font = ("Garamond ", 11 , "italic"), align = 'center')
+    t.my_pen.write("created by LeonRHatton, music credits to Winston Rhodes and others   " \
+                   + tm.my_date, font = ("Garamond ", 14 , "italic"))
     image = pyautogui.screenshot()
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-    cv2.imwrite(t.my_str + '_title' + '.png', image)
-    time.sleep(9)
+    cv2.imwrite(t.my_str + '_title' + '.jpeg', image)
+    time.sleep(12)
     t.my_pen.reset()
+    
+    
 
 def watermark():
         turtle.colormode(255)
         t.my_pen.penup()
         t.my_pen.setpos( -950, -500)
-    #     t.my_pen.pencolor(10, 50, 20) #for testing
-        t.my_pen.color(10, 220, 30)
+        t.my_pen.color(10, 20, 30)
         t.my_pen.shape("blank")
         t.my_pen.pendown()
-        t.my_pen.write('Graphics by LeonRHatton; music by Winston Rhodes and others:  '   + t.my_str + ',  '\
-                       + au.my_track, font = ("Garamond", 12 , "italic"))
+        t.my_pen.write( t.my_str + au.my_track, font = ("Garamond", 12 , "italic"))
     
 
 

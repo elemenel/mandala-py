@@ -34,12 +34,21 @@ from turtle import Screen as sc
 from functools import lru_cache
 from pathlib import Path
 from moviepy.video.io.VideoFileClip import VideoFileClip
+from My_template import my_key
+import My_logger as l
+import logging
+
+
+logger = logging.getLogger(t.my_project)
+
+logger.info('Child Logger in FileScripts is working')
 
 #Assign correct system path for cross-platform capability
 global my_work_dir
 if sys.platform.startswith('linux'):
-    my_home_dir = '/home/elemen'
-    my_work_dir = '/media/elemen/Inland SSD1'
+    my_home_dir = '/home/elemen/'
+    my_work_dir = '/media/elemen/Inland SSD1/'
+    my_log_dir = '/media/elemen/InlandSSD1/Make_Mandalas/Logs/'
     my_no_audio_video_path = '/media/elemen/Inland SSD1/no_audio/'
     my_full_vids_video_path = '/media/elemen/Inland SSD1/Full_Vids/'
     my_audio_path = '/media/elemen/Inland SSD1/'
@@ -47,46 +56,43 @@ if sys.platform.startswith('linux'):
     
     
 else:
-    my_work_dir = 'M:'
+    my_work_dir = 'M:/'
     my_no_audio_video_path = 'N:/'
     my_full_vids_video_path = 'Z:/'
     my_audio_path = 'M:/'
     my_git_path = 'B:/'
+    my_home_dir = 'C:/'
     
-print(my_work_dir) 
+    
+    
+
 '*********************************************************************************************************'
 # Create path variables
-global loc_code
-loc_code = my_work_dir +'/Make_Mandalas/'
 
-global folder_name
-folder_name = 'Images_TBD'
+global loc_code
+loc_code = my_work_dir +'Make_Mandalas/'
 
 global loc_pic
-loc_pic = '/home/elemen/Pictures/Mandala Final Thumbs/' # Store Mandala jpg files here
+loc_pic = my_work_dir + 'Pictures/Mandala Final Thumbs/' # Store Mandala jpg files here
 
 
 global con_vid
-con_vid = my_work_dir + '/Videos/'
+con_vid = my_work_dir + 'Videos/'
 
 global con_vid_no_audio
-con_vid_no_audio = my_work_dir + '/Videos/no_audio/' # Store non audio Mandala videos here
+con_vid_no_audio = my_work_dir + 'Videos/no_audio/' # Store non audio Mandala videos here
 
 global con_vid_av
-con_vid_av = my_work_dir +'/Mandalas/'
+con_vid_av = my_work_dir +'Mandalas/'
 
 global loc_thumb
-loc_thumb = my_work_dir + '/Thumbs/Output/' # Store Mandala Thumbs here
+loc_thumb = my_work_dir + 'Thumbs/Output/' # Store Mandala Thumbs here
 
 global clip_path
-clip_path = my_work_dir +'/Audio Clips for Python/'
+clip_path = my_work_dir +'Audio Clips for Python/'
 
 global full_vid_path
-full_vid_path = my_work_dir + '/Videos/no_audio/' + folder_name +'.mp4'
-
-
-
-
+full_vid_path = my_work_dir + 'Videos/no_audio/' + t.folder_name +'.mp4'
 
 
 
@@ -100,40 +106,43 @@ def copy_videos():
              destination = '/media/elemen/USB SSD-1/Plex/'
              endswith_ = '.mp4'
              [shutil.copy2(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-             print('Copying videos from Inland SSD directory to Plex directory.....')
+             logger.info('Copying videos from Inland SSD directory to Plex directory.....')
          except shutil.SameFileError as e:
              pass 
      else:
          pass
-     print('Completed videos have been copied to the Plex directory!')   
+     logger.info('Completed videos have been copied to the Plex directory!')   
 # copy_videos()
 '**********************************************************************************************************'
 # Backs up the code to current. Does not archive yet.
 # @lru_cache(maxsize = 128)
 def code_backup():
-    print('Starting code backup...........')
+    logger.info('Starting code backup...........')
 #     shutil.rmtree(my_work_dir +'/Code_Backup/')
-    shutil.rmtree('/media/elemen/MANDALABKUP/')
+    shutil.rmtree('/media/elemen/USB DISK/Modules - MandalaMaker/') #file:///media/elemen/USB DISK/Modules - MandalaMaker
 #     src =  my_work_dir +'/Python Code/'
     m_src = my_work_dir +'/Make_Mandalas/'
 #     dest = my_work_dir +'/Code_Backup/'
-    m_dest = '/media/elemen/MANDALABKUP/'
+    m_dest = 'media/elemen/USB DISK/Modules - MandalaMaker/'
 #     destination = shutil.copytree(src, dest)
     destination = shutil.copytree(m_src, m_dest)
-    print('Python Code files have been backed up to MandalaMakerBackup pendrive')
+    logger.info('Python Code files have been backed up to MandalaMakerBackup pendrive')
 #Default is to leave commented. Uncomment to run from here.    
 # code_backup()                                                           
 
 
 
 # Empties the folder where the .png files are stored for video processing.
+global png_folder
+png_folder = ' '
 def make_png_folder():
-    print('Starting make_png_folder()....................')
-    png_folder = pathlib.Path(loc_thumb + folder_name)
+    png_folder = pathlib.Path(loc_thumb + t.folder_name)
     Path(png_folder).mkdir(parents=True, exist_ok=True)
     os.chdir(png_folder)
-    print('New folder:  ' + str(png_folder) + '  has been created')
-    print(str(png_folder) +'  has been emptied. The folder is now ready for new content.')
+    return png_folder
+    my_project = png_folder
+    logger.info('New folder:  ' + str(png_folder) + '  has been created')
+    logger.info(str(png_folder) +'  has been emptied. The folder is now ready for new content.')
 # make_png_folder()
     
     
@@ -174,24 +183,24 @@ def save_final_undo():
 # Master Mandala Maker depends on this. Using list comprehension syntax.
 def move_pngs():
     origin = loc_code
-    destination = loc_thumb + folder_name
+    destination = loc_thumb + t.folder_name
     endswith_ = '.png'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Image .png files have been moved to /Thumbs/Output/')
+    logger.info('Image .png files have been moved to /Thumbs/Output/')
 
 def move_jpgs():
     origin = loc_code
-    destination = loc_pic #+ folder_name
+    destination = loc_pic #+ t.folder_name
     endswith_ = '.jpg'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Jpg files have been moved to ' + str(destination))
+    logger.info('Jpg files have been moved to ' + str(destination))
 # move_jpgs()
 
 def move_pics():
     move_pngs()
     move_jpgs()
-#     print('Image .png files have been moved to /Thumbs/Output/')
-#     print('Image .jpg files have been moved to /Mandala Final Thumbs/')
+#     logger.info('Image .png files have been moved to /Thumbs/Output/')
+#     logger.info('Image .jpg files have been moved to /Mandala Final Thumbs/')
 # move_pics()    
 
 # Video files originate in the /media/elemen/Thumbs/Output folder. This will move them to the /media/elemen/Container/Videos folder.
@@ -203,32 +212,32 @@ def move_all():
     destination = con_vid
     endswith_ = '.avi'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Video .avi files have been moved to /Videos/')
+    logger.info('Video .avi files have been moved to /Videos/')
     
     origin = loc_thumb
     destination = con_vid_no_audio
     endswith_ = '.mp4'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Video .mp4 files have been moved to /Videos/')
+    logger.info('Video .mp4 files have been moved to /Videos/')
     
     origin = loc_thumb
     destination = con_vid
     endswith_ = '.webm'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Video .webm files have been moved to /Videos/')
+    logger.info('Video .webm files have been moved to /Videos/')
     
     origin = loc_code
-    destination = loc_thumb + folder_name
+    destination = loc_thumb + t.folder_name
     endswith_ = '.png'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Image .png files have been moved to /Thumbs/Output/')
+    logger.info('Image .png files have been moved to /Thumbs/Output/')
     
-    origin = loc_thumb + folder_name
+    origin = loc_thumb + t.folder_name
     destination = loc_pic
     endswith_ = '.jpg'
     [shutil.move(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-    print('Image .jpg files have been moved to /home/elemen/Pictures/Mandala Final Thumbs/')
-    print('================================================================================')
+    logger.info('Image .jpg files have been moved to /home/elemen/Pictures/Mandala Final Thumbs/')
+    logger.info('================================================================================')
 # move_all()
 
 
@@ -240,15 +249,15 @@ def move_all():
 #         shutil.rmtree('/home/elemen/Pictures/Mandalas/') #       os.makedirs('/home/elemen/Pictures/Mandalas/')
 #     else:
 #         os.makedirs('/home/elemen/Pictures/Mandalas/')
-#     print('Pictures/Mandalas/ folder has been emptied. All files therein were permanently deleted.')
+#     logger.info('Pictures/Mandalas/ folder has been emptied. All files therein were permanently deleted.')
 
    
 # Function to get the current working directory   
 def current_path():
     import os
-    print('Current working directory is:')
-    print(os.getcwd())
-    print()
+    logger.info('Current working directory is:')
+    logger.info(os.getcwd())
+   
 
 # Run this to ensure Dropbox is updated with current python modules
 def update_all():
@@ -260,13 +269,13 @@ def update_all():
     current_path()
     os.chdir(my_work_dir)
     current_path()
-    print('Pics have been moved to Pictures folder and Dropbox has been updated')
+    logger.info('Pics have been moved to Pictures folder and Dropbox has been updated')
 
 def clear_thumbs():
-    print('Preparing to empty the Thumbs folder.......')
+    logger.info('Preparing to empty the Thumbs folder.......')
     shutil.rmtree(loc_thumb)
     os.makedirs(loc_thumb)
-    print('Thumbs folder has been emptied')
+    logger.info('Thumbs folder has been emptied')
 # clear_thumbs()
 
 # RUN THIS TO RESET THUMBS AND PICS FOLDERS. LEAVE COMMENTED TO AVOID ACCIDENTAL PURGING OF ALL FILES!
@@ -274,16 +283,16 @@ def clear_thumbs():
 #     move_pics()
 #     clear_Thumbs()
 #     clear_pics_mandalas()
-#     print(str('Current time is    ' + str(tm.my_time)))
+#     logger.info(str('Current time is    ' + str(tm.my_time)))
 
 # Empties the folder where the .png files are stored for video processing
 
 def make_file_folder():
-    print('Staring make_file_folder()...................')
-#     folder_name = t.my_str
-    shutil.rmtree(loc_thumb + folder_name + '/')
-    os.makedirs(loc_thumb + folder_name + '/')
-    print('New temp directory /Looped_Pics/Thumbs/' + folder_name + '   has been created')
+    logger.info('Starting make_file_folder()...................')
+#     t.folder_name = t.my_str
+    shutil.rmtree(loc_thumb + t.folder_name + '/')
+    os.makedirs(loc_thumb + t.folder_name + '/')
+    logger.info('New temp directory /Looped_Pics/Thumbs/' + t.folder_name + '   has been created')
 
 
 
@@ -293,7 +302,7 @@ def make_file_folder():
  # libvpx(webm)-HTML5 and browser videos.
 
 def make_video():
-    print('Starting make_video()..................')
+    logger.info('Starting make_video()..................')
     import os
     import moviepy.video.io.ImageSequenceClip
     import moviepy.editor as mp
@@ -302,34 +311,36 @@ def make_video():
     import my_angles as a
     fps = 3.0 #2.0 1.5
     # Make images directory current
-#     os.chdir(loc_thumb + folder_name)
+#     os.chdir(loc_thumb + t.folder_name)
     image_files = humansorted(os.listdir('.')) #Collect and sort .png files
     my_clip =  moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
     my_clip.set_duration(600)
     # Write sequenced png files to a single .mp4 file normally less than 10 mb, quality as good as much larger .avi file
-    my_clip.write_videofile( con_vid_no_audio + folder_name + '.mp4', fps = 40, #24
+    my_clip.write_videofile( con_vid_no_audio + t.folder_name + '.mp4', fps = 40, #24
                             codec = 'libx264', bitrate = None, audio = False, audio_fps = 44100, preset='medium', audio_nbytes=4,
                             audio_codec= 'mp3', audio_bitrate= None, audio_bufsize=4000, temp_audiofile = my_work_dir + '/temp',
                             remove_temp= True, write_logfile= True, threads=None,
-                            ffmpeg_params= None, logger= 'bar')
-    print('mp4 vid-only duration: ' + str(my_clip.duration / 60) + '  minutes')
+                            ffmpeg_params= None, logger='bar') #'bar'
+    logger.info('mp4 vid-only duration: ' + str(my_clip.duration / 60) + '  minutes')
     
-    print('Thumb images conversion to audio-less mp4 video file completed!')
+    logger.info('Thumb images conversion to audio-less mp4 video file completed!')
+  
+ 
   
 # make_video()
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 def get_duration():
     from moviepy.editor import VideoFileClip
     clip = VideoFileClip(my_clip)
-    print('Duration: ' + my_clip.duration )
+    logger.info('Duration: ' + my_clip.duration )
     
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
 # Used by Master Mandala maker Module to create videos from looped .png files
 def set_vid_env():
-    print('Starting set_vid_env().............')
+    logger.info('Starting set_vid_env().............')
     current_path()
-#     os.chdir(loc_thumb + folder_name)
-#     print('The current folder is:  ' + loc_thumb + folder_name)
+#     os.chdir(loc_thumb + t.folder_name)
+#     logger.info('The current folder is:  ' + loc_thumb + t.folder_name)
     make_video()
     os.chdir(my_work_dir + '/Make_Mandalas/')
 
@@ -337,24 +348,32 @@ def set_vid_env():
 #  https://www.geeksforgeeks.org/moviepy-assigning-audio-clip-to-video-file/
 # Used by Master Mandala maker to generate videos with sound by merging audio clips to video clips
 def sync_av():
-    print('Starting sync_av()......................')
+    logger.info('Starting sync_av()......................')
     os.chdir(con_vid)
     new_video = '__temp__.mp4'
-    print('Folder name is:  ' + str(folder_name))
-    my_file = folder_name
-    print('File Name is  ' + my_file)
+    logger.info('Folder name is:  ' + str(t.folder_name))
+    my_file = t.folder_name
+    logger.info('File Name is  ' + my_file)
     videoclip = VideoFileClip(my_audio_path + 'Videos/no_audio/' + my_file +'.mp4')
-    audioclip = AudioFileClip(au.my_audio_clip)
-    print('The duration of this clip is   ' + str(audioclip.duration / 60) + '  minutes')
-#     full_vid_path = my_work_dir + str('/Videos/Full_Vids/' + folder_name + '.mp4')
+    audioclip = AudioFileClip(au.my_audio_clip) 
+    logger.info('The duration of this clip is   ' + str(audioclip.duration / 60) + '  minutes')
+#     full_vid_path = my_work_dir + str('/Videos/Full_Vids/' + t.folder_name + '.mp4')
     new_audioclip = CompositeAudioClip([audioclip])
     videoclip.audio = new_audioclip
     videoclip.write_videofile(my_audio_path + str('Videos/Full_Vids/' + t.my_str + '.mp4'))
-    print('The duration of the new video is ' + str(videoclip.duration / 60) + '  minutes')
-    print('The new video has been renamed to    ' + t.my_str + '.mp4')
+    logger.info('The duration of the new video is ' + str(videoclip.duration / 60) + '  minutes')
+    logger.info('The new video has been renamed to    ' + t.my_str + '.mp4')
     os.chdir(loc_code)
-    time.sleep(12)
-    print('====================================================================')    
+    time.sleep(3)
+    logger.info('====================================================================')
+    
+''' Future - set audio clip to match video and vice versa as needed
+    audioclip = AudioFileClip("huru.wav").set_duration(clip_duration)
+    new_audioclip = CompositeAudioClip([audioclip])
+    clip = clip.set_audio(new_audioclip)
+    video = CompositeVideoClip([clip, txt_clip]).set_duration(clip_duration)
+
+'''    
     
 # sync_av()
 
@@ -365,57 +384,51 @@ def sync_av():
 def append_to_text():
     import sys
     filename.txt = str(t.my_str + 'ran on' + str(Tm.datetime))
-    print('This message will be displayed on the screen.')
-    print( 'This, too!')
-    original_stdout = sys.stdout # Save a reference to the original standard output
+    logger.info('This message will be displayed on the screen.')
+    logger.info( 'This, too!')
+   
 
     with open('filename.txt', 'a') as f:
         sys.stdout = f # Change the standard output to the file we created.
-        print('This message will be written to a file.')
-        print('This, too! ')
-        print( 'And this too?')
-        sys.stdout = original_stdout # Reset the standard output to its original value    
+        logger.info('This message will be written to a file.')
+        logger.info('This, too! ')
+        logger.info( 'And this too?')
+        
     
 # Change File Permissions to read/write
 def change_file_mode():
     import subprocess
     subprocess.call(['chmod', '-R', '+w', png_folder]) #Change the directory path as needed
-    
 # change_file_mode()
 
-def return_print_to_console():
-    sys.stdout.close()
-    sys.stdout=stdoutOrigin
-# return_print_to_console()
+
 
 # Make multiple copies of a file
-
 def copy_pics():
     for num in range(300):
         src = my_work_dir + 'Images/An Awesome Polygram Mandala featuring 1512  Degree Angles_999_.jpg'  
         dest = my_work_dir + 'An Awesome Polygram Mandala featuring 1512  Degree Angles' + str(num) + '.jpg'
         destination  = shutil.copyfile(src, dest)
-    print('Files have been copied')   
-        
+    logger.info('Files have been copied')   
 # copy_pics()   
 
 
 '**************************************************************************************************************************************'
 this_file = my_work_dir +'/Make_Mandalas/my_angles.py'
 
-def print_to_file():
+def log_info_to_file():
     my_file = open(this_file)
     for line in my_file:
-        print(line)
-# print_to_file()        
+        logger.info(line)
+#  logger.info_to_file()        
 
 
 
 # Pause routine, wait for mouse click. if not, continue. if click, stop. Run at end of each angle loop.
 def keep_on():
     
-    print('Terminate? Type "y" to Quit')
-    print('Waiting 5 seconds. If no response, will continue')
+    logger.info('Terminate? Type "y" to Quit')
+    logger.info('Waiting 5 seconds. If no response, will continue')
     answer = sc.textinput('Your choice:   ', 'n')
     time.sleep(5)
     
@@ -432,12 +445,12 @@ def copy_mp3s():
              destination = r'/home/elemen/Music/truncated//'
              endswith_ = '.mp3'
              [shutil.copy(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-             print('Copying music from ripped/wav to truncated.....')
+             logger.info('Copying music from ripped/wav to truncated.....')
          except shutil.SameFileError as e:
              pass 
      else:
          pass
-     print('Copying Completed!')
+     logger.info('Copying Completed!')
      
 #  def copy_script_to_win():
 #      if my_os == 'Linux':
@@ -446,12 +459,12 @@ def copy_mp3s():
 #          destination = r'/home/elemen/Music/truncated//'
 #          endswith_ = '.mp3'
 #          [shutil.copy(os.path.join(origin,i),os.path.join(destination,i)) for i in os.listdir(origin) if i.endswith(endswith_)]
-#          print('Copying music from ripped/wav to truncated.....')
+#          logger.info('Copying music from ripped/wav to truncated.....')
 #      except shutil.SameFileError as e:
 #          pass 
 #  else:
 #      pass
-#  print('Copying Completed!')   
+logger.info('Copying Completed!')   
 # copy_mp3s()    
 
 # import os
@@ -470,7 +483,7 @@ def copy_mp3s():
 #     # copy only files
 #     if os.path.isfile(source):
 #         shutil.copy(source, destination)
-#         print('copied from   ' + source + '   to   ' + destination)        
+#         logger.info('copied from   ' + source + '   to   ' + destination)        
 #
 # Needs a lot of work as of 8/14/2022 when first tried
 def pause_option():
@@ -480,7 +493,7 @@ def pause_option():
     elif answer == 'n':
        pass
     else:
-        print('Enter y or n')
+        logger.info('Enter y or n')
         time.sleep(10)
         pass
 # pause_option()    
@@ -506,9 +519,9 @@ def sync_mandala_folders():
     
     #sync(target_path, source_path, 'sync') #for syncing the opposite way
     #sync(target_path_a, source_path_a, 'sync') #for syncing the opposite way
-    print('Sync of Mandala folders completed successfully!')
-    print('Sync of Mandala Maker python script files for Git completed successfully!')
-#     print('Sync of Mandala Maker python script files to MANDALABKUP pendrive completed successfully!')
+    logger.info('Sync of Mandala folders completed successfully!')
+    logger.info('Sync of Mandala Maker python script files for Git completed successfully!')
+#     logger.info('Sync of Mandala Maker python script files to MANDALABKUP pendrive completed successfully!')
     
 sync_mandala_folders()
 
@@ -533,15 +546,14 @@ def reset_all():
     t.li.reset()
     time.sleep(5)
     
-    print('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
+    logger.info('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-')
     
 def get_video_duration():
 #     my_work_dir = my_no_audio_video_path
     my_work_dir = my_full_vids_video_path
     for filename in Path(my_work_dir).glob('*.mp4'):
             clip = (VideoFileClip(filename.as_posix())) #filename.as_posix(), ))
-            print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-            print(str(filename) + ': ' + str(round(clip.duration /60)) + ' minutes')   
+            logger.info('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+            logger.info(str(filename) + ': ' + str(round(clip.duration /60)) + ' minutes')   
 # get_video_duration()    
-    
     
