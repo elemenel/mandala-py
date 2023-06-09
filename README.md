@@ -29,6 +29,7 @@ Thonny can install the following modules required to run the Master Mandala Make
  4. pyscreenshot,
  5. moviepy with ipython notebook
  6. natsort.
+ 7. mutagen
 
 scrot is required also, but it is unavailabale in pip. Hence, it has to be installed via apt (Ubuntu).
 
