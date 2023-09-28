@@ -5,6 +5,7 @@ import turtle
 import time
 import My_template as t
 import my_angles as a
+import PIL.ImageGrab
 # from PIL import Image #module for converting python output to image
 import numpy as np
 import cv2
@@ -18,26 +19,28 @@ import shutil
 import Timer as tm
 import FileScripts as f
 
+
+
 turtle.colormode(255)
 
 
 def splash_screen():
     turtle.colormode(255)
-    turtle.bgcolor(10, 15, 15)
+    turtle.bgcolor(50, 0, 10)
     t.my_pen.penup()
-    t.my_pen.setposition(-750, 0)
-    t.my_pen.color(255, 255, 199)
+    t.my_pen.setposition(-950, 200)
+    t.my_pen.color(255, 255, 25)
     t.my_pen.pendown()
-    t.my_pen.write( t.my_str, move = 'False', font = ("Garamond ", 18, "bold italic"))
+    t.my_pen.write((f'Presenting {t.project_title}'),  font = ("Verdana", 13, "bold italic"))
     t.my_pen.penup()
-    t.my_pen.setposition(-300, -150)
+    t.my_pen.setposition(-800, 100)
     t.my_pen.pendown()
-    t.my_pen.write(" created by LeonRHatton, music credits by Winston Rhodes and others   " \
-                   + tm.my_date, move = 'False', font = ("Garamond ", 14 , "italic"), align = 'center')
-    s_image = pyautogui.screenshot()
+    t.my_pen.write(" created and produced by LeonRHatton;   " + tm.my_date, move = 'False', font = ("Verdana", 11 , "italic"), align = 'left')
+    s_image = PIL.ImageGrab.grab()
+#     s_image = pyautogui.screenshot()
     s_image = cv2.cvtColor(np.array(s_image), cv2.COLOR_RGB2BGR)
-    cv2.imwrite(t.my_str + '_splash' +'.jpeg', s_image)
-    time.sleep(4)
+    cv2.imwrite(t.my_project + '_splash' +'.jpeg', s_image)
+    time.sleep(12)
     t.my_pen.reset()
     
     
@@ -46,20 +49,20 @@ def splash_screen():
 def title_screen():
     turtle.colormode(255)
     t.my_pen.penup()
-    turtle.bgcolor(0, 0, 0)
+    turtle.bgcolor(50,50, 10)
     t.my_pen.setposition(-850, 0)
     t.my_pen.color(255, 255, 255)
     t.my_pen.pendown()
-    t.my_pen.write( t.my_title, move = 'False', font = ("Garamond ", 16, "bold italic"))
+    t.my_pen.write(f'{t.project_title}', move = 'False', font = ("Verdana", 12, "bold italic"))
     t.my_pen.penup()
-    t.my_pen.setposition(-450, -150)
+    t.my_pen.setposition(-650, -100)
     t.my_pen.pendown()
-    t.my_pen.write("created by LeonRHatton, music credits to Winston Rhodes and others   " \
-                   + tm.my_date, font = ("Garamond ", 14 , "italic"))
-    image = pyautogui.screenshot()
+    t.my_pen.write("created by LeonRHatton;  " + tm.my_date, font = ("Verdana", 10 , "italic"))
+    image = PIL.ImageGrab.grab()
+#     image = pyautogui.screenshot()
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-    cv2.imwrite(t.my_str + '_title' + '.jpeg', image)
-    time.sleep(12)
+    cv2.imwrite(f'{t.project_title}.jpeg', image)
+    time.sleep(9)
     t.my_pen.reset()
     
     
@@ -71,7 +74,7 @@ def watermark():
         t.my_pen.color(10, 20, 30)
         t.my_pen.shape("blank")
         t.my_pen.pendown()
-        t.my_pen.write( t.my_str + au.my_track, font = ("Garamond", 12 , "italic"))
+        t.my_pen.write( au.my_track + '  by leonrhatton')   #t.my_str + au.my_track, font = ("Garamond", 12 , "italic"))
     
 
 
@@ -89,7 +92,8 @@ def end_screen():
     t.my_pen.pendown()
     t.my_pen.write('Credits: Graphics by LeonRHatton, Music by Winston W. Rhodes and others,      '   \
                    + tm.my_date, font = ("Garamond ", 20 , "italic"))
-    image = pyautogui.screenshot()
+#     image = pyautogui.screenshot()
+    image = PIL.ImageGrab.grab()
     image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     cv2.imwrite('End of Show' + '_' + '999' +'.png', image)
     time.sleep(3)
@@ -113,27 +117,3 @@ def save_titles():
         time.sleep(5)
     t.my_pen.reset()
 
-
-def save_screenshot():
-     # take screenshot using pyautogui
-    image = pyautogui.screenshot()
-
-    # since the pyautogui takes as a
-    # PIL(pillow) and in RGB we need to
-    # convert it to numpy array and BGR
-    # so we can write it to the disk
-    image = cv2.cvtColor(np.array(image),
-                         cv2.COLOR_RGB2BGR)
-
-    # writing it to the disk using opencv
-    cv2.imwrite(t.my_str, image)
-
-def take_screenshot():
-    # To capture the screen
-    image = pyscreenshot.grab()
-
-    # To display the captured screenshot
-    image.show()
-
-    # To save the screenshot
-    image.save("LeonRHatton.png")
