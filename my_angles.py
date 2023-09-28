@@ -1,7 +1,7 @@
-#.....................................................................................................................................#
-#my_angles.py contains file manipulation scripts associated with master_mandala_maker.py
-             # by LeonRHatton
-
+"""my_angles.py contains functions, generators, and formatters needed to output
+a chosen set of angles to master_mandala_maker.py
+by Leon Hatton
+"""
 import turtle
 import random
 import numpy as np
@@ -13,32 +13,29 @@ import time
 global r_angle
 import Timer as Tm
 import sys
-import My_logger as l
-import logging
+import My_logger as Lg
 import My_template as t
 
-logger = logging.getLogger(t.my_project)
-logger.info('Child Logger in my_angles is working')
 
-if sys.platform.startswith('linux'):
-    my_path = '/media/elemen/'
-    my_log_path = '/home/elemen/Git/Logs'
-else:
-    my_path = 'M:'
-    my_log_path = 'B:/Logs'
+
+global i_angle_auto
+i_angle_auto = [ ]
+
+# if sys.platform.startswith('linux'):
+#     my_path = '/media/elemen/'
+#     my_log_path = '/home/elemen/Git/Logs'
+# else:
+#     my_path = 'M:'
+#     my_log_path = 'B:/Logs'
 
 Tm.time_functions()
 
-logger.info(sys.platform)
-logger.info(my_path)   
-    
- 
 turtle.setup(10,10)
 
-r_angle = random.randrange(72, 1500, 9)
+# r_angle = random.randrange(72, 1500, 9)
 
 # filter_360 = [i for i in np.arange(float(357.01), float(363.99), .01) if i % float(180) != 0]
-# logger.info(str(filter_360))
+# Lg.logger.info(str(filter_360))
 #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 # past auto angles: # 72,1500, 72 on 1/8/2022. Produces 5 points or sides.
                     # 257.142857, 1500, 51.42857 on 1/8/2022. Produces 7 points or sides.
@@ -82,39 +79,78 @@ r_angle = random.randrange(72, 1500, 9)
                     # 60, 501, 10 Ran on 4/7/2022
                     # 420, 421, 1.  4/8/2022. Ran on all available modules(25). 420 is the least common multiple of 2, 3, 4, 5, 7. \
                                                         #  Ran to compare the variations against a single number.
-                    # 840, 7600, 420. Ran on all available. Wanted to see how the 420 modes develop.                                    
+                    # 840, 7600, 420. Ran on all available. Wanted to see how the 420 modes develop.
+                    #225.5, 2000, 676.5 Ran on Reversing Simple Mandala, on 07/20/2023; uploaded to YouTube.
 #::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::                    
-# Automated Angle Generator using numpy.arange module; produces a list of angles based on custom algorithms.
-# global i_angle_auto
-def pick_angles():
-    global i_angle_auto
-    
-    angle_min = 257.142857
-    angle_max =2100
-    key = 257.142857
+# Solfeggio Angles
+solfeggio_3 = [174, 417, 741] #Digits sum to 3
+solfeggio_6 = [285, 528, 852] # Digits sum to 6
+solfeggio_9 = [396, 639, 963] # Digits sum to 9
 
-    
-    angle_min_a = 288
-    angle_max_a = 1200
-    key_a = 288
-    
-    angle_min_b = 1350
-    angle_max_b = 6000
-    key_b = 1350
-          
-    i_angle_auto = [i for i in np.arange(float(angle_min), float(angle_max), key) if i % float(180) != 0]  + [126] + \
-                   [i for i in np.arange(float(angle_min_a), float(angle_max_a), key_a) if i % float(180) != 0] + \
-                   [i for i in np.arange(float(angle_min_b), float(angle_max_b), key_b) if i % float(180) != 0]  #+ [ 221.5385]
-                   
+# i_angle_auto = [528, 432, 174, 417, 741, 285, 852, 396, 639, 963]
+#Earth Frequencies
+#136.10 and up: angle_min = 136.1
+# angle_max = 9000
+#key = 136.10
+
+def select_angle():
+    # Create an input box
+    my_angle = turtle.numinput("Enter Angle:  " )
+
+   # Wait 4 seconds for keypress
+    time.sleep(4)
+
+      # If no response, select default
+    if my_angle == null:
+        my_angle = random.randint(150,135,432,1350,1211)
+        return my_angle    
+    Lg.logger.info('The selected angle is:  ' + str(my_angle))
+
  
-    return i_angle_auto          
+
+
+# Automated Angle Generator using numpy.arange module; produces a list of angles based on custom algorithms.
+# 
+def pick_angles():
+    global i_angle_auto, i_angle_float
+    angle_min = float(135)
+    angle_max = float(angle_min *5)
+    key = float(angle_min  / 2)   #Dividing angle_min by 2 and using that as a key results in a harmonic angle family; also multiply by 3 or 5 
+    
+#     angle_min_a = float(80)
+#     float(angle_min_a * 12)
+#     key = float(angle_min_a) #Dividing angle_min by 2 and using that as a key results in a harmonic angle family; also multiply by 3 or 5 
+    
+#     angle_min_b = float(72)
+#     float(angle_min_b * 12)
+#     key = float(angle_min_b) #Dividing angle_min by 2 and using that as a key results in a harmonic angle family; also multiply by 3 or 5 
+     
+    i_angle_float = [angle for angle in np.arange(float(angle_min), float(angle_max), int(key)) if angle  %(180) != 0] #+ \
+#                     [angle for angle in np.arange(float(angle_min), float(angle_max), float(key)) if angle  %(181) != 0] + \
+#                     [angle for angle in np.arange(float(angle_min), float(angle_max), float(key)) if angle  %(182) != 0] +\
+#                     [angle for angle in np.arange(float(angle_min), float(angle_max), float(key)) if angle  %(183) != 0] + \
+#                     [angle for angle in np.arange(float(angle_min), float(angle_max), float(key)) if angle  %(179) != 0] +\
+#                     [angle for angle in np.arange(float(angle_min), float(angle_max), float(key)) if angle  %(178) != 0] + \
+#                     [angle for angle in np.arange(float(angle_min), float(angle_max), float(key)) if angle  %(177) != 0]
+    
+    
+    i_angle_auto = [angle for angle in np.arange(math.trunc(float(angle_min)), math.trunc(float(angle_max)), math.trunc(float(key))) if angle %(180) != 0] #+ [3024] + [3888] +[4752]+ [7344] +[8208]
+#                    #[i for i in np.arange(float(angle_min_b), float(angle_max_b), key_b) if i % float(180) != 0]  #+ [ 221.5385]
+    return i_angle_auto , i_angle_float     
 pick_angles()
+'''Use this pick_angles to specify the angles manually'. Comment the section out if the automated pick_angles script is prefferred'''
+# def pick_angles():
+#      global i_angle_auto
+#      i_angle_auto = [144, 288, 412, 864, 1008, 1152, 1296]
+# pick_angles()
+
+
 # i_angle_auto =[120, 90, 72, 60, 51.42857142857143, 45, 40, 36, 32.72727272727273, 30, 27.692307692307693,\
 #                25.714285714285715, 24, 22.5, 21.176470588235293, 20, 18.94736842105263, 18, 17.142857142857142,\
 #                16.3636363636363631, 15.652173913043478, 15 ]
 # Set up do develop a catalog which would include a sample. Decided to try angle 135 first, for 8 points mostly.
 # i_angle_auto = [7350,7140]  #, 315, 280, 252, 229.090909, 210, 193.846154, 168, 157.5, 148.235294]
-
+# i_angle_auto = [640, 800, 1280, 1600, 1760]
  
 #----------------------------------------------------------------------------------------------------------------------------------
 # Run sequences of angles using List Compehension
@@ -134,8 +170,8 @@ pick_angles()
 # start_prime = 371
 # end_prime = 470
 # i_angle_primes = [x for x in range(start_prime, end_prime) if x not in noprimes]
-# # logger.info('These are prime numbers from ' + str(start_prime) + '  to ' + str(end_prime) +':' + str(i_angle_primes))
-# logger.info('The number of primes list elements is: ' + str(len(i_angle_primes)))
+# # Lg.logger.info('These are prime numbers from ' + str(start_prime) + '  to ' + str(end_prime) +':' + str(i_angle_primes))
+# Lg.logger.info('The number of primes list elements is: ' + str(len(i_angle_primes)))
 
 
 
@@ -192,7 +228,7 @@ pick_angles()
 # 
 # # length = len(i_angle)
 # 
-# i_angle_auto = i_angle_f = [ 432, 1350, 1028.5714, 420, 240, 576] #1065, #Favorite angles: 144/5P, 210/12P, 834/TightSpiral,2394/20P,1350/Square
+#i_angle_auto = i_angle_f = [60, 75, 90, 105, 120, 135, 144, 150, 165, 11219, 1211, 205.1428, 432, 1350, 7050, 7048, 7046] # 2394, 834, 432, 210,1350, 1028.5714, 420, 240, 576] #1065, #Favorite angles: 144/5P, 210/12P, 834/TightSpiral,2394/20P,1350/Square
 # 
 # i_angle_d_9 = [ 108, 117, 126, 135, 144, 153, 162, 171, 180, 207, 216, 225, 234, 243, 252, 261,\
 #               270, 306, 315, 324, 333, 342, 351, 405, 414, 423, 432, 441, 450, 504, 513,\
@@ -207,9 +243,9 @@ pick_angles()
 # i_angle_d_5 = [104, 113, 122, 131, 140, 203, 212, 221, 230, 302, 311, 320, 401, 410, 500]
 # 
 # 
-# i_angle_d_7  = [411.36, 462.78000000000003, 514.2, 565.62, 617.04, 668.4599999999999,\
-#                 719.88, 771.3, 822.72, 874.14, 925.56, 976.98, 1028.4,\
-#                 1131.24, 1182.66, 1234.0800000000002, 1285.5, 1336.92,51.42, 102.84, 154.26, 205.68, 257.1, 308.52000000000004 ]
+# i_angle_auto = i_angle_d_7  = [411.36] #, 462.78000000000003, 514.2, 565.62, 617.04, 668.4599999999999,\
+                #719.88, 771.3, 822.72, 874.14, 925.56, 976.98, 1028.4,\
+                #1131.24, 1182.66, 1234.0800000000002, 1285.5, 1336.92,51.42, 102.84, 154.26, 205.68, 257.1, 308.52000000000004 ]
 # 
 # 
 # fib_angles = [144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393]
@@ -227,7 +263,7 @@ pick_angles()
 #   
 # # Using for loop
 # for i in list:
-#     logger.info(i)
+#     Lg.logger.info(i)
 #     
 # # getting length of list
 # length = len(list)
@@ -235,20 +271,20 @@ pick_angles()
 # # Iterating the index
 # # same as 'for i in range(len(list))'
 # for i in range(length):
-#     logger.info(list[i])    
+#     Lg.logger.info(list[i])    
 # 
 # # Iterating using while loop
 # #i = 0
 # while i < length:
-#     logger.info(list[i])
+#     Lg.logger.info(list[i])
 #     i += 1
     
  
 # Using list comprehension
-# [logger.info(i) for i in list]
+# [Lg.logger.info(i) for i in list]
 
 
-# logger.info(list(i_angle))
+# Lg.logger.info(list(i_angle))
 #================================================================================
 # function to analyze numerical sequences such as 120 = 1+2+0 = 3
 # Using List comphension
@@ -260,15 +296,15 @@ pick_angles()
 # y = sum([int(a) for a in str(num_b)])
 # z = sum([int(a) for a in str(num_c)])
 # 
-# logger.info('For   ' + str(num_a) + ',   ' +  'the sum of digits is ' + str(x))
-# logger.info('For   ' + str(num_b) + ',   ' +  'the sum of digits is ' + str(y))
-# logger.info('For   ' + str(num_c) + ',   ' +  'the sum of digits is ' + str(z))
+# Lg.logger.info('For   ' + str(num_a) + ',   ' +  'the sum of digits is ' + str(x))
+# Lg.logger.info('For   ' + str(num_b) + ',   ' +  'the sum of digits is ' + str(y))
+# Lg.logger.info('For   ' + str(num_c) + ',   ' +  'the sum of digits is ' + str(z))
 #==================================================================================
 # Find sum of odd digits in a number, and can be used to find even, too by tweaking code in set [2468]
 # num = "123"
 # odds = re.findall(r'[13579]', num)
 # sum = sum(int(odd) for odd in odds)
-# logger.info("the sum is: " + str(sum))
+# Lg.logger.info("the sum is: " + str(sum))
 
 
 # Function to analyze numerical squences from auto angle list output
@@ -282,7 +318,7 @@ pick_angles()
 # a = 1
 # b = 2
 # for i in range(10):
-#     logger.info(a*i +b)
+#     Lg.logger.info(a*i +b)
 # i_angle_auto = i_angle_5
 
 
@@ -294,62 +330,64 @@ pick_angles()
 #         i_angle_auto.remove( x for x ifloat(360,/))
 #     else:
 #         pass
-# filter_360()    
+# filter_360()
+
 # i_angle_auto = [1296]
+# # '___________________________________________________________________________________________________________________________________________'
+integer_values = [int for int in i_angle_auto]
 valuesRounded = [round(float) for float in i_angle_auto]
-#Output to log file
-# logger.info('Starting shell output to a file.....')
-# logger.info('*******************************************************************************************************')
-# print('*******************************************************************************************************')
-# open_shell_out_path = my_log_path +'/mandala scripts.log'
-# stdoutOrigin = sys.stdout
-# sys.stdout = open(open_shell_out_path, 'a')
-# print('Started shell output to file.')
-# print('*******************************************************************************************************')
-logger.info('*******************************************************************************************************')
-logger.info('Running Scripts from Master Mandala Maker @' +str(Tm.my_time) + '')
-logger.info('...................................................................................................')
-logger.info('The Automated Set of Angles to be Drawn Are:')
-logger.info(valuesRounded)
-logger.info('....................................................................................................')
-logger.info('The number of Automated Angle Generator elements is: ' + str(len(valuesRounded)))
+float_values = [float for float in i_angle_float]                      
+Lg.logger.info('*******************************************************************************************************')
+Lg.logger.info(f'Running Scripts from Master MandalaMaker @ {Tm.my_time}')
+Lg.logger.info('...................................................................................................')
+Lg.logger.info(f'The Automated Set of Angles to be Drawn as integers are: {integer_values} ')
+Lg.logger.info(f'The Automated Set of Angles to be Drawn as float numbers are: {float_values} ')
+Lg.logger.info(f'The Automated Set of Angles to be Drawn  rounded are: {valuesRounded}')
+Lg.logger.info('....................................................................................................')
+Lg.logger.info('The number of Automated Angle Generator elements for rounded elements is:' + str(len(valuesRounded)))
+Lg.logger.info('The number of Automated Angle Generator elements for float values is:' + str(len(float_values)))            
+# '___________________________________________________________________________________________________________________________________________________'
+# # # # Python3 code to demonstrate
+# # # # Sum of number digits in List
+# # # # using sum() + list comprehension
+# # x = list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded))
+# # Lg.logger.info(x)
+# Lg.logger.info('...................................................................................................')      
+# Lg.logger.info('Sum of digits in the elements of the list are:   ' )
+# Lg.logger.info(list(map(lambda ele: sum(int(sub)for sub in str(ele)), float_values)))
+# # Lg.logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
+# Lg.logger.info('*******************************************************************************************************')
+Lg.logger.info('Logger Source: my_angles.py')
+Lg.logger.info('*******************************************************************************************************')
+# # Lg.logger.info('Stopping shell output to file...')
+# # sys.stdout.close()
+# # sys.stdout = stdoutOrigin
+# # Lg.logger.info('Shell output default restored')
+
+# #Output to shell
+# Lg.logger.info('Running Scripts from Master MandalaMaker @' +str(Tm.my_time) + '')
+# Lg.logger.info('...................................................................................................')
+# Lg.logger.info('The Automated Set of Angles to be Drawn Are:')
+# Lg.logger.info(valuesRounded)
+# Lg.logger.info('....................................................................................................')
+# Lg.logger.info('The number of Automated Angle Generator elements is: ' + str(len(valuesRounded)))
 
 # Python3 code to demonstrate
 # Sum of number digits in List
 # using sum() + list comprehension
-x = list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded))
-# logger.info(x)
-logger.info('...................................................................................................')      
-logger.info('Sum of digits in the elements of the list are:   ' )
-logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded)))
-# logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
-logger.info('*******************************************************************************************************')
-# logger.info('*******************************************************************************************************')
-# logger.info('Stopping shell output to file...')
-# sys.stdout.close()
-# sys.stdout = stdoutOrigin
-# logger.info('Shell output default restored')
+# '_________________________________________________________________________________________________________________'
+# x = list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded))
+# # Lg.logger.info(x)
+# # Lg.logger.info('...................................................................................................')      
+# Lg.logger.info('Sum of digits in the elements of the list are:   ' )
+# # Lg.logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded)))
+# Lg.logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
 
-#Output to shell
-logger.info('Running Scripts from Master Mandala Maker @' +str(Tm.my_time) + '')
-logger.info('...................................................................................................')
-logger.info('The Automated Set of Angles to be Drawn Are:')
-logger.info(valuesRounded)
-logger.info('....................................................................................................')
-logger.info('The number of Automated Angle Generator elements is: ' + str(len(valuesRounded)))
-
-# Python3 code to demonstrate
-# Sum of number digits in List
-# using sum() + list comprehension
-x = list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded))
-# logger.info(x)
-logger.info('...................................................................................................')      
-logger.info('Sum of digits in the elements of the list are:   ' )
-logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), valuesRounded)))
-# logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
-
-
-
+def report_angle_status():
+    Lg.logger.info('The current list of angles  being processed is:')
+    Lg.logger.info(valuesRounded)
+    Lg.logger.info('Current angle selection is ' +  str(t.my_angle))
+# report_angle_status()
 
 # time.sleep(6)
 
@@ -364,7 +402,7 @@ def log_factorial():
     count = 1
     x = 360
     while count <= 361:
-        logger.info('Factorial '+ str(count) + ':    ' + str(x / count))
+        Lg.logger.info('Factorial '+ str(count) + ':    ' + str(x / count))
         count += 1
 #     sys.stdout.close()
 #     sys.stdout=stdoutOrigin
