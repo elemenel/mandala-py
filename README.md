@@ -1,43 +1,48 @@
 # mandala-py
 READ.ME
 
-Master Mandala Maker created and maintained by Leon R Hatton. Is a work-in-progress, like all bona fide coding projects.
+**Master Mandala Maker**
 
-Cross-platform capability for Linux and Windows 10. Scripted in Python 3.10, tested and executed using Thonny IDE version 4.01 and higher.
-The primary python module used is Turtle, created by Wally Feurzeig, Seymour Papert and Cynthia Solomon in 1967.
+**Unleash your creativity and generate mesmerizing visual journeys with this Python-powered mandala maker.**
 
-Master_Mandala_Maker creates mp4 formatted videos from screenshots of images. The images are created by the python scripts. Angles, Colors, Pen Sizes, and loops are combned into a script that varies with each project. After the images are created, a randomly-selected audio clip is picked from my
-personal library. Containing over 30 unique scripts, the custom python module "master_mandala_maker.py" is dependent on the additional custom modules:
+**Key Features:**
 
- 1. My_template.py(sets up environment for mandala creation using the Turtle module);
- 2. my_angles.py(outputs angle);
- 3. File_Scripts.py(source of file manipulation and audio, visual and final a/v processing);
- 4. audio_clips.py(contains links to audio tracks on local machine and selects a random track);
- 5. Timer.py (holds time and timer functions);
- 6. my_hues.py(outputs custom shades and randomized hues of a given color range);
- 7. my_splash_screen.py(generates watermark on mandala, title screens, splash screens, end screens)
- 8. My_logger.py(sets up logging files to document key features of the project during runtime)
+- Effortlessly creates stunning MP4 videos of unique mandalas accompanied by captivating audio tracks.
+- Offers a mesmerizing blend of art and technology, perfect for both artistic expression and visual relaxation.
+- Employs Python's Turtle module to craft intricate designs with a variety of colors, angles, and pen sizes.
+- Personalize your creations by specifying your own audio tracks and adjusting mandala parameters.
+- Works seamlessly on Windows 10 and Linux systems.
 
-New users will have to specify the path to their own local audio tracks.
+**Getting Started:**
 
-The Thonny app includes a pip gui that can search and install any content in the pip repository. Thonny also ensures that the additional
-modules from pip are installed on the correct path.
-Using it's internal PIP package manager, Thonny can install the following modules required to run the Master Mandala Maker.
+1. **Prerequisites:**
+   - Python 3.10 or higher
+   - Thonny IDE (version 4.01 or higher)
+   - Required modules (easily installable via Thonny's PIP package manager):
+      - open cv-python
+      - numpy
+      - pyautogui
+      - pyscreenshot
+      - moviepy with ipython notebook
+      - natsort
+      - mutagen
+      - Pydub
+      - Ffmpeg (installed with Moviepy)
+      - scrot (for Linux users, install via apt)
 
- 1. open cv-python
- 2. numpy
- 3. pyautogui
- 4. pyscreenshot
- 5. moviepy with ipython notebook
- 6. natsort
- 7. mutagen
- 8. Pydub
- 9. Ffmpeg(Installed with Moviepy)
+2. **Installation:**
+   - Clone or download this repository.
+   - Install required modules using Thonny's PIP package manager.
 
-scrot is required also for Linux use, but it is unavailabale in pip. Hence, it has to be installed via apt (Ubuntu).
+3. **Usage:**
+   - Specify the path to your audio tracks in `audio_clips.py`.
+   - Run `master_mandala_maker.py` to initiate the creation process.
+   - Enjoy the captivating mandala video and image output!
 
-This code first sets up the file environment, then selects an angle as a base template for the mandala. Then an audio track is randomly selected.
-The code then initiates the video-making process. With each loop of code, .png images are saved. The looped collection of .pngs is then sorted sequentially
-and processed into an audio-less video track.  The audio track is then added and synced to the video track completing the video creation process. Finally a jpeg image is created after the final loop.  It is stored in a subfolder of the default Pictures folder. So the mandala script outputs both  a video and a full image for each mandala created.
+**Explore Further:**
 
-     
+- Explore the project's structure and custom modules for deeper customization.
+- Contribute to the project's development or report any issues you encounter.
+- Share your mesmerizing creations with the world!
+
+**Let your creativity flourish and embark on a captivating mandala journey with Master Mandala Maker.**
