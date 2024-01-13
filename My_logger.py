@@ -1,95 +1,62 @@
 import logging
+import sys
+import datetime
 
+#Assign correct system path for cross-platform capability
 
-
-
-
-#     formatter = logging.Formatter( '%(asctime)s  |  %(name)s%; (levelname)s:  |  %(message)s  |',   datefmt='%m/%d/%Y %I:%M:%S%p')
-#     consoleHandler.setFormatter(formatter)
-#     fileHandler.setFormatter(formatter)
-
-
-my_filename = '/home/sels/Modules/MandalaMaker/Logs/t.my_filename.log'
+if sys.platform.startswith('linux'):
+    my_home_dir = '/home/sels/'
+    my_work_dir = '/home/sels/Modules/MandalaMaker/'
+    my_log_dir = '/home/sels/Modules/MandalaMaker/Logs/'
+    my_video_path = '/home/sels/Videos/'
+    no_audio_vids = '/home/sels/Videos/no_audio/'
+    my_full_vids = '/home/sels/Videos/Full_Vids/'
+    my_audio_path = '/home/sels/Music/Audio Clips for Python/'
+    my_git_path = '/home/sels/Git/elemenel/'
+    my_mandala_pics_path = '/media/sels/My_Media/Videos/Pictures/Mandala Final Thumbs/'
+    my_thumbs = '/home/sels/Thumbs/'
+    final_thumbs = '/home/sels/Pictures/Final Thumbs/'
+    my_shared_drive = f'/home/sels/sambashare/Logs/my_filename_{datetime.datetime.now()}.log'
+    
+    my_backup_drive = '/media/sels/Backup/'
+    my_audio_backup_folder = '/media/sels/Backup/AudioClipsPython/'
+    concatenate_candidates = '/home/sels/Videos/concatenate_candidates/'
+    do_concatenate_folder = '/home/sels/Videos/do_concatenate/'
+    my_filename = f'/home/sels/Modules/MandalaMaker/Logs/my_filename_{datetime.datetime.now()}.log'
+else:
+    my_work_dir = 'D:/'
+    no_audio_vids = 'D:/'
+    my_full_vids = 'D:/Videos/Full_Vids/'
+    my_audio_path = 'D:/Music/Audio Clips for Python/'
+    my_git_path = 'D:/Git/'
+    my_home_dir = 'C:/'
+    my_log_dir = 'D:/Logs/'
+    my_video_path = '/D:/Videos/'
+    no_audio_vids = 'D:/Videos/no_audio/'
+    my_mandala_pics_path = 'D:/Pictures/Mandala Final Thumbs/'
+    my_thumbs = 'D:/Pictures/Thumbs/'
+    my_shared_drive = 'Y:/sambashare/'
+    my_filename = 'D:\MandalaMaker Modules\MandalaMaker\MandalaMaker\Logs/my_filename.log'
+        
+global my_project
 my_project = 'My Project'
 
 # Universal Logger
 global logger
 global formatter, fileHandler, consoleHandler
 logger = logging.getLogger(my_project) # Initialize global logger
+
 fileHandler = logging.FileHandler(my_filename)
+fileHandler = logging.FileHandler(my_shared_drive)
 fileHandler.setLevel(logging.INFO)
+fileHandler.setLevel(logging.INFO)
+
 consoleHandler = logging.StreamHandler()
 consoleHandler.setLevel(logging.INFO)
+
 logger.setLevel(logging.INFO)
 logger.addHandler(fileHandler)
 logger.addHandler(consoleHandler)
-#     formatter = logging.Formatter( '%(asctime)s  |  %(name)s%; (levelname)s:  |  %(message)s  |',   datefmt='%m/%d/%Y %I:%M:%S%p')
-#     consoleHandler.setFormatter(formatter)
-#     fileHandler.setFormatter(formatter)
 
-def startup_script():
-    global my_filename
-    global logger
-    global formatter, fileHandler, consoleHandler, my_project
-    my_filename = f.my_work_dir + '/MandalaMaker/Logs/' + my_project + '_' + t.my_key +  '.log'
-   
-    logger = logging.getLogger(my_project)
-    fileHandler = logging.FileHandler(my_filename)
-    fileHandler.setLevel(logging.INFO)
-    consoleHandler = logging.StreamHandler()
-    consoleHandler.setLevel(logging.INFO)
-    logger.setLevel(logging.INFO)
-    logger.addHandler(fileHandler)
-    logger.addHandler(consoleHandler)
-#     formatter = logging.Formatter( '%(asctime)s  |  %(name)s%; (levelname)s:  |  %(message)s  |',   datefmt='%m/%d/%Y %I:%M:%S%p')
-#     consoleHandler.setFormatter(formatter)
-#     fileHandler.setFormatter(formatter)
-    logger.info('Starting  ' + my_project)
-    logger.info('This is ' + my_project + ' code')
-
-def make_folder():
-    logger.info('Setting up directories and files for video production')
-    t.my_angle = a.i_angle_auto[a.i]
-    t.my_str = my_project + '    featuring   ' + str( t.my_angle) + '    Degree Angles,   with   '  + str(au.my_track)
-    t.my_mandala_name = my_project + '_' + str(t.my_angle) + '_' + str(au.my_track)
-    logger.info('Folder name is   ' + str(t.my_mandala_name))
-    f.make_png_folder()
-    os.chdir(f.loc_thumb + t.my_mandala_name)
-    turtle.title(t.my_str)
-    logger.info('Presenting  ' + t.my_str)
-
-
-def stage_video():
-    f.save_final_thumb()
-    logger.info(' Starting video creation....')
-    turtle.setup(5,5)
-    f.set_vid_env()
-    logger.info('Starting merger of video and audio clips....')
-    f.sync_av()
-    logger.info('Making of mandala completed.')
-    logger.info('Stopping  ' + t.my_str + ' by Leon Hatton on  ' + str(Tm.my_time))
-    logger.info('****************************************************************************')
-    reset_all()
+logger.info(f'Logger has been initialized')
     
-    
-    
-
-def finalize():
-    logger.info('************************************************************************')
-    logger.info('Stopping ' + my_project + ' by Leon Hatton on  ' + str(Tm.my_time))
-    logger.info('Finalizing scripts to sync all files and folders')
-    logger.info('Minimizing turtle screen to observe screen and read shell output')
-    turtle.setup(5,5) # Minimized turtle window to observe screen and read shell output
-    logger.info('Moving files to appropriate folders')
-    f.move_all() # Moves files to appropriate locations
-    logger.info('Video .mp4 files have been moved to /Videos/')
-    logger.info('Image .png files have been moved to /Thumbs/Output/')
-    logger.info('Image .jpg files have been moved to /home/elemen/Pictures/Mandala Final Thumbs/')
-    logger.info('Pics have been moved to Pictures folder')
-    logger.info('================================================================================')
-    f.sync_mandala_folders()  # Sync video and script folders backups
-    logger.info('Folders and files have been synced and backed up')
-    logger.warning('Shutting down this module and resetting logger')
-    logger.handlers.clear()
-    reset_all()
-
