@@ -1,6 +1,6 @@
 """my_angles.py contains functions, generators, and formatters needed to output
 a chosen set of angles to master_mandala_maker.py
-by Leon Hatton
+Copyright (C) by Leon Hatton 2017-2024
 """
 import turtle
 import random
@@ -21,14 +21,13 @@ import My_template as t
 global i_angle_auto
 i_angle_auto = [ ]
 
-# if sys.platform.startswith('linux'):
-#     my_path = '/media/elemen/'
-#     my_log_path = '/home/elemen/Git/Logs'
-# else:
-#     my_path = 'M:'
-#     my_log_path = 'B:/Logs'
+if sys.platform.startswith('linux'):
+    my_path = '/home/sels/Modules/'
+    my_log_path = '/home/sels/Modules/MandalaMaker/Logs'
+else:
+    my_path = 'Y:'
+    my_log_path = 'Y:/Logs'
 
-Tm.time_functions()
 
 turtle.setup(10,10)
 
@@ -88,36 +87,60 @@ solfeggio_6 = [285, 528, 852] # Digits sum to 6
 solfeggio_9 = [396, 639, 963] # Digits sum to 9
 
 # i_angle_auto = [528, 432, 174, 417, 741, 285, 852, 396, 639, 963]
-#Earth Frequencies
-#136.10 and up: angle_min = 136.1
-# angle_max = 9000
-#key = 136.10
 
-def select_angle():
-    # Create an input box
-    my_angle = turtle.numinput("Enter Angle:  " )
+    
+    
+my_frequency = 417 
+max_frequency = my_frequency * 5
+key = my_frequency * 3
 
-   # Wait 4 seconds for keypress
-    time.sleep(4)
 
-      # If no response, select default
-    if my_angle == null:
-        my_angle = random.randint(150,135,432,1350,1211)
-        return my_angle    
-    Lg.logger.info('The selected angle is:  ' + str(my_angle))
 
- 
+'''Python code to calculate and print multiples of any given number'''
+# Define the given number and maximum
 
+def get_multiples():
+    global multiples, my_number
+    my_number = 6125
+    multiple = 3
+    maximum = my_number * 10
+    # Initialize an empty list to store the multiples
+    multiples = []
+
+    #Iterate from the given number to the maximum, adding 3rd multiples to the list
+    for number in range(my_number * multiple, maximum):
+        if number % my_number == 0 and number %(180) !=0 :
+            multiples.append(number)
+    print(multiples)
+    Lg.logger.info(f'my_angles.py:The list of multiples using {multiple} for the multiplier to a maximum of {maximum} for {my_number} is: {multiples}')
+get_multiples()
+
+def get_my_multiples():
+    global my_multiples, my_multiples_number, max_value, my_multiples_key
+    my_multiples_number = 1845
+    my_multiples_key =  float(my_multiples_number * 3/2)
+    max_value = float(my_multiples_number * 8)
+    my_multiples = [my_number for my_number in np.arange(float(my_multiples_number), my_multiples_key, max_value) if my_multiples_number  %(180) != 0]
+    
+get_my_multiples()
+
+def get_sequence_of_values():
+    my_value = my_multiples_number
+    max_value = my_value * 15
+    key = my_value * 3
+    sequence_values = [value for value in np.arange(my_value, max_value, key) if value  %(180) != 0]
+    Lg.logger.info(f'The list of sequenced values is {sequence_values}')
+get_sequence_of_values()
 
 # Automated Angle Generator using numpy.arange module; produces a list of angles based on custom algorithms.
 # 
 def pick_angles():
     global i_angle_auto, i_angle_float
-    angle_min = float(135)
-    angle_max = float(angle_min *5)
-    key = float(angle_min  / 2)   #Dividing angle_min by 2 and using that as a key results in a harmonic angle family; also multiply by 3 or 5 
+    angle_min = float(my_multiples_number) # 51.42857
+    angle_max = max_value
+    key =my_multiples_key   #Dividing angle_min by 2 and using that as a key results in a harmonic angle family; also multiply by 3 or 5 
     
-#     angle_min_a = float(80)
+#     angle_min_a = float(126)
 #     float(angle_min_a * 12)
 #     key = float(angle_min_a) #Dividing angle_min by 2 and using that as a key results in a harmonic angle family; also multiply by 3 or 5 
     
@@ -125,7 +148,7 @@ def pick_angles():
 #     float(angle_min_b * 12)
 #     key = float(angle_min_b) #Dividing angle_min by 2 and using that as a key results in a harmonic angle family; also multiply by 3 or 5 
      
-    i_angle_float = [angle for angle in np.arange(float(angle_min), float(angle_max), int(key)) if angle  %(180) != 0] #+ \
+    i_angle_float = [angle for angle in np.arange(float(angle_min), float(angle_max), float(key)) if angle  %(180) != 0]  # +[180] #+ multiples #1188, 1584, 1980, 2376, 2772, 3168, 3564]
 #                     [angle for angle in np.arange(float(angle_min), float(angle_max), float(key)) if angle  %(181) != 0] + \
 #                     [angle for angle in np.arange(float(angle_min), float(angle_max), float(key)) if angle  %(182) != 0] +\
 #                     [angle for angle in np.arange(float(angle_min), float(angle_max), float(key)) if angle  %(183) != 0] + \
@@ -134,11 +157,38 @@ def pick_angles():
 #                     [angle for angle in np.arange(float(angle_min), float(angle_max), float(key)) if angle  %(177) != 0]
     
     
-    i_angle_auto = [angle for angle in np.arange(math.trunc(float(angle_min)), math.trunc(float(angle_max)), math.trunc(float(key))) if angle %(180) != 0] #+ [3024] + [3888] +[4752]+ [7344] +[8208]
+    i_angle_auto = [angle for angle in np.arange(int(float(angle_min)), int(float(angle_max)), int(float(key))) if angle %(180) != 0] #+ [3024] + [3888] +[4752]+ [7344] +[8208]
 #                    #[i for i in np.arange(float(angle_min_b), float(angle_max_b), key_b) if i % float(180) != 0]  #+ [ 221.5385]
     return i_angle_auto , i_angle_float     
 pick_angles()
 '''Use this pick_angles to specify the angles manually'. Comment the section out if the automated pick_angles script is prefferred'''
+
+# # '___________________________________________________________________________________________________________________________________________'
+integer_values = [int for int in i_angle_auto]
+valuesRounded = [round(float) for float in i_angle_auto]
+float_values = [float for float in i_angle_float]                      
+Lg.logger.info('*******************************************************************************************************')
+Lg.logger.info(f'Running Scripts from Master MandalaMaker, my_angles.py @ {Tm.my_time}')
+Lg.logger.info('...........................................................................................................................................')
+Lg.logger.info(f'my_angles.py: The Automated Set of Angles to be Drawn as for the selected mandala is: {i_angle_float}')
+Lg.logger.info(f'my_angles.py: The Automated Set of Angles to be Drawn as integers are:  {integer_values}')
+Lg.logger.info(f'my_angles.py: The Automated Set of Angles to be Drawn as float numbers are:  {float_values}')
+Lg.logger.info(f'my_angles.py: The Automated Set of Angles to be Drawn  rounded are:  {valuesRounded}')
+Lg.logger.info('............................................................................................................................................')
+Lg.logger.info(f'my_angles.py: The number of Automated Angle Generator elements for rounded elements is: {len(valuesRounded)}')
+Lg.logger.info(f'my_angles.py: The number of Automated Angle Generator elements for float values is: {len(float_values)}')            
+Lg.logger.info('*******************************************************************************************************')
+Lg.logger.info('Logger Source: my_angles.py')
+Lg.logger.info('*******************************************************************************************************')
+
+
+
+
+
+
+
+
+
 # def pick_angles():
 #      global i_angle_auto
 #      i_angle_auto = [144, 288, 412, 864, 1008, 1152, 1296]
@@ -333,19 +383,10 @@ pick_angles()
 # filter_360()
 
 # i_angle_auto = [1296]
-# # '___________________________________________________________________________________________________________________________________________'
-integer_values = [int for int in i_angle_auto]
-valuesRounded = [round(float) for float in i_angle_auto]
-float_values = [float for float in i_angle_float]                      
-Lg.logger.info('*******************************************************************************************************')
-Lg.logger.info(f'Running Scripts from Master MandalaMaker @ {Tm.my_time}')
-Lg.logger.info('...................................................................................................')
-Lg.logger.info(f'The Automated Set of Angles to be Drawn as integers are: {integer_values} ')
-Lg.logger.info(f'The Automated Set of Angles to be Drawn as float numbers are: {float_values} ')
-Lg.logger.info(f'The Automated Set of Angles to be Drawn  rounded are: {valuesRounded}')
-Lg.logger.info('....................................................................................................')
-Lg.logger.info('The number of Automated Angle Generator elements for rounded elements is:' + str(len(valuesRounded)))
-Lg.logger.info('The number of Automated Angle Generator elements for float values is:' + str(len(float_values)))            
+
+
+
+
 # '___________________________________________________________________________________________________________________________________________________'
 # # # # Python3 code to demonstrate
 # # # # Sum of number digits in List
@@ -356,9 +397,7 @@ Lg.logger.info('The number of Automated Angle Generator elements for float value
 # Lg.logger.info('Sum of digits in the elements of the list are:   ' )
 # Lg.logger.info(list(map(lambda ele: sum(int(sub)for sub in str(ele)), float_values)))
 # # Lg.logger.info(list(map(lambda ele: sum(int(sub) for sub in str(ele)), x)))
-# Lg.logger.info('*******************************************************************************************************')
-Lg.logger.info('Logger Source: my_angles.py')
-Lg.logger.info('*******************************************************************************************************')
+
 # # Lg.logger.info('Stopping shell output to file...')
 # # sys.stdout.close()
 # # sys.stdout = stdoutOrigin
@@ -408,3 +447,4 @@ def log_factorial():
 #     sys.stdout=stdoutOrigin
     
 #  log_factorial()    
+
