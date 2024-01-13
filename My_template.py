@@ -1,7 +1,7 @@
 """  My_template.py contains file manipulation scripts associated with master_mandala_maker.py.
  This custom module is needed to run master_mandala_maker. It sets up the environment that each of the
   40+ mandala makers (modular scripts) depend upon to run all functions to successful completions.
- by LeonRHatton using Thonny 4.0.1 IDE.
+ by LeonRHatton using Thonny 4.1.4 IDE.
 """
 import time
 import turtle # The main turtle module is used in this module.
@@ -14,6 +14,14 @@ import Timer as Tm
 import math
 import gc
 
+
+global my_path
+my_path = 'path '
+
+if sys.platform.startswith('linux'):
+    my_path = '/home/sels/Modules/'
+else:
+    my_path = 'D:/'
 
 turtle.colormode(255)
 
@@ -45,14 +53,15 @@ my_splash = 'splash'
 global my_title
 my_title = ' title'
 
-global my_path
-my_path = 'path '
+global pi, phi
+pi =  3.141592653589793
+phi = 1.617999
 
 global my_angles
 my_angles = 'angles '
 
 global my_logfile
-my_logfile = '/home/sels/Modules/MandalaMaker/Logs/my_filename.log'
+my_logfile = f'{my_path}MandalaMaker/Logs/my_filename.log'
 
 global my_angle
 my_angle = ()
@@ -212,16 +221,12 @@ def my_venv():
     B = 255
     turtle.bgcolor(R,G,B)
     set_up_all_pens()
-   
+    
     global rand_pick, rand_num
     rand_num = random.randint(1,50)
     rand_pick = random.randint(51,120)
 
-    global pi
-    pi = 4 * math.atan(1)
-
-    global phi
-    phi = ( 1 + math.sqrt(5) ) / 2
+    
     
     
 
@@ -241,3 +246,4 @@ def my_venv():
     
     
       
+
