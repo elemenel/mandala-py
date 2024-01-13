@@ -1,18 +1,18 @@
 '''audio_clips.py organizes all audio services, including file links to audio clips,
 sorting and grouping clips based on varied parameters, for use in the master_mandala_maker. py and the FileScripts.py modules.
-by Leon Hatton
+Copyright(C) by Leon R. Hatton 2017-2024
 '''
 import sys
 import random
 import os
 import platform
+import glob
 from moviepy.editor import *
 from moviepy.editor import AudioFileClip, ImageClip, VideoFileClip
 from functools import lru_cache
 from mutagen.mp3 import MP3
 from mutagen.flac import FLAC
 import Timer as Tm
-# import My_logger as l
 import logging
 import My_template as t
 import natsort
@@ -82,8 +82,8 @@ def get_music_file_duration():   # Manually adjustable as noted
     global musicclip_duration
     Audio_length = MP3(i)
     musicclip_duration = round(int(Audio_length.info.length/60))
-#     logger.info('The duration of  ' + str(i) +' is:  ' + str(musicclip_duration) + '  minutes')
-#     logger.info('=================================================================================================')
+    Lg.logger.info('The duration of  ' + str(i) +' is:  ' + str(musicclip_duration) + '  minutes')
+    Lg.logger.info('=================================================================================================')
     if musicclip_duration in range(int(26), int(72)): # Anything, looking for x min duration clips only
         custom_length_clips.append(i)
     elif musicclip_duration in range(int(1300), int(1700)): #Adjustable
@@ -100,182 +100,15 @@ def get_music_file_duration():   # Manually adjustable as noted
         
 
 def print_clips_list():
-    logger.info('For ' + Tm.my_time + ', ' + 'the list of short clips is:   ' + str(short_clips))
-    logger.info('=================================================================================================================')
-    logger.info('For ' + Tm.my_time + ', ' + 'the list of medium clips is:   ' + str(medium_clips))
-    logger.info('=================================================================================================================')
-    logger.info('For ' + Tm.my_time + ', ' + 'the list of long clips is:   ' + str(long_clips))
-    logger.info('=================================================================================================================')
-    logger.info('For ' + Tm.my_time + ', ' + 'the list of extra long clips is:   ' + str(extra_long_clips))
-    logger.info('=================================================================================================================')
+    Lg.logger.info('For ' + Tm.my_time + ', ' + 'the list of short clips is:   ' + str(short_clips))
+    Lg.logger.info('=================================================================================================================')
+    Lg.logger.info('For ' + Tm.my_time + ', ' + 'the list of medium clips is:   ' + str(medium_clips))
+    Lg.logger.info('=================================================================================================================')
+    Lg.logger.info('For ' + Tm.my_time + ', ' + 'the list of long clips is:   ' + str(long_clips))
+    Lg.logger.info('=================================================================================================================')
+    Lg.logger.info('For ' + Tm.my_time + ', ' + 'the list of extra long clips is:   ' + str(extra_long_clips))
+    Lg.logger.info('=================================================================================================================')
    
-# strauss_clips = [my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Four Symphonic Interludes (from Intermizzo).mp3', # 24  minutes
-#                my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Dance of the Seven Veils.mp3',  # 10  minutes
-#                 [my_music_path + '/Gerard Schwarz - Strauss Also Sprach Zarathustra; Salome/Also Sprach Zarathustra, Op. 30.mp3'] # 36  minutes
-# for i in strauss_clips: 
-#     get_music_file_duration()
-
-                                                                                             
-
-solfeggio_6min_solo_tones = [my_music_path + '/Solfeggio Tones/963 Hz-fadebell-6sec-60x-stereo.mp3',
-                            my_music_path + '/Solfeggio Tones/852 Hz-fadebell-6sec-60x-stereo.mp3',
-                            my_music_path + '/Solfeggio Tones/741Hz-fadebell-6sec-60x-stereo.mp3',
-                            my_music_path + '/Solfeggio Tones/639 Hz-fadebell-6sec-60x-stereo.mp3',
-                            my_music_path + '/Solfeggio Tones/528 Hz-fadebell-6sec-60x-stereo.mp3',
-                            my_music_path + '/Solfeggio Tones/432 Hz-fadebell-6sec-60x-stereo.mp3',
-                            my_music_path + '/Solfeggio Tones/417Hz-fadebell-6sec-60x-stereo.mp3',
-                            my_music_path + '/Solfeggio Tones/396Hz-fadebell--6sec-60x-stereo.mp3',
-                            my_music_path + '/Solfeggio Tones/285hz-bell-6sec60x-stereo.mp3',
-                            my_music_path + '/Solfeggio Tones/174hz-bell-6sec60x.mp3']
-# for i in solfeggio_6min_solo_tones:
-#     get_music_file_duration()
-
-
-earth_tones = [my_music_path + '/Earth Tones/432r-864-1728 Hz-6sec-8min.mp3',
-#                         my_music_path + '/Earth Tones/D Project-Throat Chakra Tones-141.27, 282.54, 565.08, 1130.16-24min.mp3',
-                        my_music_path + '/Earth Tones/D Project-Throat Chakra Tones-141.27, 282.54, 565.08, 1130.16-36min.mp3',
-#                         my_music_path + '/Earth Tones/F Project- Crown Chakra Tones-172.06, 344.12, 688.24, 1376.48-24min.mp3',
-                        my_music_path + '/Earth Tones/F Project- Crown Chakra Tones-172.06, 344.12, 688.24, 1376.48-36min.mp3',
-                        my_music_path + '/Earth Tones/126.22-378.66-1009.76 Hz-18min.mp3',
-                        my_music_path + '/Earth Tones/136.1_272.2-_408.3-FadeBell-12min.mp3',
-#                         my_music_path + '/Earth Tones/136.1-FadeBell-12min.mp3',
-                        my_music_path + '/Earth Tones/161.82-323.63-647.27-1294.54 Hz-E freq-15min.mp3',
-                        my_music_path + '/Earth Tones/192.43-384.87-769.74-1539.47 Hz-G freq-15min.mp3',
-                        my_music_path + '/Earth Tones/194.18-388.36-1165.08-earthtones-18min.mp3',
-#                         my_music_path + '/Earth Tones/216-432-864-1728 Hz-A freq-10min.mp3',
-#                         my_music_path + '/Earth Tones/417r-1251-2085 Harmonic 3rd and 5th Frequencies-6min.mp3',
-                        my_music_path + '/Earth Tones/C# Project-136.1, 272.2, 544.4, 1088.8, 2177.6, 4355.2, 8710.4 Hz-24min.mp3',
-#                         my_music_path + '/Earth Tones/272.2-FadeBell-12 min.mp3',
-#                         my_music_path + '/Earth Tones/396Hz-fadebell-36min.mp3',
-#                         my_music_path + '/Earth Tones/396Hz-fadebell-18min.mp3',
-#                         my_music_path + '/Earth Tones/408.3-FadeBell-12 min.mp3',
-#                         my_music_path + '/Earth Tones/417Hz-fadebell-36min.mp3',
-#                         my_music_path + '/Earth Tones/417Hz-fadebell-18min.mp3',
-#                         my_music_path + '/Earth Tones/432 Hz-fadebell-36min.mp3',
-#                         my_music_path + '/Earth Tones/528 Hz-fadebell-18min.mp3',
-#                         my_music_path + '/Earth Tones/639 Hz-fadebell-18min.mp3',
-                        my_music_path + '/Earth Tones/86.4-432-1080-2160 Hz.mp3',
-                        my_music_path + '/Earth Tones/352, 704, 1408 Hz Thymus Chakra.mp3',
-#                         my_music_path + '/Earth Tones/352 Hz Thymus Chakra Tone.mp3',
-                        my_music_path + '/Earth Tones/417-1251-2085 Harmonic 3rd and 5th.mp3',
-#                         my_music_path + '/Earth Tones/432 Hz-fadebell-18min.mp3',
-#                         my_music_path + '/Earth Tones/741Hz-fadebell-18min.mp3',
-#                         my_music_path + '/Earth Tones/852 Hz-fadebell-18min.mp3',
-#                         my_music_path + '/Earth Tones/963 Hz-fadebell-18min.mp3',
-                        my_music_path + '/Earth Tones/528-633.6-422.4-316.8 Hz Earth Tones-12min.mp3',
-                        my_music_path + '/CustomTones/528-1584-4752 Harmonic Tones-60min.mp3',
-                        my_music_path + '/CustomTones/264-528-1056-2112 Hz Harmonic Tones-60min.mp3',
-                        my_music_path + '/CustomTones/164-328-656 Hz Harmonic Tones-60min.mp3',
-                        my_music_path + '/CustomTones/528 Hz 60min.mp3',
-                        my_music_path + '/CustomTones/432 Hz 60min.mp3',
-                         my_music_path + '/CustomTones/216, 432, 1296 Hz 60min steady.mp3',
-#                         my_music_path + '/CustomTones/264-528-1584 Hz 60min steady.mp3',
-                        my_music_path + '/Seven Chakra Tones/FiveChakraTones-321-432-528-639-852 Hz.mp3']
-
-for i in earth_tones:
-    get_music_file_duration()
-
-
-
-solfeggio_tones = [my_music_path +'/Solfeggio Tones/23p49 Hz-FadeBell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/126.22-378.66-1009.76 Hz-6secfade-x180.mp3',
-                    my_music_path +'/Solfeggio Tones/136.1_272.2-_408.3-FadeBell-6sec-120x.mp3',
-                    my_music_path +'/Solfeggio Tones/852 Hz-bell-6sec120x.mp3',
-                    my_music_path +'/Solfeggio Tones/852 Hz-fadebell-6sec-60x-stereo.mp3',
-                    my_music_path +'/Solfeggio Tones/963 Hz-bell-6sec120x.mp3',
-                    my_music_path +'/Solfeggio Tones/963 Hz-fadebell-6sec-60x-stereo.mp3',
-                    my_music_path +'/Solfeggio Tones/136.1_272.2-_408.3-FadeBell-6sec-120x-stereo.mp3',
-                    my_music_path +'/Solfeggio Tones/136.1-FadeBell-6sec-120x-stereo.mp3',
-#                     my_music_path +'/Solfeggio Tones/174-fade-out-.3amp-9secx33.mp3',
-#                     my_music_path +'/Solfeggio Tones/174hz-bell-6sec60x.mp3',
-                    my_music_path +'/Solfeggio Tones/174hz-bell-6sec-120x.mp3',
-                    my_music_path +'/Solfeggio Tones/194.18-388.36-1165.08-earthtones-6secbellx180.mp3',
-                    my_music_path +'/Solfeggio Tones/272.2-FadeBell-6sec-120x-stereo.mp3',
-                    my_music_path +'/Solfeggio Tones/285 and 396 hz-bell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/285hz-bell-6sec60x-stereo.mp3',
-                    my_music_path +'/Solfeggio Tones/285 Hz-bell-6sec120x.mp3',
-                    my_music_path +'/Solfeggio Tones/396 and 528 Hz-FadeBell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/396 and 639 Hz-FadeBell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/396 and 741 Hz-FadeBell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/396 and 963 Hz-FadeBell-7.83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/396 Hz-bell-6sec120x.mp3',
-#                     my_music_path +'/Solfeggio Tones/396Hz-fadebell--6sec-60x-stereo.mp3',
-                    my_music_path +'/Solfeggio Tones/408.3-FadeBell-6sec-120x-stereo.mp3',
-                    my_music_path +'/Solfeggio Tones/417-1251-2085 Harmonic 3rd and 5th Frequencies.mp3',
-#                     my_music_path +'/Solfeggio Tones/417 and 639 Hz-FadeBell-7.83sec-42x.mp3',
-#                     my_music_path +'/Solfeggio Tones/417 and 741 Hz-FadeBell-7p83sec-42x.mp3',
-#                     my_music_path +'/Solfeggio Tones/417 and 852 Hz-FadeBell-7p83sec-42x.mp3',
-#                     my_music_path +'/Solfeggio Tones/417 and 963 Hz-FadeBell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/417 Hz-bell-6sec120x.mp3',
-#                     my_music_path +'/Solfeggio Tones/417Hz-fadebell-6sec-60x-stereo.mp3',
-                    my_music_path +'/Solfeggio Tones/417r-1251-2085 Harmonic 3rd and 5th Frequencies6min.mp3',
-                    my_music_path +'/Solfeggio Tones/432 and 528 Hz-FadeBell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/432 Hz-fadebell-6sec-60x-stereo.mp3',
-                    my_music_path +'/Solfeggio Tones/432r-864-1728 Hz-6sec-8min.mp3',
-                    my_music_path +'/Solfeggio Tones/528 and 741 Hz-FadeBell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/528 and 852 Hz-FadeBell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/528 Hz-bell-6sec120x.mp3',
-                    my_music_path +'/Solfeggio Tones/528 Hz-fadebell-6sec-60x-stereo.mp3',
-                    my_music_path +'/Solfeggio Tones/639 and 852 Hz-FadeBell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/639 and 963 Hz-FadeBell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/639 Hz-bell-6sec120x.mp3',
-                    my_music_path +'/Solfeggio Tones/639 Hz-fadebell-6sec-60x-stereo.mp3',
-                    my_music_path +'/Solfeggio Tones/741 and 963 Hz-FadeBell-7p83sec-42x.mp3',
-                    my_music_path +'/Solfeggio Tones/741 Hz-bell-6sec120x.mp3',
-                    my_music_path +'/Solfeggio Tones/741Hz-fadebell-6sec-60x-stereo.mp3']
-for i in solfeggio_tones:
-    get_music_file_duration()
-
-
-solfeggio_misc = [my_music_path + '/Solfeggio Tones/194.18-388.36-1165.08-earthtones-6secbellx180.mp3',
-                    my_music_path + '/Solfeggio Tones/417r-1251-2085 Harmonic 3rd and 5th Frequencies6min.mp3',
-                    my_music_path + '/Solfeggio Tones/126.22-378.66-1009.76 Hz-6secfade-x180.mp3',
-                    my_music_path + '/Solfeggio Tones/432r-864-1728 Hz-6sec-8min.mp3',
-                    my_music_path + '/Solfeggio Tones/417-1251-2085 Harmonic 3rd and 5th Frequencies.mp3']
-# for i in solfeggio_misc:
-#     get_music_file_duration()
-
-
-#     get_music_file_duration()
-
-
-   
-chakra_tones =     [my_music_path + '/Seven Chakra Tones/FiveChakraTones-321-432-528-639-852 Hz.mp3',
-                             my_music_path +'/Seven Chakra Tones/352, 704, 1408 Hz Thymus Chakra Harmonic Frequency Tones.mp3',
-                            my_music_path + '/Seven Chakra Tones/352 Hz Thymus Chakra Frequency Tone.mp3',
-                            my_music_path + '/Seven Chakra Tones/352 Hz Thymus Chakra Primary - 1056 Hz and 1769 Hz Harmonic 3rd and 5th Frequency Tone.mp3',
-                            my_music_path + '/Seven Chakra Tones/396-1188-1980 Hz Solfeggio Harmonic 3rd and 5thTones-36min.mp3',
-                            my_music_path + '/Seven Chakra Tones/417-1251-2085 Hz Solfeggio 3rd and 5th Harmonic Frequency Tones-36min.mp3',
-                            my_music_path + '/Seven Chakra Tones/Ajna_221p23 Hz.mp3',
-                            my_music_path + '/Seven Chakra Tones/Anahata_136p10 Hz.mp3',
-                            my_music_path + '/Seven Chakra Tones/A Project- Seat of Soul  - Svadisthana Chakra Tones-210.42 Hz,420.84 Hz, 841.68 Hz, 1683.36 Hz -x120.mp3',
-                            my_music_path + '/Seven Chakra Tones/A Project- Third Eye Chakra Tones-221.23, 442.46, 884.92, 1769.84-x120.mp3',
-                            my_music_path + '/Seven Chakra Tones/A Project- Third Eye Chakra Tones-221.23, 442.46, 884.92-120x.mp3',
-                            my_music_path + '/Seven Chakra Tones/Brow-221.23-448-852 Hz-6sec-60min.mp3',
-                            my_music_path + '/Seven Chakra Tones/C# Project( 136.1, 272.2, 544.4, 1088.8, 2177.6, 4355.2, 8710.4) Hz Stereo @ 6sec x 120.mp3',
-                            my_music_path + '/Seven Chakra Tones/C# Project( 136.1, 272.2, 544.4, 1088.8, 2177.6, 4355.2, 8710.4) Hz Stereo @ 6sec x 240-24min.mp3',
-                            my_music_path + '/Seven Chakra Tones/C Project- Solar Plexus Chakra Tones-126.22, 252.44, 504.88, 1009.76-x120.mp3',
-                            my_music_path + '/Seven Chakra Tones/Crown-172.06-480-963 Hz-6sec-60min.mp3',
-                            my_music_path + '/Seven Chakra Tones/Crown Chakra Harmonic FifthsTones.mp3',
-                            my_music_path + '/Seven Chakra Tones/D Project-Throat Chakra Tones-141.27, 282.54, 565.08, 1130.16-24min.mp3',
-                            my_music_path + '/Seven Chakra Tones/F Project- Crown Chakra Tones-172.06, 344.12, 688.24, 1376.48-24min.mp3',
-                            my_music_path + '/Seven Chakra Tones/G Project- Base of Spine Chakra Tones-194.18, 388.36, 776.72 Hz-x120.mp3',
-                            my_music_path + '/Seven Chakra Tones/Heart-Thymus 128.43-385.29-642.15 Hz-6secbell-36min.mp3',
-                            my_music_path + '/Seven Chakra Tones/Heart-Thymus 136.10-341.3-639 Hz-6sec-36min.mp3',
-                            my_music_path + '/Seven Chakra Tones/Manipura_126p22 Hz.mp3',
-                            my_music_path + '/Seven Chakra Tones/Muladhara_194p18 Hz.mp3',
-                            my_music_path + '/Seven Chakra Tones/Root-194.18-256-396 Hz-6sec-60min.mp3',
-                            my_music_path + '/Seven Chakra Tones/Sacral-210.42-288-417 Hz-6sec-60min.mp3',
-                            my_music_path + '/Seven Chakra Tones/Sahasrar_172.06 Hz.mp3',
-                            my_music_path + '/Seven Chakra Tones/Solar-126.22-320-528 Hz-6sec-60min.mp3',
-                            my_music_path + '/Seven Chakra Tones/Svadisthana_210p42 Hz.mp3',
-                            my_music_path + '/Seven Chakra Tones/Throat - 141.27, 384, 741 Hz- 6sec-36min.mp3',
-                            my_music_path + '/Seven Chakra Tones/Throat - 144.16, 432.48, 720.8 Hz-6sec-36min.mp3',
-                            my_music_path + '/Seven Chakra Tones/Thymus-128.43-382-642.15-1027.44 Hz-6sec-60min.mp3',
-                            my_music_path + '/Seven Chakra Tones/Vishudda141p27 Hz.mp3']
-for i in chakra_tones:
-    get_music_file_duration()
-    
 
 #This from Stack Overflow(https://stackoverflow.com/questions/66802318/dividing-audio-clips-using-python)
     #Will split an audio file to desired duration in seconds. Use variable my_duration.
@@ -317,14 +150,26 @@ for i in chakra_tones:
 '''
 This script randomly selects a track from the list called by the mandala maker,
 and removes directory path and extension from clip, leaving the file name only
+
 '''
+all_earth_tones = glob.glob(f'/home/sels/Music/Audio Clips for Python/All_clips/*.mp3')
+bell_format_tones = glob.glob(f'/home/sels/Music/Audio Clips for Python/Bell_format/*.mp3')
+# for i in all_earth_tones:
+#     get_music_file_duration()
+
+# special_track = '/home/sels/Music/Audio Clips for Python/All_clips/105.6-528-633.6 Hz FifthHarmonics-fade-60m.mp3' #/home/sels/Music/Audio Clips for Python/All_clips/240-360-480 Hz ThirdHarmonics-fade-60m.mp3' 
+# special_track = '/home/sels/Music/Audio Clips for Python/All_clips/Sacral-210.42-288-417 Hz-6sec-60min.mp3'
+special_track = '/home/sels/Music/Audio Clips for Python/All_clips/172.8,259.2,432,691.2 Hz.mp3'
+
 suffix = '.mp3'
 suffix_a = '.flac'
 
-def pick_custom_length_track():
+def pick_earth_tone_track():
     global my_audio_clip
     global my_track
-    my_audio_clip = random.choice(custom_length_clips)
+#     my_audio_clip = special_track
+    my_audio_clip = random.choice(all_earth_tones)
+    Lg.logger.info(f'Audio_Clips:The selected track is {my_audio_clip}')
     ch = '/'
     clipped_track = my_audio_clip.split(ch, 6)
     if len(clipped_track) > 0:
@@ -334,12 +179,58 @@ def pick_custom_length_track():
     else:
         my_track = this_track.removesuffix(suffix_a)
     return my_track
-    logger.info('The selected track is ' + str(my_track))
+    Lg.logger.info(f'Audio_Clips:The selected track is {my_track}')
     Audio_length = MP3(my_audio_clip)
     musicclip_duration = round(int(Audio_length.info.length/60))
-    logger.info(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
-    print(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
-# pick_custom_length_track()
+    Lg.logger.info(f'Audio_Clips:For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
+    print(f'Audio_Clips:For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
+# pick_earth_tone_track()
+
+def pick_special_track():
+    global my_audio_clip
+    global my_track
+#     my_audio_clip = special_track
+    my_audio_clip = special_track
+    Lg.logger.info(f'The selected track is {my_audio_clip}')
+    ch = '/'
+    clipped_track = my_audio_clip.split(ch, 6)
+    if len(clipped_track) > 0:
+        this_track = clipped_track[6]
+    if suffix in this_track:
+        my_track = this_track.removesuffix(suffix)
+    else:
+        my_track = this_track.removesuffix(suffix_a)
+    return my_track
+    Lg.logger.info('The selected track is ' + str(my_track))
+    Audio_length = MP3(my_audio_clip)
+    musicclip_duration = round(int(Audio_length.info.length/60))
+    Lg.logger.info(f'For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
+    print(f'For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
+# pick_special_track()
+
+
+def pick_bell_format_track():
+    global my_audio_clip
+    global my_track
+#     my_audio_clip = special_track
+    my_audio_clip = random.choice(bell_format_tones)
+    Lg.logger.info(f'Audio_Clips:The selected track is {my_audio_clip}')
+    ch = '/'
+    clipped_track = my_audio_clip.split(ch, 6)
+    if len(clipped_track) > 0:
+        this_track = clipped_track[6]
+    if suffix in this_track:
+        my_track = this_track.removesuffix(suffix)
+    else:
+        my_track = this_track.removesuffix(suffix_a)
+    return my_track
+    Lg.logger.info(f'Audio_Clips:The selected track is {my_track}')
+    Audio_length = MP3(my_audio_clip)
+    musicclip_duration = round(int(Audio_length.info.length/60))
+    Lg.logger.info(f'Audio_Clips:For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
+    print(f'Audio_Clips:For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
+# pick_bell_format_track()
+
 
 def pick_medium_track():
     global my_audio_clip
@@ -354,11 +245,11 @@ def pick_medium_track():
     else:
         my_track = this_track.removesuffix(suffix_a)
     return my_track
-    logger.info('The selected track is ' + str(my_track))
+    Lg.logger.info('The selected track is ' + str(my_track))
     Audio_length = MP3(my_audio_clip)
     musicclip_duration = round(int(Audio_length.info.length/60))
-    logger.info(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
-    print(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
+    Lg.logger.info(f'For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
+    print(f'For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
 # pick_medium_track()
 
 def pick_long_track():
@@ -375,13 +266,13 @@ def pick_long_track():
         my_track = this_track.removesuffix(suffix_a)
     return my_track
     print(str(my_track))
-    logger.info('The selected track is ' + str(my_track))
+    Lg.logger.info('The selected track is ' + str(my_track))
     Audio_length = MP3(my_audio_clip)
     musicclip_duration = round(int(Audio_length.info.length/60))
-    logger.info(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
-    print(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
+    Lg.logger.info(f'For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
+    print(f'For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
 # pick_long_track()
-# logger.info(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
+# Lg.logger.info(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
 # print(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
 # print(str(my_track))    
 
@@ -398,11 +289,11 @@ def pick_short_track():
     else:
         my_track = this_track.removesuffix(suffix_a)
     return my_track
-    logger.info('The selected track is ' + str(my_track))
+    Lg.logger.info('The selected track is ' + str(my_track))
     Audio_length = MP3(my_audio_clip)
     musicclip_duration = round(int(Audio_length.info.length/60))
-    logger.info(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
-    print(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
+    Lg.logger.info(f'For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
+    print(f'For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
 # pick_short_track()
 
 
@@ -420,16 +311,16 @@ def pick_x_long_track():
     else:
         my_track = this_track.removesuffix(suffix_a)
     return my_track
-    logger.info('The selected track is ' + str(my_track))
+    Lg.logger.info('The selected track is ' + str(my_track))
     Audio_length = MP3(my_audio_clip)
     musicclip_duration = round(int(Audio_length.info.length/60))
-    logger.info(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
-    print(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
+    Lg.logger.info(f'For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
+    print(f'For {my_track}, the duration of this music clip is {musicclip_duration} minutes')
 # pick_x_long_track()
 
 
 def get_special_track():
-    my_special_track = '/home/sels/Music/Audio Clips for Python/Seven Chakra Tones/FiveChakraTones-321-432-528-639-852 Hz.mp3'  #/home/sels/Music/Audio Clips for Python/352, 704, 1408 Hz Thymus Chakra Harmonic Frequency Tones.mp3'  # my_music_path + '/Meditation - Music and Nature/Night Visions.mp3'  # 7  minutes my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Crossing To The Other Side.mp3'  # 4 minutes
+    my_special_track = '/home/sels/Music/Audio Clips for Python/FiveChakraTones-321-432-528-639-852 Hz.mp3'  #/home/sels/Music/Audio Clips for Python/352, 704, 1408 Hz Thymus Chakra Harmonic Frequency Tones.mp3'  # my_music_path + '/Meditation - Music and Nature/Night Visions.mp3'  # 7  minutes my_music_path + '/Winston Rhodes - Resting In The Arms Of God/Crossing To The Other Side.mp3'  # 4 minutes
     global my_audio_clip
     global my_track
     my_audio_clip = my_special_track #Include full path
@@ -445,6 +336,8 @@ def get_special_track():
 
 #my_music_path + '/Earth Tones/194.18-388.36-1165.08-earthtones-6secbellx180.mp3'
 #  Use this to manually select a single track, of any length or genre
+
+
 
 
 # my_track = [my_music_path + '/Solfeggio Tones/Solfeggio_174_bell.mp3', # Pain Reduction
@@ -533,18 +426,18 @@ def get_special_track():
 #     else:
 #         my_track = this_track.removesuffix(suffix_a)
 #     return my_track
-#     logger.info('The selected track is ' + str(my_track))
+#     Lg.logger.info('The selected track is ' + str(my_track))
 #     Audio_length = MP3(my_audio_clip)
 #     musicclip_duration = round(int(Audio_length.info.length/60))
-#     logger.info(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
+#     Lg.logger.info(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
 #     print(str('For ' + str(my_track) + ',  '  +'The duration of this music clip is   ' + str(musicclip_duration) + '  minutes'))
 
 
 
 
-# logger.info('Contents of long_clips list are   ' + str(long_clips))
-# logger.info('Contents of regular_clips list are   ' + str(extended_clips))
-# logger.info('Contents of short_clips list are   ' + str(short_clips))
+# Lg.logger.info('Contents of long_clips list are   ' + str(long_clips))
+# Lg.logger.info('Contents of regular_clips list are   ' + str(extended_clips))
+# Lg.logger.info('Contents of short_clips list are   ' + str(short_clips))
 
 
 
@@ -552,29 +445,29 @@ def get_special_track():
 
 
 # audioclip = AudioFileClip(my_audio_clip)
-# logger.info(str(audioclip.duration))
+# Lg.logger.info(str(audioclip.duration))
 # # new_clip = audioclip.set_duration(400)
-# # logger.info(str(new_clip.duration))
+# # Lg.logger.info(str(new_clip.duration))
 # list = long_clips
 # # Getting length of list using len() function
 # length = len(list)
 # i = 0
 
 # while i < length:
-#     logger.info(list[i])
+#     Lg.logger.info(list[i])
 #     i += 1
 
 # METHOD 2 from Geeksforgeeks.com
-# logger.infos list of files with duration to shell
+# Lg.logger.infos list of files with duration to shell
 
 
 #     import os
 #     path_of_the_directory = my_path + '/Lengthy Audio/'
 #     object = os.scandir(path_of_the_directory)
-#     logger.info("Files and Directories in '% s':" % path_of_the_directory)
+#     Lg.logger.info("Files and Directories in '% s':" % path_of_the_directory)
 #     for n in object :
 #         if n.is_dir() or n.is_file():
-#             logger.info(n.name)
+#             Lg.logger.info(n.name)
 #             get_duration()
 #            
 #     object.close()
@@ -635,4 +528,5 @@ print("Hours:", hours)
 print("Minutes:", mins)
 print("Seconds:", secs)
 '''
+
 
