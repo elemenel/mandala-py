@@ -1,7 +1,7 @@
 """FileScripts.py contains file manipulation scripts
 critical to successful functioning of the  master_mandala_maker.py module.
 It creates and manipulates all folders and files, and is a fully functioning video creator.
-Copyright by Leon R. Hatton, 2020 -2024
+Copyright(c) by Leon R. Hatton, 2017 -2024
 """
 import os
 import sys
