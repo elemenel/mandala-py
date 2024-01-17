@@ -9,19 +9,19 @@ from timeit import default_timer as timer
 import My_logger as Lg
 import logging
 
-if sys.platform.startswith('linux'):
-    my_path = '/home/sels/Modules/'
+if sys.platform.startswith("linux"):
+    my_path = "/home/sels/Modules/"
 else:
-    my_path = 'D:/'
-    
-    
-my_filename = f'{my_path}Mandala Maker/Logs/my_filename.log'
+    my_path = "D:/"
+
+
+my_filename = f"{my_path}Mandala Maker/Logs/my_filename.log"
 
 # logger= logging.getLogger() #t.my_project)
 # fileHandler = logging.FileHandler(my_filename)
 # fileHandler.setLevel(logging.INFO)
 # logger.addHandler(fileHandler)
-# 
+#
 # logger = logging.getLogger()  #t.my_project)
 # consoleHandler = logging.StreamHandler()
 # consoleHandler.setLevel(logging.INFO)
@@ -29,35 +29,45 @@ my_filename = f'{my_path}Mandala Maker/Logs/my_filename.log'
 # Lg.logger.info('Child Logger in Timer.py is functioning')
 
 
-class Timer():
+class Timer:
     def __init__(self, message):
         self.message = message
+
     def __enter__(self):
         self.start = timer()
-        return None # could return anything, to be used like this: with Timer('Message) as value:
+        return None  # could return anything, to be used like this: with Timer('Message) as value:
+
     def __exit__(self, type, value, traceback):
-        elapsed_time = ( timer( ) - self.start * 60) # / 60  # can changed to show seconds(60) or milliseconds(1000)
+        elapsed_time = (
+            timer() - self.start * 60
+        )  # / 60  # can changed to show seconds(60) or milliseconds(1000)
         print(self.message.format(elapsed_time))
-        
-        
-#Set up Time and Date Functions
+
+
+# Set up Time and Date Functions
 def set_time():
     global date_time, my_date, my_time, project_time, now, iterable_time, end_time, start_time, end, this_time, start, this_start, this_end
-    my_date = datetime.datetime.now().strftime('%x')
+    my_date = datetime.datetime.now().strftime("%x")
     now = datetime.datetime.now()
-    my_time = now.strftime('%D; %I:%M:%S %p')
-    project_time = now.strftime('%y%j%M%S')  #Small y = , small j =  , cap M = minutes, cap S = seconds
-    iterable_time =  str(datetime.datetime.now().strftime('%d%m%y%H%M%S%f')) #now.strftime(('%m%d%H%M%S'))
+    my_time = now.strftime("%D; %I:%M:%S %p")
+    project_time = now.strftime(
+        "%y%j%M%S"
+    )  # Small y = , small j =  , cap M = minutes, cap S = seconds
+    iterable_time = str(
+        datetime.datetime.now().strftime("%d%m%y%H%M%S%f")
+    )  # now.strftime(('%m%d%H%M%S'))
     this_start = time.time()
     this_end = time.time()
-    start = now.strftime(('%D;%H:%S%p'))
-    end = now.strftime(('%D;%H:%S'))
-    this_time = now.strftime('%I:%M:%S')
-       
+    start = now.strftime(("%D;%H:%S%p"))
+    end = now.strftime(("%D;%H:%S"))
+    this_time = now.strftime("%I:%M:%S")
+
     return my_time, project_time, my_date, now
+
+
 set_time()
- 
-#Set Up Start and End Times
+
+# Set Up Start and End Times
 # set_time()
 # start_time = now
 # timer_start_time = timer()
@@ -66,7 +76,7 @@ set_time()
 # time.sleep(2)
 # set_time()
 # end_time =now
-# execution_time  = (end_time - start_time) 
+# execution_time  = (end_time - start_time)
 # elapsed_time = (this_end - this_start)
 # timer_end_time = timer()
 # timer_elapsed_time = timer_end_time - timer_start_time
@@ -119,7 +129,7 @@ set_time()
 # minutes, seconds = divmod(remainder, 60)
 # milliseconds = my_elapsed_time.microseconds // 1000
 # formatted_time = "{:02}:{:02}:{:02}.{:02}".format(hours, minutes, seconds, milliseconds)
-# 
+#
 # print("Elapsed time: ", formatted_time)
 # Lg.logger.info(f"Elapsed time: {formatted_time} hours")
 # print(f'{my_elapsed_time/3600:.6f} hours:  {my_end_time} - {my_start_time}')
