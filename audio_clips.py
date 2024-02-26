@@ -1,6 +1,6 @@
 """audio_clips.py organizes all audio services, including file links to audio clips,
 sorting and grouping clips based on varied parameters, for use in the master_mandala_maker. py and the FileScripts.py modules.
-Copyright(C) by Leon R. Hatton 2017-2024
+by Leon Hatton
 """
 import sys
 import random
@@ -43,7 +43,7 @@ logger.info("*******************************************************************
 # time_functions()
 # logger.info('date_time:  ' + str(date_time))
 # logger.info('my_date:  ' + str(my_date))
-# logger.info('my_time  :' + str(my_time))
+# logger.info('my_date_time  :' + str(my_date_time))
 # logger.info('now  :'+  str(now))
 # logger.info('project_time:  ' + str(project_time))
 
@@ -57,10 +57,10 @@ if sys.platform.startswith("linux"):
     my_music_path = "/home/sels/Music/Audio Clips for Python"
 
 else:
-    my_music_path = "M:/Music"
-    my_path = "M:"
-    my_no_audio_video_path = "M:/Videos/no_audio/"
-    my_full_vids_video_path = "M:/Videos/Full_Vids/"
+    my_music_path = "D:/Music"
+    my_path = "D:"
+    my_no_audio_video_path = "D:/Videos/no_audio/"
+    my_full_vids_video_path = "D:/Videos/Full_Vids/"
 
 Tm.set_time()
 
@@ -107,14 +107,14 @@ def get_music_file_duration():  # Manually adjustable as noted
 
 def print_clips_list():
     Lg.logger.info(
-        "For " + Tm.my_time + ", " + "the list of short clips is:   " + str(short_clips)
+        "For " + Tm.my_date_time + ", " + "the list of short clips is:   " + str(short_clips)
     )
     Lg.logger.info(
         "================================================================================================================="
     )
     Lg.logger.info(
         "For "
-        + Tm.my_time
+        + Tm.my_date_time
         + ", "
         + "the list of medium clips is:   "
         + str(medium_clips)
@@ -123,14 +123,14 @@ def print_clips_list():
         "================================================================================================================="
     )
     Lg.logger.info(
-        "For " + Tm.my_time + ", " + "the list of long clips is:   " + str(long_clips)
+        "For " + Tm.my_date_time + ", " + "the list of long clips is:   " + str(long_clips)
     )
     Lg.logger.info(
         "================================================================================================================="
     )
     Lg.logger.info(
         "For "
-        + Tm.my_time
+        + Tm.my_date_time
         + ", "
         + "the list of extra long clips is:   "
         + str(extra_long_clips)
@@ -178,20 +178,10 @@ and removes directory path and extension from clip, leaving the file name only
 """
 all_earth_tones = glob.glob(f"/home/sels/Music/Audio Clips for Python/All_clips/*.mp3")
 bell_format_tones = glob.glob(
-    f"/home/sels/Music/Audio Clips for Python/Bell_format/*.mp3"
+    f"/home/sels/Music/Audio Clips for Python/Bell_format/639_bell-127.8-766.8-1022.4 Hz FifthHarmonics.mp3"
 )
 # for i in all_earth_tones:
 #     get_music_file_duration()
-
-# special_track = '/home/sels/Music/Audio Clips for Python/All_clips/105.6-528-633.6 Hz FifthHarmonics-fade-60m.mp3' #/home/sels/Music/Audio Clips for Python/All_clips/240-360-480 Hz ThirdHarmonics-fade-60m.mp3'
-# special_track = '/home/sels/Music/Audio Clips for Python/All_clips/Sacral-210.42-288-417 Hz-6sec-60min.mp3'
-special_track = (
-    "/home/sels/Music/Audio Clips for Python/All_clips/172.8,259.2,432,691.2 Hz.mp3"
-)
-
-suffix = ".mp3"
-suffix_a = ".flac"
-
 
 def pick_earth_tone_track():
     global my_audio_clip
@@ -217,15 +207,22 @@ def pick_earth_tone_track():
     print(
         f"Audio_Clips:For {my_track}, the duration of this music clip is {musicclip_duration} minutes"
     )
-
-
 # pick_earth_tone_track()
 
 
+# special_track = '/home/sels/Music/Audio Clips for Python/All_clips/105.6-528-633.6 Hz FifthHarmonics-fade-60m.mp3' #/home/sels/Music/Audio Clips for Python/All_clips/240-360-480 Hz ThirdHarmonics-fade-60m.mp3'
+# special_track = '/home/sels/Music/Audio Clips for Python/All_clips/Sacral-210.42-288-417 Hz-6sec-60min.mp3'
+#/home/sels/Music/Audio Clips for Python/Bell_format/432 bell-155.52, 259.2, 648, 972 Hz.mp3
+special_track = (
+#     "/home/sels/Music/Audio Clips for Python/All_clips/SevenChakraTones-144-432-528-639-741-852-1296 Hz-60min.mp3"
+    " /home/sels/Music/Audio Clips for Python/All_clips/FiveChakraTones-321-432-528-639-852 Hz-60m.mp3"
+)
+suffix, suffix_a = ".mp3", ".flac"
+
 def pick_special_track():
+    
     global my_audio_clip
     global my_track
-    #     my_audio_clip = special_track
     my_audio_clip = special_track
     Lg.logger.info(f"The selected track is {my_audio_clip}")
     ch = "/"

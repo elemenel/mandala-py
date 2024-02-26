@@ -10,7 +10,8 @@ import PIL.ImageGrab
 # from PIL import Image #module for converting python output to image
 import numpy as np
 import cv2
-import pyautogui
+
+# import pyautogui
 import pyscreenshot
 import datetime as datetime
 import sys
@@ -18,7 +19,8 @@ import os
 import audio_clips as au
 import shutil
 import Timer as tm
-import FileScripts as f
+import FileScripts_feb as f
+import My_logger as Lg
 
 
 turtle.colormode(255)
@@ -26,33 +28,40 @@ turtle.colormode(255)
 
 def splash_screen():
     turtle.colormode(255)
-    turtle.bgcolor(50, 0, 10)
+    turtle.bgcolor(30, 0, 10)
     t.my_pen.penup()
     t.my_pen.setposition(-950, 200)
-    t.my_pen.color(255, 255, 25)
+    t.my_pen.color(255, 255, 150)
     t.my_pen.pendown()
     t.my_pen.write(
-        (f"Presenting {t.project_title}"), font=("Verdana", 13, "bold italic")
+        (f"Presenting {t.folder_name}"),
+        font=("Verdana", 16, "bold italic"),
+        align="left",
     )
     t.my_pen.penup()
     t.my_pen.setposition(-800, 100)
     t.my_pen.pendown()
     t.my_pen.write(
-        " created and produced by LeonRHatton;   " + tm.my_date,
+        (f"created and produced by LeonRHatton; {tm.my_date}"),
         move="False",
-        font=("Verdana", 11, "italic"),
+        font=("Verdana", 14, "italic"),
         align="left",
     )
     s_image = PIL.ImageGrab.grab()
     #     s_image = pyautogui.screenshot()
     s_image = cv2.cvtColor(np.array(s_image), cv2.COLOR_RGB2BGR)
-    cv2.imwrite(t.my_project + "_splash" + ".jpeg", s_image)
-    time.sleep(12)
+    cv2.imwrite(
+        f"/home/sels/Pictures/SplashScreens/{t.my_project}_splash.jpeg", s_image
+    )
+    Lg.logger.info(
+        f"Splash Screen for {t.my_project} has been saved to SplashScreen folder"
+    )
+    time.sleep(6)
     t.my_pen.reset()
 
 
 def title_screen():
-    turtle.colormode(255)
+    #     turtle.colormode(255)
     t.my_pen.penup()
     turtle.bgcolor(50, 50, 10)
     t.my_pen.setposition(-850, 0)
@@ -76,14 +85,14 @@ def title_screen():
 
 
 def watermark():
-    turtle.colormode(255)
+    #         turtle.colormode(255)
     t.my_pen.penup()
     t.my_pen.setpos(-950, -500)
     t.my_pen.color(10, 20, 30)
     t.my_pen.shape("blank")
     t.my_pen.pendown()
     t.my_pen.write(
-        au.my_track + "  by leonrhatton"
+        f"{t.project_title} by leonrhatton"
     )  # t.my_str + au.my_track, font = ("Garamond", 12 , "italic"))
 
 

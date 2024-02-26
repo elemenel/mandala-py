@@ -51,7 +51,7 @@ global formatter, fileHandler, consoleHandler
 logger = logging.getLogger(my_project)  # Initialize global logger
 
 fileHandler = logging.FileHandler(my_filename)
-fileHandler = logging.FileHandler(my_shared_drive)
+# fileHandler = logging.FileHandler(my_shared_drive) After conncting to shared drive, uncomment
 fileHandler.setLevel(logging.INFO)
 fileHandler.setLevel(logging.INFO)
 

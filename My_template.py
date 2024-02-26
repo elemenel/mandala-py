@@ -225,7 +225,7 @@ def set_up_all_pens():
 
 def my_venv():
     Tm.set_time()
-    turtle.setup(1950, 1070)  # This is the default screen size. Choose any size.
+    turtle.setup(1910, 1070)  # This is the default screen size. Choose any size.
     turtle.title(
         "The Novanno Healing Mandalas by LeonRHatton"
     )  # Placeholder. Is unique to each mandala maker
