@@ -1,5 +1,5 @@
 """
-Copyright (C) 2017 - 2024 by  Leon Hatton
+Copyright (C) 2017 - 2024 by  LeonRHatton
 # email: elementalsystems1@gmail.com
 #
 # This software is provided 'as-is', without any express or implied
@@ -20,7 +20,7 @@ Copyright (C) 2017 - 2024 by  Leon Hatton
 
 MASTER MANDALA MAKER (master_mandala_maker_production.py);
     developer:
-    Leon Hatton, elementalsystems1@gmail.com
+    LeonRHatton, elementalsystems1@gmail.com
     Primary Python IDE is Thonny, currently version 4.1.4 on Python 3.10(Ubuntu Studio(ubuntucinnamon); and Python 3.11(Windows 11) .
 
     Default  platform is Linux. Formerly (May 2022-May 2023) using Kubuntu, which I think
@@ -90,6 +90,7 @@ import os
 from timeit import default_timer as timer
 import random
 import math
+import glob
 
 # import pyautogui # For screenshot
 import numpy as np  # Processes the video
@@ -97,7 +98,7 @@ import cv2  # For screenshots
 from select import select
 import datetime
 import My_template as t
-import my_angles as a  # Processes angle selections714 Hz
+import my_angles as a  # Processes angle selections
 
 # import my_hues as h # Defines turtle pen names; Aids in color selections
 import my_splash_screen as s
@@ -120,7 +121,7 @@ global my_project, my_angle, my_title, my_script, str_angles, count_limit, count
 global file_key, my_key, start, end, count, my_project, logger, formatter, fileHandler, consoleHandler, my_angle, folder_name, turtle
 
 
-turtle.setup(1950, 1070)  # This is the default screen size. Choose any size.
+turtle.setup(1950,1070)  # This is the default screen size. Choose any size.
 turtle.title(
     "The Novanno Healing Mandalas by LeonRHatton"
 )  # Placeholder. Is unique to each mandala maker
@@ -159,6 +160,25 @@ logger.setLevel(Lg.logging.INFO)
 logger.addHandler(Lg.fileHandler)
 logger.addHandler(Lg.consoleHandler)
 Lg.logger.info("Logger Source: MandalaMaker")
+
+def do_spellcheck():
+    from spellchecker import SpellChecker
+
+    spell = SpellChecker()
+
+    # find those words that may be misspelled
+    misspelled = spell.unknown([])
+
+    for word in misspelled:
+        # Get the one `most likely` answer
+        print(spell.correction(word))
+
+        # Get a list of `likely` options
+        print(spell.candidates(word))
+# do_spellcheck()        
+
+
+
 
 
 def make_turtle_black_dot_pen():
@@ -785,6 +805,60 @@ def reset_all_pens():
     reset_random_hue_pens()
 
 
+def merge_vids():
+    from moviepy.editor import concatenate_videoclips, VideoFileClip, AudioFileClip, CompositeAudioClip
+    import glob
+    turtle.setup(5,5)
+    my_concatenated_directory = "/home/sels/Videos/Full_Vids/"
+    Tm.set_time()
+    au.pick_earth_tone_track()
+    Lg.logger.info(f"The randomly selected audio track is {au.my_track}")
+    a.pick_angles()
+    t.my_angle = a.my_multiples_number  #"300 Degrees Angles" #{my_angle}
+    Lg.logger.info(f"The selected angle is {t.my_angle}")
+    directory = "/home/sels/Videos/do_concatenate/"
+    file_count = len([file for file in os.listdir(directory)])
+    Lg.logger.info(f"The the number of mandalas to be concatenated is file fer{file_count}")
+    mp4_files = glob.glob(f"{directory}/*.mp4")
+    clips = [VideoFileClip(file) for file in mp4_files]
+    if not clips:
+        print("merge_vids:No .mp4 files were found in the directory")
+        Lg.logger.info("merge_vids:No .mp4 files were found in the directory, exiting")
+        return
+    else:
+        final_clip = concatenate_videoclips(clips)
+        output_filename = f"{file_count} Mandalas  featuring {t.my_angle} Degrees Angles--{au.my_track}-{Tm.this_time}.mp4"
+        final_path = f"/home/sels/Videos/Mixing Folder/SyncAV/{output_filename}"
+        final_clip.write_videofile(final_path, codec="libx264", threads=8, logger="bar")
+        print(f"Successfully concatenated videos into {output_filename}@ {Tm.this_time}")
+        Lg.logger.info(f"Successfully concatenated videos into {output_filename}@ {Tm.this_time}")
+#         final_clip.close()
+        videoclip = VideoFileClip(f"{final_path}")
+        audioclip = AudioFileClip(f"{au.my_audio_clip}")
+        audioclip = audioclip.set_duration(
+            videoclip.duration + 6
+        )  # Adjust the audio duration here '+6' is default
+        Lg.logger.info(
+            f"FileScripts:The duration of this audio clip is {audioclip.duration / 60:.2f} minutes"
+        )
+        new_audioclip = CompositeAudioClip([audioclip])
+        videoclip.audio = new_audioclip
+        videoclip.write_videofile(
+            f"/home/sels/Videos/Full_Vids/{output_filename}",
+            remove_temp=True,
+            write_logfile=False,
+            threads=8,
+            ffmpeg_params=None,
+            logger='bar') 
+        videoclip.close()
+        exit()
+
+ 
+# merge_vids()   
+
+
+
+
 "=================================================================================================================="
 """Modules Section
 """
@@ -810,9 +884,9 @@ def startup_script():  # Starts module clock, sets up turtle functions, starts l
     initialize_random_hue_pens()
 #     gc.enable()
     t.set_up_my_pen()
-    Lg.logger.info(
-        f"{my_script}:Starting to delete screenshots of {my_script} @ {Tm.this_time}...."
-    )  # Thumbs are not necesssary after the video is created from them
+#     Lg.logger.info(
+#         f"{my_script}:Starting to delete screenshots of {my_script} @ {Tm.this_time}...."
+#     )  # Thumbs are not necesssary after the video is created from them
 #     f.clear_thumbs()  # Deletes all screenshot pngs
     default_range = 765
 
@@ -846,11 +920,11 @@ def make_folder():  # Creates directories for video production; selects audio tr
         f"{my_script}:Selecting track from runtime-generated list @ {Tm.this_time}"
     )
 #     au.pick_bell_format_track()  # Set of tones having primary tone as bell; complementary tones constant
-    au.pick_special_track() # Default state is commented out. Use it to select a specific track, specified at line 161 in audio_clips module.
+#     au.pick_special_track() # Default state is commented out. Use it to select a specific track, specified at line 161 in audio_clips module.
 #     au.pick_earth_tone_track()  # Default state is uncommented. Use it to select a randomly selected track in audio_clips module.
     my_project = Lg.my_project
-    Lg.my_project = f"({len(a.i_angle)}){formatted_angles} degrees-{my_script}-{au.my_track}-{Tm.project_time}"
-    project_title = f"{len(a.i_angle)} ({formatted_angles}) degrees angles; {my_script}; Audio: {au.my_track} @{Tm.project_time}"
+    Lg.my_project = f"({len(a.i_angle)}){formatted_angles} degrees-{my_script}-{Tm.project_time}"
+    project_title = f"{len(a.i_angle)} ({formatted_angles}) degrees angles; {my_script};{Tm.project_time}"
     my_logfile = f"{f.my_work_dir}/Logs/{Lg.my_project}.log"
     Lg.logger.info(f"{my_script}:Starting {Lg.my_project} @ {Tm.this_time}")
     Lg.logger.info(f"{my_script}:This is {Lg.my_project} code")
@@ -911,11 +985,11 @@ def produce_video():
     f.sync_av()
     Tm.set_time()
     Lg.logger.info(
-        f"{my_script}:Making of {my_script} by Leon Hatton completed @ {Tm.now}"
+        f"{my_script}:Making of {my_script} by LeonRHatton completed @ {Tm.now}"
     )
     Tm.set_time()
     Lg.logger.info(
-        f"{my_script}:Stopping  {t.folder_name} by Leon Hatton @ {Tm.this_time}"
+        f"{my_script}:Stopping  {t.folder_name} by LeonRHatton @ {Tm.this_time}"
     )
     # End time
     produce_video_end_time = timer()
@@ -934,24 +1008,24 @@ def produce_reversing_video():
     reset_all_pens()
     # Start time
     produce_reversing_video_start_time = timer()
-#     f.save_final_thumb()
-#     gc.collect()
     Lg.logger.info(
         f"{my_script}:Starting produce_reversing_video script @ {Tm.this_time}........"
     )
     f.set_reverse_vid_env()
     Tm.set_time()
     Lg.logger.info(
-        f"{my_script}:Starting merger of video and audio clips @ {Tm.this_time}........."
+        f"{my_script}:Selecting audio clip and adding it to the video @ {Tm.this_time}........."
     )
+    au.pick_earth_tone_track()
+    Lg.logger.info(f"The audio track randomly selected from the earth_tones directory is {au.my_track}")
     f.sync_av()
     Tm.set_time()
     Lg.logger.info(
-        f"{my_script}:Making of {my_script} by Leon Hatton completed @ {Tm.now}"
+        f"{my_script}:Making of {my_script} by LeonRHatton completed @ {Tm.now}"
     )
     Tm.set_time()
     Lg.logger.info(
-        f"{my_script}:Stopping  {t.folder_name} by Leon Hatton @ {Tm.this_time}"
+        f"{my_script}:Stopping  {t.folder_name} by LeonRHatton @ {Tm.this_time}"
     )
     # End time
     produce_reversing_video_end_time = timer()
@@ -975,21 +1049,21 @@ def finalize():
     Lg.logger.info(
         f"{my_script}:Preparing to backup and sync all files and folders of {my_script} @ {Tm.this_time}"
     )
-    Lg.logger.info(f"{my_script}:Moving files to appropriate folders")
-    f.move_all()  # Moves files to appropriate locations
-    Lg.logger.info(f"{my_script}:Video .mp4 files have been moved to /Videos/")
-    Lg.logger.info(f"{my_script}:Image .png files have been moved to /Thumbs/")
-    Lg.logger.info(
-        f"{my_script}:Image .jpg files have been moved to /Pictures/Mandala Final Thumbs/"
-    )
-    Lg.logger.info(
-        f"{my_script}:Pics have been moved to Pictures folder @ {Tm.this_time}"
-    )
+#     Lg.logger.info(f"{my_script}:Moving files to appropriate folders")
+#     f.move_all()  # Moves files to appropriate locations
+#     Lg.logger.info(f"{my_script}:Video .mp4 files have been moved to /Videos/")
+#     Lg.logger.info(f"{my_script}:Image .png files have been moved to /Thumbs/")
+#     Lg.logger.info(
+#         f"{my_script}:Image .jpg files have been moved to /Pictures/Mandala Final Thumbs/"
+#     )
+#     Lg.logger.info(
+#         f"{my_script}:Pics have been moved to Pictures folder @ {Tm.this_time}"
+#     )
     Lg.logger.info(
         "================================================================================"
     )
     Tm.set_time()
-    Lg.logger.info(f"{my_script}:Screenshots deletions completed @ {Tm.this_time}")
+#     Lg.logger.info(f"{my_script}:Screenshots deletions completed @ {Tm.this_time}")
     Lg.logger.info(
         f"{my_script}:Starting to update the backup files of {my_script} @ {Tm.this_time}"
     )
@@ -1244,7 +1318,7 @@ def set_titles():
     Lg.logger.info(
         f"{my_script}:Current Mandala is {my_script}; angle to be drawn is {my_angle:.2f} @ {Tm.this_time}"
     )  # Employing f-script
-    t.my_title = f"{my_script}: {my_angle:.2f} Degrees Angle  and  {au.my_track}"  # Employing f-script
+    t.my_title = f"{my_script}: {my_angle:.2f} Degrees Angle "  # Employing f-script
     turtle.title(t.my_title)
     count = 0
     turtle.bgcolor(0, 0, 15)
@@ -1258,7 +1332,17 @@ Status: Creation Date: 12/25/2023, Last Completed Run: 01/01/2024
 
 
 def flower_of_life():
-    global count, my_script, my_pensize, my_key, count_limit, radius, my_angle
+    global my_project, my_angle, my_title, my_script, str_angles,count, count_limit
+    my_script = "Animated Flower of Life Matrix"
+    Lg.logger.info(f"{my_script}:Starting {my_script} @ {Tm.this_time}")
+    startup_script()
+    make_folder()
+    # Ensure that the 'my_angle' variable in the my_angles.py module is set at 60 degrees only!
+    t.my_splash =  f"{my_project}"
+    Tm.set_time()
+    t.my_title = f"{my_script}"
+    turtle.title(t.my_title)
+    my_angle = 60
 
     def draw_center_flower():
         pa.left(my_angle)
@@ -1288,11 +1372,7 @@ def flower_of_life():
             pa.left(my_angle)
             f.save_thumb()
 
-    my_script = "Animated Flower of Life Matrix"
-    Lg.logger.info(f"{my_script}:Starting {my_script} @ {Tm.this_time}")
-    startup_script()
-    make_folder()
-    # Ensure that the 'my_angle' variable in the my_angles.py module is set at 60 degrees only!
+    
     radius = 48
     t.my_angles = str_angles
     t.my_splash = f"{my_project} with {au.my_track}"
@@ -1322,71 +1402,6 @@ def flower_of_life():
 # flower_of_life()
 
 
-# +++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
-""" Status: Creation Date: 6/2/2023, Last Completed Run: 12/10/2023
-Originally named colorful_mandala_short. Changed to Prosper Mandala on 12/10/2023.
- """
-
-
-def Prosper_mandala():
-    global count, my_script, turtle, my_angle, count_limit
-    my_script = "Prosper_Mandala"
-    Lg.logger.info(f"{my_script}:Starting {my_script} @ {Tm.this_time}")
-    startup_script()
-    make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
-    for a.i in range(len(a.i_angle)):
-        my_angle = a.i_angle_float[a.i]
-        make_p_turtles()  # Creates turtle instances
-        count_limit = default_range  # 765 is default; Adjust as needed for output to fit screen; use lower or higher number for testing
-        R, B, L, M = (
-            0,
-            random.randint(64, 127),
-            random.randint(127, 255),
-            255,
-        )  # Randomnizes pencolors
-        my_random = random.randint(150, 255)  # Varies the pencolor where used
-        my_pensize, my_pensize_a, my_length, my_circle, my_length_bk = (
-            0.0125,
-            0.005,
-            0.0862,
-            0.01,
-            0.06,
-        )  # Multipliers
-        count = 0
-        turtle.bgcolor(0, 0, 15)
-        set_titles()
-        # Prosper_Mandala script
-        for count in range(count_limit):
-            Q_seed.dot(6)
-            pa.pencolor(count % 255, count % 255, random.randint(15, 150))
-            pb.pencolor(random.randint(15, 150), count % 255, count % 127)
-            pa.pensize(count * my_pensize)
-            pb.pensize(count * my_pensize)
-            pa.left(my_angle)
-            pa.fd(count * my_length_bk)
-            f.save_thumb()
-            pb.fd(count)
-            f.save_thumb()
-            pb.right(my_angle)
-            pb.fd(count * my_length_bk * 3)
-            f.save_thumb()
-            pb.right(my_angle)
-            pb.fd(count * my_length * 3)
-            f.save_thumb()
-            pa.left(my_angle)
-            pa.circle(count * my_circle * 3, -my_angle, 3)
-            f.save_thumb()
-            pa.fd(count * my_length * 2)
-            Q_seed.dot(6)
-            process_thumbs()
-    #             report_loop_count() # For testing
-    produce_reversing_video()
-    finalize()
-
-
-# Prosper_mandala()
-
 
 def colorful_mandala_wheels():
     global count, my_script, my_script, my_script, turtle, my_angle, count_limit
@@ -1395,7 +1410,7 @@ def colorful_mandala_wheels():
     my_script = my_script
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     for a.i in range(len(a.i_angle)):
         my_angle = a.i_angle_float[a.i]
         make_p_turtles()  # Creates turtle instances
@@ -1443,7 +1458,7 @@ def colorful_mandala_wheels():
 #     Lg.logger.info(f'{my_script}:Starting {my_script} @ {Tm.this_time}')
 #     startup_script()
 #     make_folder()
-#     t.my_angles, t.my_splash = str_angles, f'{my_project} with {au.my_track}'
+#     t.my_angles, t.my_splash = str_angles, f'{my_project}'
 #     for a.i  in range( len(a.i_angle)):
 #         my_angle = a.i_angle_float[a.i]
 #         make_p_turtles() # Creates turtle instances
@@ -1524,7 +1539,7 @@ def influence_mandala():
     Lg.logger.info(f"{my_script}:Starting {my_script} @ {Tm.this_time}")
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     for a.i in range(len(a.i_angle)):
         my_angle = a.i_angle_float[a.i]
         make_p_turtles()  # Creates turtle instances
@@ -1595,7 +1610,7 @@ def Effective_mandala():
     Lg.logger.info(f"{my_script}:Starting {my_script} @ {Tm.this_time}")
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     for a.i in range(len(a.i_angle)):
         my_angle = a.i_angle_float[a.i]
         #         make_p_turtles() # Creates turtle instances
@@ -1641,6 +1656,9 @@ def Effective_mandala():
             gold_hue_pen.fd(count * (my_length / 5))
             f.save_thumb()
             gold_hue_pen.pensize(count * my_pensize)
+            gold_hue_pen.rt(my_angle)
+            gold_hue_pen.fd(count / (my_length * 144))
+            f.save_thumb()
             indigo_hue_pen.pensize(count * my_pensize)
             indigo_hue_pen.fd(count * (my_length * 9))
             f.save_thumb()
@@ -1650,6 +1668,8 @@ def Effective_mandala():
             Q_seed.dot(6)
             #             report_loop_count() # For testing
             process_thumbs()
+    clear_indigo_hue_pen()
+    clear_gold_hue_pen()
     produce_reversing_video()
     finalize()
 
@@ -1669,7 +1689,7 @@ def Assurance_mandala():
     Lg.logger.info(f"{my_script}:Starting {my_script} @ {Tm.this_time}")
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     for a.i in range(len(a.i_angle)):
         my_angle = a.i_angle_float[a.i]
         make_p_turtles()  # Creates turtle instances
@@ -1753,7 +1773,7 @@ def basic_yin_yang():  # **
     my_script = "Animated Yin-Yang Wheel"
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     my_angle = 180
     count_limit = 900
     turtle.bgcolor(
@@ -1797,7 +1817,7 @@ def basic_yin_yang_extended():  # **
     my_script = "Basic Yin-Yang Extended"
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     count = 0
     count_limit = 600
     pa.hideturtle()
@@ -1949,7 +1969,7 @@ def occilating_yin_yang():  # **
     my_script = "Occillating Yin-Yang"
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     my_angle = 180
     for count in range(10):
         turtle.bgcolor(
@@ -4486,69 +4506,8 @@ def Brave_mandala_extended():
                 f.save_thumb()  # Screenshot as a png
     produce_video()
     finalize()
-
-
-#  module_5
-# *****************************************************************************************************************************
-# +++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
-def reverent_mandala():  # Uses 2 pens with offset phi angle
-    global my_project, my_angle, my_title, my_script, str_angles, count, count_limit
-    my_script = "Reverent Mandala"
-    startup_script()
-    make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
-    for a.i in range(len(a.i_angle)):
-        all_pens_home()
-        my_angle = a.i_angle_float[a.i]
-        Lg.logger.info(
-            f"{my_script}:Current angle to be drawn is {my_angle:.2f} @ {Tm.this_time}"
-        )
-        turtle.title(f"Reverent Mandala: {my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = turtle.title
-        count = 0
-        count_limit = 765
-        blue_hue_pen.speed(0)
-        gold_hue_pen.speed(0)
-        red_hue_pen.speed(0)
-        turtle.bgcolor(10, 0, 15)
-        for count in range(count_limit):  # 900 is default. Use lower number for testing.
-            magenta_hue_pen.pensize(count / 300)
-            gold_hue_pen.pensize(count / 300)
-            green_hue_pen.pensize(count / 225)
-            pick_magenta()  # magenta_hue_pen
-            pick_gold()  # gold_hue_pen
-            pick_green()  # green_hue_pen
-            gold_hue_pen.left(my_angle / phi)
-            gold_hue_pen.left(my_angle)
-            gold_hue_pen.fd((count * 0.8) * 0.33)
-            f.save_thumb()
-            gold_hue_pen.penup()
-            gold_hue_pen.fd((count * 0.8) * 0.33)
-            f.save_thumb()
-            gold_hue_pen.pendown()
-            gold_hue_pen.fd((count * 0.8) * 0.34)
-            f.save_thumb()
-            magenta_hue_pen.left(my_angle)
-            magenta_hue_pen.circle(count / 4, my_angle, 6)
-            f.save_thumb()
-            green_hue_pen.rt(my_angle)
-            green_hue_pen.fd(count / phi)
-            f.save_thumb()
-            gold_hue_pen.left(my_angle)
-            gold_hue_pen.fd(count / 4)
-            f.save_thumb()
-            magenta_hue_pen.left(my_angle)
-            magenta_hue_pen.fd(count / 4)
-            process_thumbs()
-        reset_random_hue_pens()
-    produce_reversing_video()
-    finalize()
-
-
-# reverent_mandala()
-
-
-#  module_7
+    
+    
 # +++++++++++MODULE DARK MANDALA+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def dark_mandala():
     global my_project, my_angle, my_title, my_script, str_angles
@@ -4630,7 +4589,7 @@ def Vanguard_Mandala():  # Formerly Pretty Awesome Mandala (name changed on 11/2
     my_script = "Vanguard Mandala"
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     count_limit = 512 * 3  # Default is 512; use shorter range to test
     my_pensize = 84 * 4  # Default is 84
     my_pensize_a = 102 * 4  # Default is 102
@@ -4639,8 +4598,8 @@ def Vanguard_Mandala():  # Formerly Pretty Awesome Mandala (name changed on 11/2
         Lg.logger.info(
             f"{my_script}: Starting to draw {my_angle:.2f} degrees angles at {Tm.this_time}"
         )
-        turtle.title(f"{my_script}:{my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = f"{my_script}: {my_angle} Degrees Angle and {au.my_track}"
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle"
         turtle.bgcolor(10, 0, 0)
         make_turtle_pa()
         all_pens_home()
@@ -4676,15 +4635,15 @@ def Plain_mandala():
     my_script = "Plain Mandala"
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     count_limit, my_pensize = 900, 150  # 900, 150 are default
     for a.i in range(len(a.i_angle)):
         my_angle = math.trunc(float(a.i_angle_auto[a.i]))
         Lg.logger.info(
             f"{my_script}:PlainMandala:Current angle to be drawn is {my_angle:.2f}"
         )
-        turtle.title(f"Plain_mandala: {my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = f"Plain_mandala: {my_angle} Degrees Angle and {au.my_track}"
+        turtle.title(f"Plain_mandala: {my_angle} Degrees Angle")
+        t.my_title = f"Plain_mandala: {my_angle} Degrees Angle"
         turtle.bgcolor(0, 0, 10)
         t.set_up_lg()
         t.set_up_ly()
@@ -5280,54 +5239,6 @@ def multi_hued_polygram():
 # module_23 NEEDS WORK
 
 
-# +++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
-def Brave_mandala():  # Uses pens pa, pb
-    global my_project, my_angle, my_title, my_script, str_angles, count_limit, count, pa, pb, my_pensize
-    my_script = "Brave Mandala"
-    startup_script()
-    make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
-    for a.i in range(len(a.i_angle)):
-        my_angle = float(a.i_angle_auto[a.i])
-        Tm.set_time()
-        Lg.logger.info(
-            f"{my_script}:{my_script}:Current angle to be drawn is {my_angle} @ {Tm.this_time}"
-        )
-        t.my_title = f"{my_script}: {my_angle} Degrees Angle and {au.my_track}"
-        turtle.title(t.my_title)
-        turtle.bgcolor(0, 0, 25)
-        make_turtle_pa()
-        make_turtle_pb()
-        R = random.randrange(150, 250, 10)
-        G = 0
-        B = 255
-        L = random.randint(10, 200)
-        Lg.logger.info("The value of color R :   " + str(R))
-        Lg.logger.info("The value of color L :   " + str(L))
-        count_limit = 765
-        for count in range(count_limit):
-            pa.pencolor(R, count % 255, B - count % 255)
-            pa.pensize(count / 210)
-            pa.fd(count / 3)
-            f.save_thumb()
-            pa.left(my_angle)
-            pa.fd(count / 1.5)
-            f.save_thumb()
-            pb.pensize(count / B)
-            pb.pencolor(R, B - count % 255, L)
-            pb.circle(count / 3, my_angle, 3)
-            f.save_thumb()
-            pa.rt(my_angle)
-            pa.pencolor(L, B - count % 255, B - count % 255)
-            pa.circle(count / 3, -my_angle, 2)
-            f.save_thumb()
-            pb.left(my_angle)
-            pb.backward(count / 36)
-            process_thumbs()
-        clear_pa_pen()
-        clear_pb_pen()
-    produce_reversing_video()
-    finalize()
 
 
 # module_24
@@ -6083,7 +5994,7 @@ def cloverleaf():
             pa.pendown()
             f.save_thumb()
         clear_pa_pen()
-    Lg.logger.info(f"{my_script}:Stopping {my_script} by Leon Hatton @ {Tm.this_time}")
+    Lg.logger.info(f"{my_script}:Stopping {my_script} by LeonRHatton @ {Tm.this_time}")
     Lg.logger.info("###############################################################")
     produce_reversing_video()
     finalize()
@@ -6596,14 +6507,14 @@ def sirius_mandala():
     my_script = "Sirius Mandala"
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     for a.i in range(len(a.i_angle)):
         my_angle = a.i_angle_float[a.i]
         Tm.set_time()
         Lg.logger.info(
             f"{my_script}:Current angle to be drawn is {my_angle} @ {Tm.this_time}"
         )
-        t.my_title = f"{my_script}: {my_angle} Degrees Angle and {au.my_track}"
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle"
         turtle.title(t.my_title)
         make_turtle_pa()
         make_turtle_pb()
@@ -6615,38 +6526,36 @@ def sirius_mandala():
                 pa.color(0, count % 127, random.randint(150, 255))  # Blue/Coral
             else:
                 pa.color(0, 0, count % 127)  # Black/Blue
-
             pa.rt(my_angle)
-            pa.fd(count / phi)
+            pa.fd(count /6)
             f.save_thumb()
             pa.pensize(count / 163)
             pa.circle(count / 10, -my_angle)
             pa.rt(my_angle)
-
+            pa.fd(count / 6)
             f.save_thumb()
-
             pb.pencolor(255, 0, count % 255)  # Red/Magenta
             pb.rt(my_angle)
-            pb.fd(count / phi)
+            pb.fd(count /10)
             f.save_thumb()
             pb.pensize(count / 172)
             pa.rt(my_angle)
-            pb.circle(count / 14, -my_angle)
+            pb.circle(count / 14, my_angle)
             f.save_thumb()
-
             if count < 510:
                 pc.color(count % 255, count % 255, 255)  # Coral/White
             else:
                 pc.color(255, random.randint(100, 255), 255)  # White
             pc.rt(my_angle)
-            pc.fd(count / t.pi)
+            pc.fd(count / 7)
             f.save_thumb()
             pc.pensize(count / 181)
             pa.rt(my_angle)
             pc.circle(count / 18, -my_angle, 7)
-            f.save_thumb()
-        reset_pa_pb()
-        reset_pc()
+            process_thumbs()
+        clear_pa_pen()
+        clear_pb_pen()
+        clear_pc_pen()
     produce_reversing_video()
     finalize()
 
@@ -6706,7 +6615,7 @@ def wall_show():
         f.sync_av()
         reset_all()
         Tm.end_time()
-    Lg.logger.info(f"{my_script}:Stopping {my_script} by Leon Hatton on {Tm.this_time}")
+    Lg.logger.info(f"{my_script}:Stopping {my_script} by LeonRHatton on {Tm.this_time}")
     Lg.logger.info(
         "************************************************************************"
     )
@@ -6829,7 +6738,7 @@ def wall_show_extended():
         reset_all()
         Tm.end_time()
     Lg.logger.info(
-        f"{my_script}:Stopping {my+script} by Leon Hatton on  {Tm.this_time}"
+        f"{my_script}:Stopping {my+script} by LeonRHatton on  {Tm.this_time}"
     )
     Lg.logger.info(
         "************************************************************************"
@@ -6973,7 +6882,7 @@ def dark_mandala_extended():  # Work on some more
         Lg.logger.info(
             f"{my_script}: Starting to draw {my_angle:.2f} degrees angles at {Tm.this_time}"
         )
-        turtle.title(f"{my_script}:{my_angle} Degrees Angle and {au.my_track}")
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
         t.my_title = f"{my_script}: {my_angle} Degrees Angle and {au.my_track}"
         turtle.bgcolor(255, 255, 100)
         count_limit = 255  # 300 is default; use lower number for testing
@@ -7158,6 +7067,57 @@ def dark_mandala_extended():  # Work on some more
 
 
 
+# +++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
+def Brave_mandala():  # Uses pens pa, pb
+    global my_project, my_angle, my_title, my_script, str_angles, count_limit, count, pa, pb, my_pensize
+    my_script = "Brave Mandala"
+    startup_script()
+    make_folder()
+    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    for a.i in range(len(a.i_angle)):
+        my_angle = float(a.i_angle_auto[a.i])
+        Tm.set_time()
+        Lg.logger.info(
+            f"{my_script}:{my_script}:Current angle to be drawn is {my_angle} @ {Tm.this_time}"
+        )
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle and {au.my_track}"
+        turtle.title(t.my_title)
+        turtle.bgcolor(0, 0, 25)
+        make_turtle_pa()
+        make_turtle_pb()
+        R = random.randrange(150, 250, 10)
+        G = 0
+        B = 255
+        L = random.randint(10, 200)
+        Lg.logger.info("The value of color R :   " + str(R))
+        Lg.logger.info("The value of color L :   " + str(L))
+        count_limit = 765
+        for count in range(count_limit):
+            pa.pencolor(R, count % 255, B - count % 255)
+            pa.pensize(count / 210)
+            pa.fd(count / 3)
+            f.save_thumb()
+            pa.left(my_angle)
+            pa.fd(count / 1.5)
+            f.save_thumb()
+            pb.pensize(count / B)
+            pb.pencolor(R, B - count % 255, L)
+            pb.circle(count / 3, my_angle, 3)
+            f.save_thumb()
+            pa.rt(my_angle)
+            pa.pencolor(L, B - count % 255, B - count % 255)
+            pa.circle(count / 3, -my_angle, 2)
+            f.save_thumb()
+            pb.left(my_angle)
+            pb.backward(count / 36)
+            process_thumbs()
+        clear_pa_pen()
+        clear_pb_pen()
+    produce_reversing_video()
+    finalize()
+
+
+
 
 '''----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Module Plain Mandala Series uses  6 pairs of pens:
@@ -7177,20 +7137,21 @@ def Plain__one():
     Lg.logger.info(f" green_hue_pen, yellow_hue_pen")
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     count_limit, my_pensize = 1020, 150  # 1020, 150 are default
     for a.i in range(len(a.i_angle)):
         my_angle = (a.i_angle_float[a.i])
         Lg.logger.info(
             f"{my_script}:Current angle to be drawn is {my_angle:.2f}"
         )
-        turtle.title(f"{my_script}:{my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = f"{my_script}:{my_angle} Degrees Angle and {au.my_track}"
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}:{my_angle} Degrees Angle "
         my_distance = 2
-        initialize_random_hue_pens()
+        make_green_hue_pen()
+        make_yellow_hue_pen()
         count = 0
         for count in range(count_limit):
-            turtle.bgcolor(10, 50, 10)
+            turtle.bgcolor(5, 0, 15)
             pick_green()  # Pen green_hue_pen
             pick_yellow()  # Pen yellow_hue_pen
             for foo in range(2):
@@ -7199,9 +7160,10 @@ def Plain__one():
                 f.save_thumb()
                 green_hue_pen.rt(my_angle)
                 green_hue_pen.fd(count/my_distance)
-                process_thumbs()
+                f.save_thumb()
                 yellow_hue_pen.pensize(count / my_pensize)
                 green_hue_pen.pensize(count / my_pensize)
+        process_thumbs()        
         clear_green_hue_pen()
         clear_yellow_hue_pen()
     produce_reversing_video()
@@ -7216,17 +7178,18 @@ def Plain__two():
     Lg.logger.info(f" magenta_hue_pen, light_hue_pen")
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     count_limit, my_pensize = 1020, 150  # 1020, 150 are default
     for a.i in range(len(a.i_angle)):
         my_angle = (a.i_angle_float[a.i])
         Lg.logger.info(
             f"{my_script}:Current angle to be drawn is {my_angle:.2f}"
         )
-        turtle.title(f"{my_script}:{my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = f"{my_script}:{my_angle} Degrees Angle and {au.my_track}"
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}:{my_angle} Degrees Angle"
         my_distance = 2
-        initialize_random_hue_pens()
+        make_magenta_hue_pen()
+        make_light_hue_pen()
         count = 0    
         for count in range(count_limit):
             turtle.bgcolor(8, 15, 50)
@@ -7257,17 +7220,18 @@ def Plain__three():
     my_script = "Plain Mandala Three"
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     count_limit, my_pensize = 1020, 150  # 1020, 150 are default
     for a.i in range(len(a.i_angle)):
         my_angle = (a.i_angle_float[a.i])
         Lg.logger.info(
             f"{my_script}:Current angle to be drawn is {my_angle:.2f}"
         )
-        turtle.title(f"{my_script}:{my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = f"{my_script}:{my_angle} Degrees Angle and {au.my_track}"
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}:{my_angle} Degrees Angle"
         my_distance = 2
-        initialize_random_hue_pens()
+        make_indigo_hue_pen()
+        make_gold_hue_pen()
         count = 0            
         for count in range(count_limit):
             turtle.bgcolor(50, 10, 20)
@@ -7298,17 +7262,18 @@ def Plain__four():
     my_script = "Plain Mandala Four"
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     count_limit, my_pensize = 1020, 150  # 1020, 150 are default
     for a.i in range(len(a.i_angle)):
         my_angle = (a.i_angle_float[a.i])
         Lg.logger.info(
             f"{my_script}:Current angle to be drawn is {my_angle:.2f}"
         )
-        turtle.title(f"{my_script}:{my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = f"{my_script}:{my_angle} Degrees Angle and {au.my_track}"
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}:{my_angle} Degrees Angle"
         my_distance = 2
-        initialize_random_hue_pens()
+        make_blue_hue_pen()
+        make_red_hue_pen()
         count = 0    
         for count in range(count_limit):
             turtle.bgcolor(80, 12, 50)
@@ -7340,17 +7305,18 @@ def Plain__five():
     my_script = "Plain Mandala Five"
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     count_limit, my_pensize = 1020, 150  # 1020, 150 are default
     for a.i in range(len(a.i_angle)):
         my_angle = (a.i_angle_float[a.i])
         Lg.logger.info(
             f"{my_script}:Current angle to be drawn is {my_angle:.2f}"
         )
-        turtle.title(f"{my_script}:{my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = f"{my_script}:{my_angle} Degrees Angle and {au.my_track}"
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}:{my_angle} Degrees Angle"
         my_distance = 2
-        initialize_random_hue_pens()
+        make_orange_hue_pen()
+        make_random_hue_pen()
         count = 0    
         for count in range(count_limit):
             turtle.bgcolor(20, 40, 50) 
@@ -7381,17 +7347,18 @@ def Plain__six():
     my_script = "Plain Mandala Six"
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
-    count_limit, my_pensize = 1020, 150  # 1020, 150 are default
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
+    count_limit, my_pensize = 1020 , 150 #1020, 150  # 1020, 150 are default
     for a.i in range(len(a.i_angle)):
         my_angle = (a.i_angle_float[a.i])
         Lg.logger.info(
             f"{my_script}:Current angle to be drawn is {my_angle:.2f}"
         )
-        turtle.title(f"{my_script}:{my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = f"{my_script}:{my_angle} Degrees Angle and {au.my_track}"
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}:{my_angle} Degrees Angle"
         my_distance = 2
-        initialize_random_hue_pens()
+        make_green_hue_pen()
+        make_cyan_hue_pen()
         count = 0    
         for count in range(count_limit):
             turtle.bgcolor(0, 10, 0)
@@ -7424,7 +7391,7 @@ def Sirius_mandala():
     my_script = "Sirius Mandala"
     startup_script()
     make_folder()
-    t.my_angles, t.my_splash = str_angles, f"{my_project} with {au.my_track}"
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
     Lg.logger.info(f'Sirius Mandala employs pens pa, pb, and pc.')
     for a.i in range(len(a.i_angle)):
         my_angle = a.i_angle_float[a.i]
@@ -7432,7 +7399,7 @@ def Sirius_mandala():
         Lg.logger.info(
             f"{my_script}:Current angle to be drawn is {my_angle} @ {Tm.this_time}"
         )
-        t.my_title = f"{my_script}: {my_angle} Degrees Angle and {au.my_track}"
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle"
         turtle.title(t.my_title)
         count_limit = 765
         turtle.bgcolor(10, 20,15)
@@ -7457,6 +7424,7 @@ def Sirius_mandala():
             pa.rt(my_angle)
             pb.circle(count / 14, -my_angle)
             f.save_thumb()
+            pb.rt(my_angle * 2)
             pb.fd(count/phi)
             f.save_thumb()
             if count < 510:
@@ -7478,6 +7446,77 @@ def Sirius_mandala():
 
 
 
+
+
+# +++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
+""" Status: Creation Date: 6/2/2023, Last Completed Run: 12/10/2023
+Originally named colorful_mandala_short. Changed to Prosper Mandala on 12/10/2023.
+ """
+
+
+def Prosper_mandala():
+    global count, my_script, turtle, my_angle, count_limit
+    my_script = "Prosper_Mandala"
+    Lg.logger.info(f"{my_script}:Starting {my_script} @ {Tm.this_time}")
+    startup_script()
+    make_folder()
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
+    for a.i in range(len(a.i_angle)):
+        my_angle = a.i_angle_float[a.i]
+        make_p_turtles()  # Creates turtle instances
+        count_limit = default_range  # 765 is default; Adjust as needed for output to fit screen; use lower or higher number for testing
+        R, B, L, M = (
+            0,
+            random.randint(64, 127),
+            random.randint(127, 255),
+            255,
+        )  # Randomnizes pencolors
+        my_random = random.randint(150, 255)  # Varies the pencolor where used
+        my_pensize, my_pensize_a, my_length, my_circle, my_length_bk = (
+            0.0125,
+            0.005,
+            0.0862,
+            0.01,
+            0.06,
+        )  # Multipliers
+        count = 0
+        turtle.bgcolor(0, 0, 15)
+        set_titles()
+        # Prosper_Mandala script
+        for count in range(count_limit):
+            Q_seed.dot(6)
+            pa.pencolor(count % 255, count % 255, random.randint(15, 150))
+            pb.pencolor(random.randint(15, 150), count % 255, count % 127)
+            pa.pensize(count * my_pensize)
+            pb.pensize(count * my_pensize)
+            pa.left(my_angle)
+            pa.fd(count * my_length_bk)
+            f.save_thumb()
+            pb.fd(count)
+            f.save_thumb()
+            pb.right(my_angle)
+            pb.fd(count * my_length_bk * 3)
+            f.save_thumb()
+            pb.right(my_angle)
+            pb.fd(count * my_length * 3)
+            f.save_thumb()
+            pa.left(my_angle)
+            pa.circle(count * my_circle * 3, -my_angle, 3)
+            f.save_thumb()
+            pa.fd(count * my_length * 2)
+            Q_seed.dot(6)
+            process_thumbs()
+    #             report_loop_count() # For testing
+    produce_reversing_video()
+    finalize()
+
+
+# Prosper_mandala()
+
+
+
+
+
 #============================================================================
     ''' Estimated .28 minutes(17 seconds) per angle completed'''
 def Durable_mandala():
@@ -7493,7 +7532,7 @@ def Durable_mandala():
         t.my_title = f'{my_script}: {my_angle} Degrees Angle '
         turtle.title(t.my_title)
         turtle.bgcolor(0,10,20)
-        Lg.logger.info(str('The featured angle is     ') + str(my_angle))
+        Lg.logger.info(f"The featured angle is {my_angle}")
         count_limit = 400
         count = 0
         red_hue_pen.pensize(1)
@@ -7534,6 +7573,73 @@ def Durable_mandala():
     
 
 
+()
+
+
+#  module_5
+# *****************************************************************************************************************************
+# +++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
+def Reverent_mandala():  # Uses 2 pens with offset phi angle
+    global my_project, my_angle, my_title, my_script, str_angles, count, count_limit
+    my_script = "Reverent Mandala"
+    startup_script()
+    make_folder()
+    t.my_angles, t.my_splash = str_angles, f"{my_project}"
+    for a.i in range(len(a.i_angle)):
+        all_pens_home()
+        my_angle = a.i_angle_float[a.i]
+        Lg.logger.info(
+            f"{my_script}:Current angle to be drawn is {my_angle:.2f} @ {Tm.this_time}"
+        )
+        turtle.title(f"Reverent Mandala: {my_angle} Degrees Angle ")
+        t.my_title = turtle.title
+        count = 0
+        count_limit = 765
+        magenta_hue_pen.speed(0)
+        gold_hue_pen.speed(0)
+        green_hue_pen.speed(0)
+        turtle.bgcolor(10, 0, 15)
+        for count in range(count_limit):  # 900 is default. Use lower number for testing.
+            magenta_hue_pen.pensize(count / 300)
+            gold_hue_pen.pensize(count / 300)
+            green_hue_pen.pensize(count / 225)
+            pick_magenta()  # magenta_hue_pen
+            pick_gold()  # gold_hue_pen
+            pick_green()  # green_hue_pen
+            gold_hue_pen.left(my_angle / phi)
+            gold_hue_pen.left(my_angle)
+            gold_hue_pen.fd((count * 0.8) * 0.33)
+            f.save_thumb()
+            gold_hue_pen.penup()
+            gold_hue_pen.fd((count * 0.8) * 0.33)
+            f.save_thumb()
+            gold_hue_pen.pendown()
+            gold_hue_pen.fd((count * 0.8) * 0.34)
+            f.save_thumb()
+            magenta_hue_pen.left(my_angle)
+            magenta_hue_pen.circle(count / 4, my_angle, 6)
+            f.save_thumb()
+            green_hue_pen.rt(my_angle)
+            green_hue_pen.fd(count / phi)
+            f.save_thumb()
+            gold_hue_pen.left(my_angle)
+            gold_hue_pen.fd(count / 4)
+            f.save_thumb()
+            magenta_hue_pen.left(my_angle)
+            magenta_hue_pen.fd(count / 4)
+            process_thumbs()
+        clear_gold_hue_pen()
+        clear_green_hue_pen()
+        clear_magenta_hue_pen()
+    produce_reversing_video()
+    finalize()
+
+
+# reverent_mandala()
+
+
+
+
 # +++++++++++MODULE  Bountiful Mandala+++++++++++++++++++++++++++++++++++++++++++++++++++++
 '''2/10/2024: Located at lines 7367 - 7851. Take-off from the popular courage mandala. first attempt at introducing
 a working undo() function, to hopefully create a reversed animation at runtime. It would be good to reverse it and run another reverse
@@ -7555,18 +7661,17 @@ def Bounteous_One():
         )
         t.my_title = f"{my_script}: {my_angle} Degrees Angle "
         turtle.title(t.my_title)
-        
         my_hue = random.randint(5, 100)
         my_hue_a = random.randint(100, 200)
         Lg.logger.info("The value of my_hue is" + "   " + str(my_hue))
         Lg.logger.info("The value of my_hue_a is" + "   " + str(my_hue_a))
         count = 0
-        fd_01, fd_02, fd_03, fd_04 = 1.2, 1.2, 1.2, 1.2
-        circ_01, circ_02, circ_03 = 18, 24, 32
+        fd_01, fd_02, fd_03, fd_04 = 12, 12, 4, 12     
+        circ_01, circ_02, circ_03 = 18, 24, 35
         bk_01 = 6
         count_limit = 510
         for count in range(count_limit):
-            turtle.bgcolor(0, 0, 0)
+            turtle.bgcolor(25, 5, 20)
             pick_blue()  # Blue pen
             R, G, B, L, M, N, D, E, F = my_hue, 255, 0, 255, my_hue_a, 0, 0, my_hue, 255
             if count <= 0.75 * count:
@@ -7576,24 +7681,25 @@ def Bounteous_One():
             pa.pencolor(M, L - count % 255, E)
             pb.pencolor(R, G - count % 255, count % 255)
             pb.left(my_angle)
-            blue_hue_pen.left(my_angle)
+            local_pen = blue_hue_pen
+            local_pen.left(my_angle)
             pa.left(-my_angle)
-            pb.fd(count / fd_01)
+            pb.fd(count / fd_04)
             f.save_thumb()
-            blue_hue_pen.fd(count + phi)
+            local_pen.fd(count / phi)
             f.save_thumb()
-            pa.fd(count / fd_02)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.rt(my_angle)
-            blue_hue_pen.left(-my_angle)
+            local_pen.left(-my_angle)
             pa.rt(my_angle)
-            blue_hue_pen.fd(count / fd_03)
+            local_pen.fd(count / fd_03)
             f.save_thumb()
-            pa.fd(count / fd_04)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.circle(count / circ_01, my_angle, 3)
             f.save_thumb()
-            blue_hue_pen.circle(count / circ_02, my_angle)
+            local_pen.circle(count / circ_02, my_angle)
             f.save_thumb()
             pa.circle(count / circ_03, my_angle)
             f.save_thumb()
@@ -7605,9 +7711,9 @@ def Bounteous_One():
             pb.pencolor(255, 255, count % 255)
             pb.dot(count / 36)
             f.save_thumb()
-            blue_hue_pen.pensize(count / 145)
-            pb.pensize(count / 150)
-            pa.pensize(count / 72)
+            local_pen.pensize(count / 45)
+            pb.pensize(count / 90)
+            pa.pensize(count / 63)
             process_thumbs()
         clear_blue_hue_pen()
         clear_pa_pen()
@@ -7637,14 +7743,12 @@ def Bounteous_Two():
         turtle.title(t.my_title)
         my_hue = random.randint(5, 100)
         my_hue_a = random.randint(100, 200)
-        fd_01, fd_02, fd_03, fd_04 = 1.2, 1.2, 1.2, 1.2
-        circ_01, circ_02, circ_03 = 18, 24, 32
+        fd_01, fd_02, fd_03, fd_04 = 12, 12, 4, 12     
+        circ_01, circ_02, circ_03 = 18, 24, 35
         bk_01 = 6
-        count_limit =510
-        count = 0
-
+        count_limit = 510
         for count in range(count_limit):
-            turtle.bgcolor(0, 0, 0)
+            turtle.bgcolor(25, 5, 20)
             pick_magenta()  # Magenta pen
             R, G, B, L, M, N, D, E, F = my_hue, 255, 0, 255, my_hue_a, 0, 0, my_hue, 255
             if count <= 0.75 * count:
@@ -7653,25 +7757,25 @@ def Bounteous_Two():
                 pick_magenta()
             pa.pencolor(L - count % 255, M, E)
             pb.pencolor(G - count % 255, count % 255, R)
-            pb.left(my_angle)
-            magenta_hue_pen.left(my_angle)
+            local_pen = magenta_hue_pen
+            local_pen.left(my_angle)
             pa.left(-my_angle)
-            pb.fd(count / fd_01)
+            pb.fd(count / fd_04)
             f.save_thumb()
-            magenta_hue_pen.fd(count + phi)
+            local_pen.fd(count / phi)
             f.save_thumb()
-            pa.fd(count / fd_02)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.rt(my_angle)
-            magenta_hue_pen.left(-my_angle)
+            local_pen.left(-my_angle)
             pa.rt(my_angle)
-            magenta_hue_pen.fd(count / fd_03)
+            local_pen.fd(count / fd_03)
             f.save_thumb()
-            pa.fd(count / fd_04)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.circle(count / circ_01, my_angle, 3)
             f.save_thumb()
-            magenta_hue_pen.circle(count / circ_02, my_angle)
+            local_pen.circle(count / circ_02, my_angle)
             f.save_thumb()
             pa.circle(count / circ_03, my_angle)
             f.save_thumb()
@@ -7683,9 +7787,9 @@ def Bounteous_Two():
             pb.pencolor(255, 255, 10)
             pb.dot(count / 36)
             f.save_thumb()
-            magenta_hue_pen.pensize(count / 145)
-            pb.pensize(count / 150)
-            pa.pensize(count / 72)
+            local_pen.pensize(count / 45)
+            pb.pensize(count / 90)
+            pa.pensize(count / 63)
             process_thumbs()
         clear_magenta_hue_pen()
         clear_pa_pen()
@@ -7712,15 +7816,14 @@ def Bounteous_Three():
         )
         t.my_title = f"{my_script}:{my_angle} Degrees Angle "
         turtle.title(t.my_title)
-        fd_01, fd_02, fd_03, fd_04 = 1.2, 1.2, 1.2, 1.2
-        circ_01, circ_02, circ_03 = 18, 24, 32
-        bk_01 = 6
         my_hue = random.randint(5, 100)
         my_hue_a = random.randint(100, 200)
+        ffd_01, fd_02, fd_03, fd_04 = 12, 12, 4, 12     
+        circ_01, circ_02, circ_03 = 18, 24, 35
+        bk_01 = 6
         count_limit = 510
-        count = 0     
         for count in range(count_limit):
-            turtle.bgcolor(0, 0, 0)
+            turtle.bgcolor(25, 5, 20)
             pick_green()  # Green pen
             R, G, B, L, M, N, D, E, F = my_hue, 255, 0, 255, my_hue_a, 0, 0, my_hue, 255
             if count <= 0.75 * count:
@@ -7730,24 +7833,25 @@ def Bounteous_Three():
             pa.pencolor(E, M, L - count % 255)
             pb.pencolor(G - count % 255, R, count % 255)
             pb.left(my_angle)
-            green_hue_pen.left(my_angle)
+            local_pen = green_hue_pen
+            local_pen.left(my_angle)
             pa.left(-my_angle)
-            pb.fd(count / fd_01)
+            pb.fd(count / fd_04)
             f.save_thumb()
-            green_hue_pen.fd(count + phi)
+            local_pen.fd(count / phi)
             f.save_thumb()
-            pa.fd(count / fd_02)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.rt(my_angle)
-            green_hue_pen.left(-my_angle)
+            local_pen.left(-my_angle)
             pa.rt(my_angle)
-            green_hue_pen.fd(count / fd_03)
+            local_pen.fd(count / fd_03)
             f.save_thumb()
-            pa.fd(count / fd_04)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.circle(count / circ_01, my_angle, 3)
             f.save_thumb()
-            green_hue_pen.circle(count / circ_02, my_angle)
+            local_pen.circle(count / circ_02, my_angle)
             f.save_thumb()
             pa.circle(count / circ_03, my_angle)
             f.save_thumb()
@@ -7759,9 +7863,9 @@ def Bounteous_Three():
             pb.pencolor(255, 255, 10)
             pb.dot(count / 36)
             f.save_thumb()
-            green_hue_pen.pensize(count / 145)
-            pb.pensize(count / 150)
-            pa.pensize(count / 72)
+            local_pen.pensize(count / 45)
+            pb.pensize(count / 90)
+            pa.pensize(count / 63)
             process_thumbs()
         clear_green_hue_pen()
         clear_pa_pen()
@@ -7790,12 +7894,12 @@ def Bounteous_Four():
         turtle.title(t.my_title)
         my_hue = random.randint(5, 100)
         my_hue_a = random.randint(100, 200)
-        fd_01, fd_02, fd_03, fd_04 = 1.2, 1.2, 1.2, 1.2
-        circ_01, circ_02, circ_03 = 18, 24, 32
+        ffd_01, fd_02, fd_03, fd_04 = 12, 12, 4, 12     
+        circ_01, circ_02, circ_03 = 18, 24, 35
         bk_01 = 6
         count_limit = 510
         for count in range(count_limit):
-            turtle.bgcolor(0, 0, 0)
+            turtle.bgcolor(25, 5, 20)
             pick_gold()  # Gold pen
             R, G, B, L, M, N, D, E, F = my_hue, 255, 0, 255, my_hue_a, 0, 0, my_hue, 255
             if count <= 0.75 * count:
@@ -7805,24 +7909,25 @@ def Bounteous_Four():
             pa.pencolor(L - count % 255, M, E)
             pb.pencolor(G - count % 255, count % 255, R)
             pb.left(my_angle)
-            gold_hue_pen.left(my_angle)
+            local_pen = gold_hue_pen
+            local_pen.left(my_angle)
             pa.left(-my_angle)
-            pb.fd(count / fd_01)
+            pb.fd(count / fd_04)
             f.save_thumb()
-            gold_hue_pen.fd(count + phi)
+            local_pen.fd(count / phi)
             f.save_thumb()
-            pa.fd(count / fd_02)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.rt(my_angle)
-            gold_hue_pen.left(-my_angle)
+            local_pen.left(-my_angle)
             pa.rt(my_angle)
-            gold_hue_pen.fd(count / fd_03)
+            local_pen.fd(count / fd_03)
             f.save_thumb()
-            pa.fd(count / fd_04)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.circle(count / circ_01, my_angle, 3)
             f.save_thumb()
-            gold_hue_pen.circle(count / circ_02, my_angle)
+            local_pen.circle(count / circ_02, my_angle)
             f.save_thumb()
             pa.circle(count / circ_03, my_angle)
             f.save_thumb()
@@ -7834,9 +7939,9 @@ def Bounteous_Four():
             pb.pencolor(255, 255, 10)
             pb.dot(count / 36)
             f.save_thumb()
-            gold_hue_pen.pensize(count / 145)
-            pb.pensize(count / 150)
-            pa.pensize(count / 72)
+            local_pen.pensize(count / 45)
+            pb.pensize(count / 90)
+            pa.pensize(count / 63)
             process_thumbs()
         clear_gold_hue_pen()
         clear_pa_pen()
@@ -7865,15 +7970,12 @@ def Bounteous_Five():
         turtle.title(t.my_title)
         my_hue = random.randint(5, 100)
         my_hue_a = random.randint(100, 200)
-        fd_01, fd_02, fd_03, fd_04 = 1.2, 1.2, 1.2, 1.2
-        circ_01, circ_02, circ_03 = 18, 24, 32
+        fd_01, fd_02, fd_03, fd_04 = 12, 12, 4, 12     
+        circ_01, circ_02, circ_03 = 18, 24, 35
         bk_01 = 6
-        count_limit = 510
-        count = 0     
-
-
-        for count in range(count_limit):  
-            turtle.bgcolor(0, 0, 0)
+        count_limit = 765
+        for count in range(count_limit):
+            turtle.bgcolor(25, 5, 20)
             pick_indigo()  # Indigo  pen
             R, G, B, L, M, N, D, E, F = my_hue, 255, 0, 255, my_hue_a, 0, 0, my_hue, 255
             if count <= 0.75 * count:
@@ -7883,24 +7985,25 @@ def Bounteous_Five():
             pa.pencolor(G - count % 255, count % 255, R)
             pb.pencolor(L - count % 255, M, E)
             pb.left(my_angle)
-            indigo_hue_pen.left(my_angle)
+            local_pen = indigo_hue_pen
+            local_pen.left(my_angle)
             pa.left(-my_angle)
-            pb.fd(count / fd_01)
+            pb.fd(count / fd_04)
             f.save_thumb()
-            indigo_hue_pen.fd(count + phi)
+            local_pen.fd(count / phi)
             f.save_thumb()
-            pa.fd(count / fd_02)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.rt(my_angle)
-            indigo_hue_pen.left(-my_angle)
+            local_pen.left(-my_angle)
             pa.rt(my_angle)
-            indigo_hue_pen.fd(count / fd_03)
+            local_pen.fd(count / fd_03)
             f.save_thumb()
-            pa.fd(count / fd_04)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.circle(count / circ_01, my_angle, 3)
             f.save_thumb()
-            indigo_hue_pen.circle(count / circ_02, my_angle)
+            local_pen.circle(count / circ_02, my_angle)
             f.save_thumb()
             pa.circle(count / circ_03, my_angle)
             f.save_thumb()
@@ -7912,9 +8015,9 @@ def Bounteous_Five():
             pb.pencolor(255, 255, 10)
             pb.dot(count / 36)
             f.save_thumb()
-            indigo_hue_pen.pensize(count / 145)
-            pb.pensize(count / 150)
-            pa.pensize(count / 72)
+            local_pen.pensize(count / 45)
+            pb.pensize(count / 90)
+            pa.pensize(count / 63)
             process_thumbs()
         clear_indigo_hue_pen()
         clear_pa_pen()
@@ -7944,13 +8047,12 @@ def Bounteous_Six():
         turtle.title(t.my_title)
         my_hue = random.randint(5, 100)
         my_hue_a = random.randint(100, 200)
-        fd_01, fd_02, fd_03, fd_04 = 1.2, 1.2, 1.2, 1.2
-        circ_01, circ_02, circ_03 = 18, 24, 32
+        fd_01, fd_02, fd_03, fd_04 = 12, 12, 4, 12     
+        circ_01, circ_02, circ_03 = 18, 24, 35
         bk_01 = 6
-        count_limit =510
-        count = 0     
-        for count in range(count_limit):  
-            turtle.bgcolor(0, 0, 0)
+        count_limit = 765
+        for count in range(count_limit):
+            turtle.bgcolor(25, 5, 20)
             pick_orange()  # Orange pen
             R, G, B, L, M, N, D, E, F = my_hue, 255, 0, 255, my_hue_a, 0, 0, my_hue, 255
             if count <= 0.75 * count:
@@ -7960,24 +8062,25 @@ def Bounteous_Six():
             pa.pencolor(L - count % 255, M, E)
             pb.pencolor(G - count % 255, count % 255, R)
             pb.left(my_angle)
-            orange_hue_pen.left(my_angle)
+            local_pen = orange_hue_pen
+            local_pen.left(my_angle)
             pa.left(-my_angle)
-            pb.fd(count / fd_01)
+            pb.fd(count / fd_04)
             f.save_thumb()
-            orange_hue_pen.fd(count + phi)
+            local_pen.fd(count / phi)
             f.save_thumb()
-            pa.fd(count / fd_02)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.rt(my_angle)
-            orange_hue_pen.left(-my_angle)
+            local_pen.left(-my_angle)
             pa.rt(my_angle)
-            orange_hue_pen.fd(count / fd_03)
+            local_pen.fd(count / fd_03)
             f.save_thumb()
-            pa.fd(count / fd_04)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.circle(count / circ_01, my_angle, 3)
             f.save_thumb()
-            orange_hue_pen.circle(count / circ_02, my_angle)
+            local_pen.circle(count / circ_02, my_angle)
             f.save_thumb()
             pa.circle(count / circ_03, my_angle)
             f.save_thumb()
@@ -7989,15 +8092,15 @@ def Bounteous_Six():
             pb.pencolor(255, 255, 10)
             pb.dot(count / 36)
             f.save_thumb()
-            orange_hue_pen.pensize(count / 145)
-            pb.pensize(count / 150)
-            pa.pensize(count / 72)
+            orange_hue_pen.pensize(count / 45)
+            pb.pensize(count / 90)
+            pa.pensize(count / 63)
             process_thumbs()
         clear_orange_hue_pen()
         clear_pa_pen()
         clear_pb_pen()
     produce_reversing_video()
-    finalize
+    finalize()
        
   
        
@@ -8020,14 +8123,12 @@ def Bounteous_Seven():
         turtle.title(t.my_title)
         my_hue = random.randint(5, 100)
         my_hue_a = random.randint(100, 200)
-        fd_01, fd_02, fd_03, fd_04 = 1.2, 1.2, 1.2, 1.2
-        circ_01, circ_02, circ_03 = 18, 24, 32
+        fd_01, fd_02, fd_03, fd_04 = 12, 12, 4, 12     
+        circ_01, circ_02, circ_03 = 18, 24, 35
         bk_01 = 6
-        count_limit = 510
-        count = 0            
-       
+        count_limit = 765
         for count in range(count_limit):
-            turtle.bgcolor(0, 0, 0)  
+            turtle.bgcolor(25, 5, 20)
             pick_yellow()  # Yellow pen
             R, G, B, L, M, N, D, E, F = my_hue, 255, 0, 255, my_hue_a, 0, 0, my_hue, 255
             if count <= 0.75 * count:
@@ -8037,24 +8138,25 @@ def Bounteous_Seven():
             pb.pencolor(L - count % 255, M, E)
             pa.pencolor(G - count % 255, count % 255, R)
             pb.left(my_angle)
-            yellow_hue_pen.left(my_angle)
+            local_pen = yellow_hue_pen
+            local_pen.left(my_angle)
             pa.left(-my_angle)
-            pb.fd(count / fd_01)
+            pb.fd(count / fd_04)
             f.save_thumb()
-            yellow_hue_pen.fd(count + phi)
+            local_pen.fd(count / phi)
             f.save_thumb()
-            pa.fd(count / fd_02)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.rt(my_angle)
-            yellow_hue_pen.left(-my_angle)
+            local_pen.left(-my_angle)
             pa.rt(my_angle)
-            yellow_hue_pen.fd(count / fd_03)
+            local_pen.fd(count / fd_03)
             f.save_thumb()
-            pa.fd(count / fd_04)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.circle(count / circ_01, my_angle, 3)
             f.save_thumb()
-            yellow_hue_pen.circle(count / circ_02, my_angle)
+            local_pen.circle(count / circ_02, my_angle)
             f.save_thumb()
             pa.circle(count / circ_03, my_angle)
             f.save_thumb()
@@ -8066,9 +8168,9 @@ def Bounteous_Seven():
             pb.pencolor(255, 255, 10)
             pb.dot(count / 36)
             f.save_thumb()
-            yellow_hue_pen.pensize(count / 145)
-            pb.pensize(count / 150)
-            pa.pensize(count / 72)
+            local_pen.pensize(count / 45)
+            pb.pensize(count / 90)
+            pa.pensize(count / 63)
             process_thumbs()
         clear_yellow_hue_pen()
         clear_pa_pen()
@@ -8098,13 +8200,12 @@ def Bounteous_Eight():
         turtle.title(t.my_title)
         my_hue = random.randint(5, 100)
         my_hue_a = random.randint(100, 200)
-        fd_01, fd_02, fd_03, fd_04 = 1.2, 1.2, 1.2, 1.2
-        circ_01, circ_02, circ_03 = 18, 24, 32
+        fd_01, fd_02, fd_03, fd_04 = 12, 12, 4, 12     
+        circ_01, circ_02, circ_03 = 18, 24, 35
         bk_01 = 6
         count_limit = 510
-        count = 0     
-        for count in range(count_limit): 
-            turtle.bgcolor(0, 0, 0)
+        for count in range(count_limit):
+            turtle.bgcolor(25, 5, 20)
             pick_light()  # Light pen
             R, G, B, L, M, N, D, E, F = my_hue, 255, 0, 255, my_hue_a, 0, 0, my_hue, 255
             if count <= 0.75 * count:
@@ -8114,24 +8215,25 @@ def Bounteous_Eight():
             pa.pencolor(L - count % 255, M, E)
             pb.pencolor(G - count % 255, count % 255, R)
             pb.left(my_angle)
-            light_hue_pen.left(my_angle)
+            local_pen = light_hue_pen
+            local_pen.left(my_angle)
             pa.left(-my_angle)
-            pb.fd(count / fd_01)
+            pb.fd(count / fd_04)
             f.save_thumb()
-            light_hue_pen.fd(count + phi)
+            local_pen.fd(count / phi)
             f.save_thumb()
-            pa.fd(count / fd_02)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.rt(my_angle)
-            light_hue_pen.left(-my_angle)
+            local_pen.left(-my_angle)
             pa.rt(my_angle)
-            light_hue_pen.fd(count / fd_03)
+            local_pen.fd(count / fd_03)
             f.save_thumb()
-            pa.fd(count / fd_04)
+            pa.fd(count / fd_03)
             f.save_thumb()
             pb.circle(count / circ_01, my_angle, 3)
             f.save_thumb()
-            light_hue_pen.circle(count / circ_02, my_angle)
+            local_pen.circle(count / circ_02, my_angle)
             f.save_thumb()
             pa.circle(count / circ_03, my_angle)
             f.save_thumb()
@@ -8143,9 +8245,9 @@ def Bounteous_Eight():
             pb.pencolor(255, 255, 10)
             pb.dot(count / 36)
             f.save_thumb()
-            light_hue_pen.pensize(count / 145)
-            pb.pensize(count / 150)
-            pa.pensize(count / 72)
+            local_pen.pensize(count / 45)
+            pb.pensize(count / 90)
+            pa.pensize(count / 63)
             process_thumbs()
         clear_light_hue_pen()
         clear_pa_pen()
@@ -8360,9 +8462,7 @@ def Gradiant_five():
         pa.pensize(1)
         pa.left(my_angle / 2)
         red_hue_pen.rt(my_angle / 2)
-        for count in range(
-            count_limit
-        ):  
+        for count in range(count_limit):
             pa.pensize(count / 72)
             pick_red()
             pa.right(my_angle)
@@ -8745,9 +8845,10 @@ def Bold__six():
   Uses local turtle pens pa and indigo_hue_pen; changed name from Awesome_Mandala_Old to
   Intense_Mandala. Impemented special center black dot pen, quantum_seed. Duration is based upon quantity of angles selected.
  """
-def Intense_Mandala():
+def Intense_One():
+    #Uses Indigo  Hue Pen
     global my_project, my_angle, my_title, my_script, str_angles, count, count_limit, pa
-    my_script = "Intense Mandala"
+    my_script = "Intense Mandala One"
     startup_script()
     make_folder()
     (
@@ -8755,7 +8856,7 @@ def Intense_Mandala():
         t.my_splash,
     ) = (
         str_angles,
-        f"{my_project} with {au.my_track}",
+        f"{my_project}",
     )
     for a.i in range(len(a.i_angle)):
         all_pens_home()
@@ -8763,9 +8864,9 @@ def Intense_Mandala():
         Lg.logger.info(
             f"{my_script}: Starting to draw {my_angle:.2f} degrees angles at {Tm.this_time}"
         )
-        turtle.title(f"{my_script}:{my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = f"{my_script}: {my_angle} Degrees Angle and {au.my_track}"
-        count_limit = 255 * 4
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle"
+        count_limit =  255 * 5
         R, G = 0, 0
         M, N, X, Y, Z = 255, 110, 10, 155, 255
         B = random.randint(10, 50)
@@ -8777,7 +8878,7 @@ def Intense_Mandala():
         Lg.logger.info(f"{my_script}:The Value of color L is: {L}")
         for count in range(count_limit):
             pick_indigo()  # indigo_hue_pen
-            turtle.bgcolor(0, B, 0)
+            turtle.bgcolor(5, 15, 10)
             indigo_hue_pen.pensize(count / 120)
             indigo_hue_pen.left(my_angle)
             indigo_hue_pen.fd(count / 4)
@@ -8793,12 +8894,297 @@ def Intense_Mandala():
             Q_seed.dot(3)
             process_thumbs()
         pa.clear()
-        indigo_hue_pen.reset()
+        clear_indigo_hue_pen()
     produce_reversing_video()
     finalize()
+# Intense_One()
 
 
-# Intense_Mandala()
+
+
+def Intense_Two():
+    #Uses Green Hue Pen
+    global my_project, my_angle, my_title, my_script, str_angles, count, count_limit, pa
+    my_script = "Intense Mandala_Two"
+    startup_script()
+    make_folder()
+    (
+        t.my_angles,
+        t.my_splash,
+    ) = (
+        str_angles,
+        f"{my_project}",
+    )
+    for a.i in range(len(a.i_angle)):
+        all_pens_home()
+        my_angle = a.i_angle_float[a.i]
+        Lg.logger.info(
+            f"{my_script}: Starting to draw {my_angle:.2f} degrees angles at {Tm.this_time}"
+        )
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle"
+        count_limit = 255 *5
+        R, G = 0, 0
+        M, N, X, Y, Z = 255, 110, 10, 155, 255
+        B = random.randint(10, 50)
+        L = random.randint(150, 255)
+        pick_green()  # green_hue_pen
+        green_hue_pen.left(my_angle / 2)
+        pa.left(my_angle / 2)
+        Lg.logger.info(f"{my_script}:The Value of color B is: {B}")
+        Lg.logger.info(f"{my_script}:The Value of color L is: {L}")
+        for count in range(count_limit):
+            pick_green()  # green_hue_pen
+            turtle.bgcolor(0, B, 0)
+            green_hue_pen.pensize(count / 120)
+            green_hue_pen.left(my_angle)
+            green_hue_pen.fd(count / 4)
+            f.save_thumb()
+            pa.pensize(count / 200)
+            pa.rt(my_angle)
+            if count <= 255:
+                pa.pencolor(L, M - count, M - count)
+            else:
+                pa.pencolor(L, count % 255, X)
+            pa.circle(count * 0.25, -my_angle, 9)
+            f.save_thumb()
+            Q_seed.dot(3)
+            process_thumbs()
+        pa.clear()
+        clear_green_hue_pen()
+    produce_reversing_video()
+    finalize()
+    
+# Intense_Two()
+
+
+def Intense_Three():
+    #Uses Dark Hue Pen
+    global my_project, my_angle, my_title, my_script, str_angles, count, count_limit, pa
+    my_script = "Intense Mandala_Three"
+    startup_script()
+    make_folder()
+    (
+        t.my_angles,
+        t.my_splash,
+    ) = (
+        str_angles,
+        f"{my_project} ",
+    )
+    for a.i in range(len(a.i_angle)):
+        all_pens_home()
+        my_angle = a.i_angle_float[a.i]
+        Lg.logger.info(
+            f"{my_script}: Starting to draw {my_angle:.2f} degrees angles at {Tm.this_time}"
+        )
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle"
+        count_limit = 255 * 5
+        R, G = 0, 0
+        M, N, X, Y, Z = 255, 110, 10, 155, 255
+        B = random.randint(10, 50)
+        L = random.randint(150, 255)
+        pick_dark()  # dark_hue_pen
+        dark_hue_pen.left(my_angle / 2)
+        pa.left(my_angle / 2)
+        Lg.logger.info(f"{my_script}:The Value of color B is: {B}")
+        Lg.logger.info(f"{my_script}:The Value of color L is: {L}")
+        for count in range(count_limit):
+            pick_dark()  # dark_hue_pen
+            turtle.bgcolor(0, B, 0)
+            dark_hue_pen.pensize(count / 120)
+            dark_hue_pen.left(my_angle)
+            dark_hue_pen.fd(count / 4)
+            f.save_thumb()
+            pa.pensize(count / 200)
+            pa.rt(my_angle)
+            if count <= 255:
+                pa.pencolor(L, M - count, M - count)
+            else:
+                pa.pencolor(L, count % 255, X)
+            pa.circle(count * 0.25, -my_angle, 9)
+            f.save_thumb()
+            Q_seed.dot(3)
+            process_thumbs()
+        pa.clear()
+        clear_dark_hue_pen()
+    produce_reversing_video()
+    finalize()
+    
+# Intense_Three()
+
+
+
+def Intense_Four():
+    #Uses Red Hue Pen
+    global my_project, my_angle, my_title, my_script, str_angles, count, count_limit, pa
+    my_script = "Intense Mandala_Four"
+    startup_script()
+    make_folder()
+    (
+        t.my_angles,
+        t.my_splash,
+    ) = (
+        str_angles,
+        f"{my_project} with {au.my_track}",
+    )
+    for a.i in range(len(a.i_angle)):
+        all_pens_home()
+        my_angle = a.i_angle_float[a.i]
+        Lg.logger.info(
+            f"{my_script}: Starting to draw {my_angle:.2f} degrees angles at {Tm.this_time}"
+        )
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle"
+        count_limit = 255 * 5
+        R, G = 0, 0
+        M, N, X, Y, Z = 255, 110, 10, 155, 255
+        B = random.randint(10, 50)
+        L = random.randint(150, 255)
+        pick_red()  # red_hue_pen
+        red_hue_pen.left(my_angle / 2)
+        pa.left(my_angle / 2)
+        Lg.logger.info(f"{my_script}:The Value of color B is: {B}")
+        Lg.logger.info(f"{my_script}:The Value of color L is: {L}")
+        for count in range(count_limit):
+            pick_red()  # red_hue_pen
+            turtle.bgcolor(0, B, 0)
+            red_hue_pen.pensize(count / 120)
+            red_hue_pen.left(my_angle)
+            red_hue_pen.fd(count / 4)
+            f.save_thumb()
+            pa.pensize(count / 200)
+            pa.rt(my_angle)
+            if count <= 255:
+                pa.pencolor(L, M - count, M - count)
+            else:
+                pa.pencolor(L, count % 255, X)
+            pa.circle(count * 0.25, -my_angle, 9)
+            f.save_thumb()
+            Q_seed.dot(3)
+            process_thumbs()
+        pa.clear()
+        clear_red_hue_pen()
+    produce_reversing_video()
+    finalize()
+    
+# Intense_Four()
+
+
+
+def Intense_Five():
+    #Uses Gold Hue Pen
+    global my_project, my_angle, my_title, my_script, str_angles, count, count_limit, pa
+    my_script = "Intense Mandala_Five"
+    startup_script()
+    make_folder()
+    (
+        t.my_angles,
+        t.my_splash,
+    ) = (
+        str_angles,
+        f"{my_project} with {au.my_track}",
+    )
+    for a.i in range(len(a.i_angle)):
+        all_pens_home()
+        my_angle = a.i_angle_float[a.i]
+        Lg.logger.info(
+            f"{my_script}: Starting to draw {my_angle:.2f} degrees angles at {Tm.this_time}"
+        )
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle"
+        count_limit = 255 * 5
+        R, G = 0, 0
+        M, N, X, Y, Z = 255, 110, 10, 155, 255
+        B = random.randint(10, 50)
+        L = random.randint(150, 255)
+        pick_gold()  # gold_hue_pen
+        gold_hue_pen.left(my_angle / 2)
+        pa.left(my_angle / 2)
+        Lg.logger.info(f"{my_script}:The Value of color B is: {B}")
+        Lg.logger.info(f"{my_script}:The Value of color L is: {L}")
+        for count in range(count_limit):
+            pick_gold()  # gold_hue_pen
+            turtle.bgcolor(0, B, 0)
+            gold_hue_pen.pensize(count / 120)
+            gold_hue_pen.left(my_angle)
+            gold_hue_pen.fd(count / 4)
+            f.save_thumb()
+            pa.pensize(count / 200)
+            pa.rt(my_angle)
+            if count <= 255:
+                pa.pencolor(L, M - count, M - count)
+            else:
+                pa.pencolor(L, count % 255, X)
+            pa.circle(count * 0.25, -my_angle, 9)
+            f.save_thumb()
+            Q_seed.dot(3)
+            process_thumbs()
+        pa.clear()
+        clear_gold_hue_pen()
+    produce_reversing_video()
+    finalize()
+    
+# Intense_Five()
+
+def Intense_Six():
+    #Uses Cyan Hue Pen
+    global my_project, my_angle, my_title, my_script, str_angles, count, count_limit, pa
+    my_script = "Intense Mandala_Six"
+    startup_script()
+    make_folder()
+    (
+        t.my_angles,
+        t.my_splash,
+    ) = (
+        str_angles,
+        f"{my_project}",
+    )
+    for a.i in range(len(a.i_angle)):
+        all_pens_home()
+        my_angle = a.i_angle_float[a.i]
+        Lg.logger.info(
+            f"{my_script}: Starting to draw {my_angle:.2f} degrees angles at {Tm.this_time}"
+        )
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle "
+        count_limit = 255 * 5
+        R, G = 0, 0
+        M, N, X, Y, Z = 255, 110, 10, 155, 255
+        B = random.randint(10, 50)
+        L = random.randint(150, 255)
+        pick_cyan()  # cyan_hue_pen
+        cyan_hue_pen.left(my_angle / 2)
+        pa.left(my_angle / 2)
+        Lg.logger.info(f"{my_script}:The Value of color B is: {B}")
+        Lg.logger.info(f"{my_script}:The Value of color L is: {L}")
+        for count in range(count_limit):
+            pick_cyan()  #cyan_hue_pen
+            turtle.bgcolor(0, B, 0)
+            cyan_hue_pen.pensize(count / 120)
+            cyan_hue_pen.left(my_angle)
+            cyan_hue_pen.fd(count / 4)
+            f.save_thumb()
+            pa.pensize(count / 200)
+            pa.rt(my_angle)
+            if count <= 255:
+                pa.pencolor(L, M - count, M - count)
+            else:
+                pa.pencolor(L, count % 255, X)
+            pa.circle(count * 0.25, -my_angle, 9)
+            f.save_thumb()
+            Q_seed.dot(3)
+            process_thumbs()
+        pa.clear()
+        clear_cyan_hue_pen()
+    produce_reversing_video()
+    finalize()
+    
+# Intense_Six()
+
+
+
+
 
 
 # +++++++++++MODULE+++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -8915,7 +9301,7 @@ def Resonance_Two():
         t.my_splash,
     ) = (
         str_angles,
-        f"{my_project} with {au.my_track}",
+        f"{my_project}",
     )
     for a.i in range(len(a.i_angle)):
         all_pens_home()
@@ -8923,9 +9309,9 @@ def Resonance_Two():
         Lg.logger.info(
             f"{my_script}: Starting to draw {my_angle:.2f} degrees angles at {Tm.this_time}"
         )
-        turtle.title(f"{my_script}:{my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = f"{my_script}: {my_angle} Degrees Angle and {au.my_track}"
-        count_limit =  1020
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle"
+        count_limit = 1020
         R, G = 0, 0
         M, N, X, Y, Z = 255, 110, 10, 155, 255
         B = random.randint(10, 50)
@@ -8983,6 +9369,85 @@ def Resonance_Two():
 
 # Resonance_Two()
 
+def Resonance_Three():
+    global my_project, my_angle, my_title, my_script, str_angles, count, count_limit, pa
+    my_script = "Resonance Three Mandala"
+    Lg.logger.info(
+        f"{my_script}:Status: Creation Date: 3/10/2024; Last Update/Run: {Tm.my_date}"
+    )
+    Lg.logger.info(
+        f"{my_script}:Uses local turtle pens pa and green_hue_pen; spun off from Intense Mandala."
+    )
+    Lg.logger.info(
+        f"{my_script}:Features first attempt to freeze the size of the mandala,"
+    )
+    Lg.logger.info(
+        f"{my_script}:Spin the mandala and change the coloring; portraying resonant frequencies of color and sound."
+    )
+    startup_script()
+    make_folder()
+    (
+        t.my_angles,
+        t.my_splash,
+    ) = (
+        str_angles,
+        f"{my_project}" 
+    )
+    for a.i in range(len(a.i_angle)):
+        all_pens_home()
+        t.my_venv()
+        t.my_angle = a.i_angle_float[a.i]
+        Lg.logger.info(
+            f"{my_script}: Starting to draw {t.my_angle:.2f} degrees angles at {Tm.this_time}"
+        )
+        turtle.title(f"{my_script}:{t.my_angle} Degrees Angle") 
+        t.my_title = f"{my_script}: {t.my_angle} Degrees Angle "
+        f.make_reverse_png_folder()
+        count_limit = 1020   # Default is 2550; use lesser for testing
+        R, G = 0, 0
+        M, N, X, Y, Z = 255, 110, 10, 155, 255
+        B = random.randint(10, 50)
+        L = random.randint(150, 255)
+        pick_green()  # green_hue_pen
+        green_hue_pen.left(t.my_angle / 2)
+        pa.left(t.my_angle / 2)
+        Lg.logger.info(f"{my_script}:The Value of color B is: {B}")
+        Lg.logger.info(f"{my_script}:The Value of color L is: {L}")
+        for count in range(count_limit):
+            turtle.bgcolor(5, 0, 15)
+            pa.pensize(count / 70)
+            pa.rt(t.my_angle)
+            Q_seed.dot(5)
+            f.save_thumb()
+            pa.pencolor(L, Y - count % 150, M - count % 240)
+            pa.rt(t.my_angle)
+            pa.fd(count / 4)
+            f.save_thumb()
+            pa.penup()
+            pa.rt(t.my_angle)
+            pa.fd(count / 4)
+            f.save_thumb()
+            pa.pendown()
+            pa.rt(t.my_angle)
+            pa.fd(count / 4)
+            f.save_thumb()
+            pa.rt(t.my_angle)
+            pa.fd(count / 4)
+            f.save_thumb()
+            pick_green()  # green_hue_pen
+            green_hue_pen.pensize(count / 1200)
+            green_hue_pen.left(t.my_angle / 2)
+            green_hue_pen.fd(count / 3)
+            f.save_thumb()
+            Q_seed.dot(5)
+        process_thumbs()
+        clear_pa_pen()
+        clear_green_hue_pen()
+    produce_reversing_video()
+    finalize()
+
+
+# Resonance_Three()
 
 
 
@@ -9008,7 +9473,7 @@ def benchmark_mandala():
         t.my_splash,
     ) = (
         str_angles,
-        f"{my_project} with {au.my_track}",
+        f"{my_project} ",
     )
     for a.i in range(len(a.i_angle)):
         all_pens_home()
@@ -9016,8 +9481,8 @@ def benchmark_mandala():
         Lg.logger.info(
             f"{my_script}: Starting to draw {my_angle:.2f} degrees angles at {Tm.this_time}"
         )
-        turtle.title(f"{my_script}:{my_angle} Degrees Angle and {au.my_track}")
-        t.my_title = f"{my_script}: {my_angle} Degrees Angle and {au.my_track}"
+        turtle.title(f"{my_script}:{my_angle} Degrees Angle")
+        t.my_title = f"{my_script}: {my_angle} Degrees Angle "
         count_limit = 50  # count will be doubled for reversed video
         for count in range(count_limit):
             turtle.bgcolor(10, 75, 80)
@@ -9041,15 +9506,18 @@ randomly selected, unless I  switch. I might try to automate the selection optio
 """
 global my_script_varied, my_script_bounteous, my_script_bold, my_script_plain
 my_script_varied = [
+    Reverent_mandala,
+    Sirius_mandala,
+    Bold__three,
+    Gradiant_three,
     Effective_mandala,
     Prosper_mandala,
     Brave_mandala,
-    Intense_Mandala,
-    Resonance_Two,
+    Intense_Two,
+    Resonance_Three,
     Vanguard_Mandala,
     influence_mandala,
     Durable_mandala,
-    Sirius_mandala,
     ]
 
 my_script_bounteous = [
@@ -9091,12 +9559,22 @@ my_script_gradiant = [
      Gradiant_one,
     ]
 
-my_script_all =   my_script_varied + my_script_plain + my_script_bold + my_script_bounteous + my_script_gradiant
+my_script_intense = [
+    Intense_One,
+    Intense_Two,
+    Intense_Three,
+    Intense_Four,
+    Intense_Five,
+    Intense_Six,
+    ]
+
+# my_script_flower = [flower_of_life]
+my_script_all =   my_script_varied + my_script_plain + my_script_bold + my_script_bounteous + my_script_gradiant + my_script_intense
 
 
 def pick_mandala_script():
-    global my_script, script
-    my_script = my_script_plain
+    global my_script, script, my_script_count
+    my_script = [Vanguard_Mandala, Bold__two, Intense_Six, Gradiant_five, Bounteous_Eight, Effective_mandala]
     my_script_count = len(my_script)
     #Copy only one to run
 #     my_script_plain 
@@ -9107,16 +9585,19 @@ def pick_mandala_script():
     pick_script_starttime = timer()
     for script in my_script:
         script()
-    f.merge_vids()
-    f.add_av()
+    merge_vids()
+    f.move_concatenated_vids()
+#     f.add_av()
+    Tm.set_time()
     Lg.logger.info(
-        f"{my_script}:Completed the execution of {my_script_count} scripts @ {Tm.this_time}"
+        f"{my_script}:Completed the execution of {t.my_script_count} scripts @ {Tm.this_time}"
     )
     pick_script_endtime = timer()
     elapsed_time = pick_script_endtime - pick_script_starttime
     Lg.logger.info(
         f"Total time to run this session of pick_mandala_script: {elapsed_time/3600:.2f} hours"
     )
+    finalize()
     exit()
 
 
@@ -9278,3 +9759,4 @@ Run long_clips
 # turtle.bye()  # End the program;  Default is to leave uncommented
 # exit()
  
+
