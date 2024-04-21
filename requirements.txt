@@ -7,7 +7,7 @@ numpy==1.25.2
 numpy==1.22.0
 opencv_python==4.8.0.76
 Pillow==10.0.0
-Pillow==9.0.1
+Pillow==10.3.0
 Pillow==10.0.0
 PyAutoGUI==0.9.54
 pydub==0.25.1
