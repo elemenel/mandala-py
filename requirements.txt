@@ -6,9 +6,9 @@ natsort==8.4.0
 numpy==1.25.2
 numpy==1.22.0
 opencv_python==4.8.0.76
-Pillow==10.0.0
+Pillow==12.2.0
 Pillow==10.3.0
-Pillow==10.0.0
+Pillow==12.2.0
 PyAutoGUI==0.9.54
 pydub==0.25.1
 pyscreenshot==3.1
